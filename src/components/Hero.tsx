@@ -103,9 +103,15 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
           cursorClassName="text-brand-gold-light"
         />
 
+        {/* Double gold rule divider */}
+        <div className="flex flex-col items-center justify-center gap-1 mx-auto w-40 sm:w-56">
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-brand-gold-light/80 to-transparent" />
+          <div className="w-3/4 h-px bg-gradient-to-r from-transparent via-brand-gold-light/40 to-transparent" />
+        </div>
+
         <div className="space-y-2">
           <p className="font-sans text-sm sm:text-base md:text-lg font-semibold tracking-[0.18em] text-brand-gold-light uppercase">
-            Resort &nbsp;·&nbsp; Home Stay &nbsp;·&nbsp; Heritage
+            Resort &nbsp;·&nbsp; Home Stay &nbsp;·&nbsp; Hotels
           </p>
           <p className="font-display text-base sm:text-lg md:text-xl text-brand-background/90 font-light italic">
             Where Every Stay Tells a Story
