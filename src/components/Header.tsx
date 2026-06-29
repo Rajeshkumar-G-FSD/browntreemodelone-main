@@ -44,8 +44,8 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
       id="main-header"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
         isScrolled
-          ? "py-3 px-4 md:px-12 bg-white/80 backdrop-blur-xl shadow-lg shadow-brand-primary/5 border-b border-brand-primary/5"
-          : "py-6 px-4 md:px-16 bg-transparent"
+          ? "py-3 px-4 md:px-12 bg-white/95 backdrop-blur-xl shadow-md shadow-brand-primary/8 border-b border-brand-primary/8"
+          : "py-5 px-4 md:px-16 bg-gradient-to-b from-black/50 to-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -55,10 +55,10 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
           onClick={() => handleItemClick("home")}
           className="flex items-center focus:outline-none group cursor-pointer"
         >
-          <img 
-            src={btLogo} 
-            alt="BT Logo" 
-            className="h-12 md:h-16 w-auto object-contain transition-all duration-300 group-hover:scale-105" 
+          <img
+            src={btLogo}
+            alt="BT Logo"
+            className="h-11 md:h-14 w-auto object-contain transition-all duration-300 group-hover:scale-105"
           />
         </button>
 
@@ -70,52 +70,70 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
               id={`nav-item-${item.id}`}
               onClick={() => handleItemClick(item.id)}
               className={`font-sans text-xs font-semibold tracking-widest transition-all duration-300 cursor-pointer ${
-                activeSection === item.id
-                  ? "text-brand-secondary border-b-2 border-brand-secondary pb-1"
-                  : "text-brand-primary/70 hover:text-brand-primary"
+                isScrolled
+                  ? activeSection === item.id
+                    ? "text-brand-secondary border-b-2 border-brand-secondary pb-1"
+                    : "text-brand-primary/80 hover:text-brand-primary"
+                  : activeSection === item.id
+                    ? "text-brand-gold-light border-b-2 border-brand-gold-light pb-1"
+                    : "text-white/90 hover:text-white"
               }`}
             >
               {item.label}
             </button>
           ))}
-          
+
           <button
             id="nav-contact-button"
             onClick={() => handleItemClick("contact")}
             className={`font-sans text-xs font-semibold tracking-widest py-2 px-5 rounded-full border transition-all duration-300 cursor-pointer ${
-              activeSection === "contact"
-                ? "border-brand-secondary text-brand-secondary bg-brand-secondary/5"
-                : "border-brand-primary/30 text-brand-primary hover:border-brand-secondary hover:text-brand-secondary"
+              isScrolled
+                ? activeSection === "contact"
+                  ? "border-brand-secondary text-brand-secondary bg-brand-secondary/8"
+                  : "border-brand-primary/30 text-brand-primary hover:border-brand-secondary hover:text-brand-secondary"
+                : activeSection === "contact"
+                  ? "border-brand-gold-light text-brand-gold-light bg-white/10"
+                  : "border-white/40 text-white/90 hover:border-white hover:text-white"
             }`}
           >
             CONTACT
           </button>
         </nav>
 
-        {/* Right CTA Actions */}
+        {/* Right CTA */}
         <div className="hidden lg:flex items-center space-x-4">
           <button
             id="book-now-header-cta"
             onClick={onOpenBooking}
-            className="bg-brand-primary text-brand-gold-light font-sans text-xs font-semibold tracking-widest py-3 px-6 rounded-full hover:bg-brand-secondary hover:text-white transition-all duration-300 shadow-md shadow-brand-primary/20 hover:scale-105 active:scale-95 cursor-pointer"
+            className={`font-sans text-xs font-semibold tracking-widest py-3 px-6 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-md ${
+              isScrolled
+                ? "bg-brand-primary text-brand-gold-light hover:bg-brand-secondary hover:text-white shadow-brand-primary/20"
+                : "bg-brand-gold-light text-brand-primary hover:bg-white hover:text-brand-primary shadow-black/20"
+            }`}
           >
             BOOK NOW
           </button>
         </div>
 
-        {/* Mobile Menu Action Toggle */}
+        {/* Mobile right actions */}
         <div className="flex lg:hidden items-center space-x-3">
           <button
             id="book-now-mobile-cta"
             onClick={onOpenBooking}
-            className="bg-brand-primary text-brand-gold-light font-sans text-[10px] font-bold tracking-wider py-2 px-4 rounded-full active:scale-95 cursor-pointer"
+            className={`font-sans text-[10px] font-bold tracking-wider py-2 px-4 rounded-full active:scale-95 cursor-pointer transition-all duration-300 ${
+              isScrolled
+                ? "bg-brand-primary text-brand-gold-light"
+                : "bg-brand-gold-light text-brand-primary"
+            }`}
           >
             BOOK
           </button>
           <button
             id="mobile-menu-toggle"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-brand-primary focus:outline-none p-1 cursor-pointer"
+            className={`focus:outline-none p-1 cursor-pointer transition-colors duration-300 ${
+              isScrolled ? "text-brand-primary" : "text-white"
+            }`}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

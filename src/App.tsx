@@ -11,7 +11,7 @@ import DestinationsSection from "./components/DestinationsSection";
 import ExperiencesSection from "./components/ExperiencesSection";
 import ReviewsSection from "./components/ReviewsSection";
 import ContactSection from "./components/ContactSection";
-import PropertyDetailModal from "./components/PropertyDetailModal";
+import PropertyDetailPage from "./components/PropertyDetailPage";
 import BookingDrawer from "./components/BookingDrawer";
 import Footer from "./components/Footer";
 import ChatBot from "./components/ChatBot";
@@ -19,22 +19,46 @@ import ChatBot from "./components/ChatBot";
 import { PROPERTIES, EXPERIENCES, REVIEWS, DESTINATIONS } from "./data";
 import { Property, Suite, Experience } from "./types";
 
-export default function App() {
-  // Navigation & Active Section Tracking
-  const [activeSection, setActiveSection] = useState("home");
+// Converts a property to a URL slug: /ooty-the-earthy-nest-by-brown-tree
+function toPropertySlug(property: Property): string {
+  const location = property.location.split(",")[0].trim().toLowerCase().replace(/\s+/g, "-");
+  const name = property.name.toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, "-");
+  return `/${location}-${name}`;
+}
 
-  // Interaction States
+function findPropertyBySlug(slug: string): Property | null {
+  return PROPERTIES.find((p) => toPropertySlug(p) === slug) ?? null;
+}
+
+export default function App() {
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [activeSection, setActiveSection] = useState("home");
   const [filteredDestination, setFilteredDestination] = useState("");
-  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+  const [bookingProperty, setBookingProperty] = useState<Property | null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [preselectedSuite, setPreselectedSuite] = useState<Suite | null>(null);
 
-  // Monitor scrolling to highlight correct nav link
+  // Property shown as full page (null = show home)
+  const propertyOnPage = findPropertyBySlug(currentPath);
+
+  // Browser back/forward support
   useEffect(() => {
+    const onPopState = () => setCurrentPath(window.location.pathname);
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  // Scroll to top when entering a property page
+  useEffect(() => {
+    if (propertyOnPage) window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPath]);
+
+  // Track active section while scrolling on home page
+  useEffect(() => {
+    if (propertyOnPage) return;
     const handleScroll = () => {
       const sections = ["home", "properties", "destinations", "experiences", "reviews", "contact"];
       const scrollPosition = window.scrollY + 200;
-
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -47,156 +71,149 @@ export default function App() {
         }
       }
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [propertyOnPage]);
 
-  // Navigate smoothly to a section
+  // Navigate to a section — works from both home and property pages
   const handleNavigate = (sectionId: string) => {
-    const el = document.getElementById(sectionId);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-      setActiveSection(sectionId);
+    if (propertyOnPage) {
+      window.history.pushState({}, "", "/");
+      setCurrentPath("/");
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+        setActiveSection(sectionId);
+      }, 80);
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+        setActiveSection(sectionId);
+      }
     }
   };
 
-  // When search button in Hero is clicked
+  // Navigate to property detail page
+  const handleOpenPropertyDetail = (property: Property) => {
+    const slug = toPropertySlug(property);
+    window.history.pushState({}, "", slug);
+    setCurrentPath(slug);
+  };
+
+  // Navigate back to home
+  const handleBackToHome = () => {
+    window.history.pushState({}, "", "/");
+    setCurrentPath("/");
+  };
+
+  // Hero search
   const handleHeroSearch = (filters: { destination: string; checkIn: string; checkOut: string; guests: number }) => {
     setFilteredDestination(filters.destination);
-    
-    // Smoothly scroll down to properties
     const el = document.getElementById("properties");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Selecting a destination card
+  // Destination card click
   const handleSelectDestination = (destName: string) => {
     setFilteredDestination(destName);
-    
-    // Smoothly scroll to properties
     const el = document.getElementById("properties");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Launch detail modal for property
-  const handleOpenPropertyDetail = (property: Property) => {
-    setSelectedProperty(property);
+  // Book suite from property detail page
+  const handleBookSuiteFromPage = (property: Property, suite: Suite) => {
+    setBookingProperty(property);
+    setPreselectedSuite(suite);
+    setBookingOpen(true);
   };
 
-  // Close property modal
-  const handleClosePropertyDetail = () => {
-    setSelectedProperty(null);
-  };
-
-  // Inquire/Book Suite inside detail modal
-  const handleBookSuiteFromModal = (property: Property, suite: Suite) => {
-    setSelectedProperty(null); // Close modal
-    setPreselectedSuite(suite); // Pass preselected suite
-    setBookingOpen(true); // Open drawer
-  };
-
-  // Open booking drawer generically
+  // Open booking drawer
   const handleOpenBooking = () => {
+    setBookingProperty(propertyOnPage);
     setPreselectedSuite(null);
     setBookingOpen(true);
   };
 
-  // Experience package click -> opens general booking
+  // Experience click
   const handleBookExperience = (exp: Experience) => {
-    // Find matching property if any, or open booking
-    if (exp.id === "exp-heli") {
-      const swiss = PROPERTIES.find((p) => p.id === "misty-peaks");
-      setSelectedProperty(swiss || null);
-    } else if (exp.id === "exp-healing") {
-      const jaipur = PROPERTIES.find((p) => p.id === "heritage-pine");
-      setSelectedProperty(jaipur || null);
-    } else {
-      const coastal = PROPERTIES.find((p) => p.id === "azure-orchid");
-      setSelectedProperty(coastal || null);
-    }
+    let linked: Property | undefined;
+    if (exp.id === "exp-heli") linked = PROPERTIES.find((p) => p.id === "misty-peaks");
+    else if (exp.id === "exp-healing") linked = PROPERTIES.find((p) => p.id === "heritage-pine");
+    else linked = PROPERTIES.find((p) => p.id === "azure-orchid");
+    setBookingProperty(linked ?? null);
     setPreselectedSuite(null);
     setBookingOpen(true);
   };
 
-  // Direct book-now clicked on properties section cards
+  // Direct Book Now on property card
   const handleBookPropertyDirect = (property: Property) => {
-    setSelectedProperty(property);
+    setBookingProperty(property);
     setPreselectedSuite(null);
     setBookingOpen(true);
   };
 
   return (
     <div id="luxe-sanctuary-app" className="min-h-screen bg-brand-background text-brand-charcoal overflow-x-hidden selection:bg-brand-secondary selection:text-white">
-      {/* Floating Header */}
+      {/* Floating Header – always visible */}
       <Header
         activeSection={activeSection}
         onNavigate={handleNavigate}
         onOpenBooking={handleOpenBooking}
       />
 
-      {/* Hero Section */}
-      <Hero
-        onSearch={handleHeroSearch}
-        onExploreClick={() => handleNavigate("properties")}
-        onOpenBooking={handleOpenBooking}
-      />
-
-      {/* Main Content Sections */}
-      <main id="main-content">
-        {/* Curated Properties List Section */}
-        <PropertiesSection
-          properties={PROPERTIES}
-          onSelectProperty={handleOpenPropertyDetail}
-          onBookProperty={handleBookPropertyDirect}
-          filteredDestination={filteredDestination}
+      {propertyOnPage ? (
+        /* ── Property detail full page ── */
+        <PropertyDetailPage
+          property={propertyOnPage}
+          onBack={handleBackToHome}
+          onBookSuite={handleBookSuiteFromPage}
         />
+      ) : (
+        /* ── Home page ── */
+        <>
+          <Hero
+            onSearch={handleHeroSearch}
+            onExploreClick={() => handleNavigate("properties")}
+            onOpenBooking={handleOpenBooking}
+          />
 
-        {/* Global Destinations Grid */}
-        <DestinationsSection
-          destinations={DESTINATIONS}
-          onSelectDestination={handleSelectDestination}
-        />
+          <main id="main-content">
+            <PropertiesSection
+              properties={PROPERTIES}
+              onSelectProperty={handleOpenPropertyDetail}
+              onBookProperty={handleBookPropertyDirect}
+              filteredDestination={filteredDestination}
+            />
 
-        {/* Curated Experiences Showcase */}
-        <ExperiencesSection
-          experiences={EXPERIENCES}
-          onBookExperience={handleBookExperience}
-        />
+            <DestinationsSection
+              destinations={DESTINATIONS}
+              onSelectDestination={handleSelectDestination}
+            />
 
-        {/* Guest Reviews Testimonial Slider */}
-        <ReviewsSection reviews={REVIEWS} />
+            <ExperiencesSection
+              experiences={EXPERIENCES}
+              onBookExperience={handleBookExperience}
+            />
 
-        {/* Bespoke Inquiry Contact Form */}
-        <ContactSection />
-      </main>
+            <ReviewsSection reviews={REVIEWS} />
 
-      {/* Footer block */}
-      <Footer onNavigate={handleNavigate} />
+            <ContactSection />
+          </main>
 
-      {/* Immersive Property Detail Modal Overlay */}
-      {selectedProperty && (
-        <PropertyDetailModal
-          property={selectedProperty}
-          onClose={handleClosePropertyDetail}
-          onBookSuite={handleBookSuiteFromModal}
-        />
+          <Footer onNavigate={handleNavigate} />
+        </>
       )}
 
-      {/* Slide-out Booking Drawer */}
+      {/* Booking drawer – available on all pages */}
       <BookingDrawer
         properties={PROPERTIES}
-        selectedProperty={selectedProperty || (bookingOpen ? selectedProperty : null)}
+        selectedProperty={bookingProperty}
         selectedSuite={preselectedSuite}
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
       />
 
-      {/* Luxury Concierge Chatbot "Brown tree" */}
       <ChatBot />
     </div>
   );
