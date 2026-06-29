@@ -64,7 +64,7 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
                 <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-brand-secondary/40 shadow-md">
                   <img
                     src={currentReview.avatar}
-                    alt={currentReview.author}
+                    alt={`${currentReview.author} – verified Brown Tree Resorts guest review`}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
                   />

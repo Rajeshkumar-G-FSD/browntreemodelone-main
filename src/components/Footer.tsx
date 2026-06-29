@@ -40,7 +40,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             <div className="flex items-center">
               <img 
                 src={btLogo} 
-                alt="BT Logo" 
+                alt="Brown Tree Resorts brand logo – curated hill station accommodations across the Nilgiri and Palani Hills" 
                 className="h-14 md:h-18 w-auto object-contain" 
               />
             </div>

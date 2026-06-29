@@ -56,7 +56,7 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
         >
           <img
             src={btLogo}
-            alt="BT Logo"
+            alt="Brown Tree Resorts logo – luxury resort, home stay and heritage stays in Ooty, Kothagiri and Kodaikanal"
             className="h-11 md:h-14 w-auto object-contain transition-all duration-300 group-hover:scale-105"
           />
         </button>

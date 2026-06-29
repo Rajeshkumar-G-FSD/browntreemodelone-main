@@ -229,7 +229,7 @@ export default function PropertiesSection({
                   <div className="relative aspect-[4/3] w-full overflow-hidden">
                     <img
                       src={property.image}
-                      alt={property.name}
+                      alt={`${property.name} – luxury ${property.type.toLowerCase()} accommodation in ${property.location}, ${property.region}`}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />

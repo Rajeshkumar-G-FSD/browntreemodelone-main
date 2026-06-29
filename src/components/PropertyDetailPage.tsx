@@ -66,7 +66,7 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
       <div className="relative w-full overflow-hidden bg-brand-primary/5">
         <img
           src={activeImage}
-          alt={property.name}
+          alt={`${property.name} – luxury ${property.type.toLowerCase()} hill station stay in ${property.location}, ${property.region}`}
           className="w-full h-auto object-contain transition-all duration-700 max-h-[80vh]"
         />
         {/* Gradient overlay */}
@@ -117,7 +117,7 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
                     : "border-transparent opacity-55 hover:opacity-100 hover:border-brand-primary/20"
                   }`}
               >
-                <img src={img} alt={`View ${idx + 1}`} className="w-full h-full object-cover" />
+                <img src={img} alt={`${property.name} – ${property.location} accommodation gallery photo ${idx + 1}`} className="w-full h-full object-cover" />
               </button>
             ))}
           </div>

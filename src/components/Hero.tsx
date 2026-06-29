@@ -82,7 +82,7 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
       <div className="absolute inset-0 z-0">
         <img
           src={heroNature}
-          alt="Luxe Sanctuary Nature View"
+          alt="Misty Nilgiri hillside landscape with lush green forests and rolling hills – natural setting of Brown Tree Resorts in South India"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover brightness-[0.75] scale-105 transition-transform duration-[10s] ease-out select-none"
         />

@@ -49,7 +49,7 @@ export default function DestinationsSection({ destinations, onSelectDestination 
                 {/* Image Cover */}
                 <img
                   src={dest.image}
-                  alt={dest.name}
+                  alt={`${dest.name} hill station – ${dest.description} Brown Tree Resorts destination`}
                   referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-[8s] ease-out group-hover:scale-110"
                 />
