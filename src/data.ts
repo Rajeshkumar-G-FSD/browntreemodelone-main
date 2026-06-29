@@ -32,7 +32,30 @@ import hummingBirdSinglebed from "./assets/images/HummingBird_singlebed.jpeg";
 import hummingBirdSinglebedA from "./assets/images/HummingBird_Singlebed_.jpeg";
 import hummingBirdParking from "./assets/images/HummingBird_parking.jpeg";
 import hummingBirdDining from "./assets/images/HummingBird_dining.jpeg";
-import mistyPeaks from "./assets/images/misty_peaks_1782714932656.jpg";
+import solarMain from "./assets/images/solar.png";
+import solarSinglebed from "./assets/images/solar_singlebed.jpeg";
+import solarSinglebedA from "./assets/images/solar_singlebed_.jpeg.jpeg";
+import solarDoublebed from "./assets/images/solar_doublebed.jpeg";
+import solarSinglebedPremium from "./assets/images/solar_singlebed_premium.jpeg";
+import solarSinglebedRed from "./assets/images/solar_singlebed_red.jpeg";
+import solarSinglebedDulex from "./assets/images/solar_singlebed_dulex.jpeg";
+import solarSinglebedSuite from "./assets/images/solar_singlebed_suite.jpeg";
+import solarSinglebedSuiteA from "./assets/images/solar_singlebed_suite_.jpeg";
+import solarSinglebedSuiteRed from "./assets/images/solar_singlebed_suite_red.jpeg";
+import solarSinglebedSuiteRedA from "./assets/images/solar_singlebed_suite_red_.jpeg";
+import solarSinglebedSuiteGreen from "./assets/images/solar_singlebed_suite_green.jpeg";
+import solarSinglebedSuitePink from "./assets/images/solar_singlebed_suite_pink.jpeg";
+import solarDinning from "./assets/images/solar_dinning.jpeg";
+import solarRestroom from "./assets/images/solar_restroom.jpeg";
+import vetrivelMain from "./assets/images/vetrivel_inn.png";
+import vetrivelFrontview from "./assets/images/vetrivel_inn_frontview.jpg";
+import vetrivelRestroom from "./assets/images/vetrivel_inn_restroom.jpg";
+import vetrivelBedNightview from "./assets/images/vetrivel_inn_bed_nightview.jpg";
+import vetrivelDinning from "./assets/images/vetrivel_inn_dinning.jpg";
+import vetrivelDoublesbed from "./assets/images/vetrivel_inn_doublesbed.jpg";
+import vetrivelSuiteBed from "./assets/images/vetrivel_inn_suite_bed.jpg";
+import vetrivelBedRed from "./assets/images/vetrivel_inn_bed_red.jpg";
+import vetrivelBed from "./assets/images/vetrivel_inn_bed.jpg";
 import earthyNestFront from "./assets/images/earthynest_frontviiew.png";
 import earthyNestBedroom from "./assets/images/earthynest_bedroom.jpeg";
 import earthyNestBrestosgroom from "./assets/images/earthynest_brestosgroom.jpeg";
@@ -209,6 +232,69 @@ export const PROPERTIES: Property[] = [
     coordinates: { lat: 11.4150, lng: 76.6850 }
   },
   {
+    id: "solar-residency",
+    name: "Solar Residency by Brown Tree",
+    type: "Ooty",
+    location: "Ooty, India",
+    region: "Nilgiri Hills",
+    price: 3500,
+    rating: 4.8,
+    reviewCount: 18,
+    image: solarMain,
+    gallery: [
+      solarMain,
+      solarSinglebed,
+      solarSinglebedA,
+      solarDoublebed,
+      solarSinglebedPremium,
+      solarSinglebedRed,
+      solarSinglebedDulex,
+      solarSinglebedSuite,
+      solarSinglebedSuiteA,
+      solarSinglebedSuiteRed,
+      solarSinglebedSuiteRedA,
+      solarSinglebedSuiteGreen,
+      solarSinglebedSuitePink,
+      solarDinning,
+      solarRestroom,
+    ],
+    description: "Sholas Residency by BrownTree – A Boutique Stay in the Heart of Ooty\n\nExperience the charm of Sholas Residency by BrownTree, a boutique hotel thoughtfully designed for travelers who value comfort, style, and personalized hospitality. Ideally located in the heart of Ooty, it places you close to the town's iconic attractions, vibrant markets, and local dining, making every outing effortless.\n\nWhether you're visiting for a family holiday, a romantic escape, or a group vacation, Sholas Residency offers elegant accommodations and a warm, inviting atmosphere. Blending modern comforts with BrownTree's signature hospitality, it promises a relaxing stay and an authentic Ooty experience you'll cherish.",
+    highlights: [
+      "Eco-Powered Solar Property",
+      "Panoramic Nilgiri Hill Views",
+      "Warm BrownTree Hospitality"
+    ],
+    amenities: [
+      "Solar-Powered Rooms",
+      "Spacious Garden Lounge",
+      "Mountain View Terrace",
+      "Organic Breakfast Service",
+      "In-House Bonfire Setup",
+      "Free Parking"
+    ],
+    suites: [
+      {
+        id: "solar-standard-room",
+        name: "Solar Standard Room",
+        description: "A cozy, well-appointed room with garden views, natural ventilation, and all modern comforts powered by solar energy.",
+        pricePerNight: 3500,
+        maxGuests: 2,
+        size: "120 sqm / 1,290 sqft",
+        amenities: ["Solar Heating", "Garden View", "Free Wi-Fi", "Daily Breakfast"]
+      },
+      {
+        id: "solar-family-suite",
+        name: "Solar Family Suite",
+        description: "A spacious family suite with a private sit-out, stunning hill views, and extra beds for a comfortable group stay.",
+        pricePerNight: 5500,
+        maxGuests: 4,
+        size: "200 sqm / 2,150 sqft",
+        amenities: ["Private Sit-Out", "Hill View", "Extra Beds", "Kitchenette", "Bonfire Access"]
+      }
+    ],
+    coordinates: { lat: 11.4180, lng: 76.7000 }
+  },
+  {
     id: "misty-peaks",
     name: "Humming Bird by Brown Tree Resorts",
     type: "Kothagiri",
@@ -272,13 +358,19 @@ export const PROPERTIES: Property[] = [
     price: 4500,
     rating: 4.9,
     reviewCount: 29,
-    image: "https://picsum.photos/seed/morocco/800/600",
+    image: vetrivelMain,
     gallery: [
-      "https://picsum.photos/seed/morocco/1200/800",
-      "https://picsum.photos/seed/morocco2/1200/800",
-      "https://picsum.photos/seed/morocco3/1200/800"
+      vetrivelMain,
+      vetrivelFrontview,
+      vetrivelRestroom,
+      vetrivelBedNightview,
+      vetrivelDinning,
+      vetrivelDoublesbed,
+      vetrivelSuiteBed,
+      vetrivelBedRed,
+      vetrivelBed,
     ],
-    description: "A stunning architecture of hand-cut local stone and sleek brass detailing situated high on Kodaikanal's dramatic ridges. Hotel Vetrivel International by Brown Tree Resorts offers spectacular sunrise valley-view pools, custom velvet upholstery, and traditional South Indian mountain hospitality with high-end modern comforts.",
+    description: "Vetrivel International by BrownTree – Stay Close to the Heart of Kodaikanal\n\nIdeally located just a short walk from the iconic Kodaikanal Lake, Vetrivel International by BrownTree offers the perfect blend of comfort, convenience, and warm hospitality. Its prime location allows guests to easily explore the town's popular attractions, charming cafés, shopping streets, and scenic viewpoints.\n\nWhether you're planning a family vacation, a getaway with friends, or a relaxing holiday, Vetrivel International provides comfortable accommodations and a welcoming ambiance for a memorable stay. Discover the beauty of Kodaikanal while enjoying the trusted hospitality and personalized service that define the BrownTree experience.",
     highlights: [
       "Epic Valley-Sunset Views",
       "Astronomer-Guided Stargazing",
