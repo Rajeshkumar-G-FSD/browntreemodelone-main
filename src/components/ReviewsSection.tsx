@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Star, ChevronLeft, ChevronRight, MessageSquare, Quote } from "lucide-react";
 import { Review } from "../types";
 
@@ -13,13 +13,28 @@ interface ReviewsSectionProps {
 
 export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startAutoSlide = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+    }, 3000);
+  };
+
+  useEffect(() => {
+    startAutoSlide();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [reviews.length]);
 
   const handlePrev = () => {
     setActiveIndex((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
+    startAutoSlide();
   };
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+    startAutoSlide();
   };
 
   const currentReview = reviews[activeIndex] || reviews[0];

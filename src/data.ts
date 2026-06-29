@@ -477,6 +477,76 @@ export const REVIEWS: Review[] = [
     date: "June 2026",
     content: "Misty Peaks Lodge is a true hill-station sanctuary. Sitting by the double-sided stone hearth in Kothagiri, with a cup of freshly brewed Nilgiri tea, watching the slopes disappear into the thick fog—it was the ultimate digital detox.",
     propertyId: "misty-peaks"
+  },
+  {
+    id: "rev-4",
+    author: "Priya Ramanathan",
+    role: "Family Traveler, Chennai",
+    avatar: "https://picsum.photos/seed/woman3/100/100",
+    rating: 5,
+    date: "March 2026",
+    content: "The Abode by Brown Tree felt like a home away from home in the heart of Ooty. The staff were incredibly warm, the rooms spotless, and the view from our window every morning was simply breathtaking. Our kids absolutely loved it.",
+    propertyId: "heritage-pine"
+  },
+  {
+    id: "rev-5",
+    author: "Arjun & Deepa Krishnan",
+    role: "Honeymooners, Bangalore",
+    avatar: "https://picsum.photos/seed/couple1/100/100",
+    rating: 5,
+    date: "February 2026",
+    content: "Tea Leaf Stays was the perfect honeymoon retreat. Waking up to rolling tea gardens, sipping fresh Nilgiri tea on the balcony with mist swirling around us — it was pure magic. Brown Tree's hospitality made every moment feel special.",
+    propertyId: "tea-leaf-stays"
+  },
+  {
+    id: "rev-6",
+    author: "Rahul Mehta",
+    role: "Solo Traveler & Nature Enthusiast",
+    avatar: "https://picsum.photos/seed/man2/100/100",
+    rating: 5,
+    date: "April 2026",
+    content: "Humming Bird by Brown Tree in Kothagiri is a hidden gem. The valley views from my room were unlike anything I've seen, the birdsong at dawn was my alarm clock, and the staff went above and beyond to make me feel welcome.",
+    propertyId: "misty-peaks"
+  },
+  {
+    id: "rev-7",
+    author: "Sunita & Vikram Nair",
+    role: "Weekend Getaway, Coimbatore",
+    avatar: "https://picsum.photos/seed/woman4/100/100",
+    rating: 5,
+    date: "May 2026",
+    content: "Solar Residency surprised us in the best way possible. Clean, comfortable, well-located in Ooty, and the staff treated us like family. The local food served was authentic and delicious. Will definitely be back with the whole family!",
+    propertyId: "solar-residency"
+  },
+  {
+    id: "rev-8",
+    author: "Kavitha Subramaniam",
+    role: "Travel Blogger, Madurai",
+    avatar: "https://picsum.photos/seed/woman5/100/100",
+    rating: 5,
+    date: "January 2026",
+    content: "Hotel Vetrivel International is perfectly placed for exploring Kodaikanal. Just a short walk from the lake, cozy rooms, and genuine BrownTree hospitality. The evening mist rolling through the pine trees outside our window was surreal.",
+    propertyId: "mirage-ridge"
+  },
+  {
+    id: "rev-9",
+    author: "Anand & Friends Group",
+    role: "Friends Getaway, Hyderabad",
+    avatar: "https://picsum.photos/seed/man3/100/100",
+    rating: 5,
+    date: "June 2026",
+    content: "The Earthy Nest by Brown Tree was the ultimate group retreat. The garden area is perfect for hangouts, the rooms were cozy yet spacious, and the Ooty sunrise from the property left us all speechless. Highly recommend for friend trips!",
+    propertyId: "azure-orchid"
+  },
+  {
+    id: "rev-10",
+    author: "Meena Sundaram",
+    role: "Corporate Retreat Organizer",
+    avatar: "https://picsum.photos/seed/woman6/100/100",
+    rating: 5,
+    date: "March 2026",
+    content: "We organized a corporate offsite at Tea Leaf Stays and Brown Tree made it effortless. The serene tea garden backdrop kept the team refreshed and focused, the service was impeccable, and every detail was thoughtfully arranged.",
+    propertyId: "tea-leaf-stays"
   }
 ];
 
