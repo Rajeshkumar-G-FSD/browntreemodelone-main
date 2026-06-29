@@ -4,10 +4,39 @@
  */
 
 import { Property, Experience, Review, Destination } from "./types";
-import azureBayResort from "./assets/images/azure_bay_resort_1782714903912.jpg";
-import heritagePalace from "./assets/images/heritage_palace_1782714918331.jpg";
+import theAbodeMain from "./assets/images/theabodebybrowntree.png";
+import theAbodeGarden from "./assets/images/theabodebybrowntree_gareden.jpg";
+import theAbodeInterior from "./assets/images/theabodebybrowntree_.jpg";
+import theAbodeDining from "./assets/images/theabodebybrowntree_dining.jpg";
+import theAbodeCot from "./assets/images/theabodebybrowntree_cot.jpg";
+import theAbodeDoubleHot from "./assets/images/theabodebybrowntree_doublehot.jpg";
+import teaLeafMain from "./assets/images/Tealeaf.png";
+import teaLeafInterior from "./assets/images/Tealeaf_.jpeg";
+import teaLeafCampfire from "./assets/images/Tealeaf_campfire.webp";
+import teaLeafSteps from "./assets/images/Tealeaf_steps.webp";
+import teaLeafBalconyChair from "./assets/images/Tealeaf_balcony_chair.webp";
+import teaLeafBalconySun from "./assets/images/Tealeaf_balcony_sun.webp";
+import teaLeafBalcony from "./assets/images/Tealeaf_balcony.webp";
+import teaLeafDinning from "./assets/images/Tealeaf_dinning.webp";
+import teaLeafNaturalA from "./assets/images/Tealeaf_natural_.webp";
+import teaLeafNaturalB from "./assets/images/Tealeaf_natural.webp";
+import teaLeafBedroomsA from "./assets/images/Tealeaf.bed_rooms__.webp";
+import teaLeafBedroomsB from "./assets/images/Tealeaf.bed_rooms_.webp";
+import teaLeafBedA from "./assets/images/Tealeaf_bed_.webp";
+import teaLeafBedroom from "./assets/images/Tealeaf_bedroom.webp";
+import teaLeafBedB from "./assets/images/Tealeaf_bed.webp";
+import hummingBirdMain from "./assets/images/HummingBird.png";
+import hummingBirdNightview from "./assets/images/HummingBird_nightview.jpeg";
+import hummingBirdDoublebed from "./assets/images/HummingBird_doublebed.jpeg";
+import hummingBirdSinglebed from "./assets/images/HummingBird_singlebed.jpeg";
+import hummingBirdSinglebedA from "./assets/images/HummingBird_Singlebed_.jpeg";
+import hummingBirdParking from "./assets/images/HummingBird_parking.jpeg";
+import hummingBirdDining from "./assets/images/HummingBird_dining.jpeg";
 import mistyPeaks from "./assets/images/misty_peaks_1782714932656.jpg";
 import earthyNestFront from "./assets/images/earthynest_frontviiew.png";
+import earthyNestBedroom from "./assets/images/earthynest_bedroom.jpeg";
+import earthyNestBrestosgroom from "./assets/images/earthynest_brestosgroom.jpeg";
+import earthyNestGarden from "./assets/images/earthynest_garden.jpeg";
 
 export const PROPERTIES: Property[] = [
   {
@@ -22,12 +51,11 @@ export const PROPERTIES: Property[] = [
     image: earthyNestFront,
     gallery: [
       earthyNestFront,
-      // Replace these with local images once files are added to src/assets/images/
-      "https://picsum.photos/seed/earthynest-reception/1200/800", // earthynest_reception
-      "https://picsum.photos/seed/earthynest-hall/1200/800",      // earthynest_hall
-      "https://picsum.photos/seed/earthynest-garden/1200/800",    // earthynest_garden.jpeg
+      earthyNestBedroom,
+      earthyNestBrestosgroom,
+      earthyNestGarden,
     ],
-    description: "Nestled amongst Ooty's emerald tea plantations and serene highlands, The Earthy Nest by Brown Tree offers panoramic views of Nilgiri valleys. Enjoy high-altitude luxury, cozy stone fireplaces, private balconies looking out over the morning mist, and outdoor dining under the starry sky.",
+    description: "Earthy Nest by BrownTree – A Peaceful Nature Retreat\n\nNestled amidst the lush greenery of Ooty, Earthy Nest by BrownTree is a serene retreat offering breathtaking views of the Nilgiris. Wake up to crisp mountain air, explore Ooty's scenic beauty, and unwind in a peaceful setting designed for relaxation and unforgettable moments.\n\nWhether it's a family vacation, a friends' getaway, or a team get-together, Earthy Nest is the perfect escape from the fast-paced routine of everyday life. With cozy comforts, tranquil surroundings, and warm BrownTree hospitality, every stay is an opportunity to reconnect, recharge, and create lasting memories.",
     highlights: [
       "Overlooking Nilgiri Tea Valleys",
       "Heated Glass-Wall Infinity Pool",
@@ -72,14 +100,16 @@ export const PROPERTIES: Property[] = [
     price: 3000,
     rating: 4.9,
     reviewCount: 118,
-    image: heritagePalace,
+    image: theAbodeMain,
     gallery: [
-      heritagePalace,
-      "https://picsum.photos/seed/jaipur1/1200/800",
-      "https://picsum.photos/seed/jaipur2/1200/800",
-      "https://picsum.photos/seed/jaipur3/1200/800"
+      theAbodeMain,
+      theAbodeGarden,
+      theAbodeInterior,
+      theAbodeDining,
+      theAbodeCot,
+      theAbodeDoubleHot,
     ],
-    description: "An exquisite heritage revival of colonial-era Nilgiri estate architecture, redesigned with sleek contemporary glass screens and classic royal luxury. THE ABODE BY BROWN TREE is surrounded by towering pine trees and private British-style gardens, offering unmatched mountain serenity.",
+    description: "Abode by BrownTree – Comfort in the Heart of Ooty\n\nLocated in the heart of Ooty, Abode by BrownTree offers the perfect balance of convenience and tranquility. While you're just minutes away from the town's popular attractions, shopping streets, and restaurants, the property provides a calm and peaceful ambiance where you can truly relax and unwind.\n\nDesigned with families, couples, and leisure travelers in mind, Abode features comfortable, well-appointed rooms and warm, personalized hospitality that makes every guest feel at home. Whether you're exploring the scenic beauty of the Nilgiris or simply looking for a cozy retreat after a day of sightseeing, Abode is the ideal place to create lasting memories with your loved ones.",
     highlights: [
       "Colonial-Era Heritage Estate",
       "Acre-Wide Pine Gardens",
@@ -124,11 +154,23 @@ export const PROPERTIES: Property[] = [
     price: 5500,
     rating: 4.8,
     reviewCount: 24,
-    image: "https://images.unsplash.com/photo-1555899434-94d1368aa712?auto=format&fit=crop&w=800&q=80",
+    image: teaLeafMain,
     gallery: [
-      "https://images.unsplash.com/photo-1555899434-94d1368aa712?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1563911302283-d2bc1507023a?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80"
+      teaLeafMain,
+      teaLeafInterior,
+      teaLeafCampfire,
+      teaLeafSteps,
+      teaLeafBalconyChair,
+      teaLeafBalconySun,
+      teaLeafBalcony,
+      teaLeafDinning,
+      teaLeafNaturalA,
+      teaLeafNaturalB,
+      teaLeafBedroomsA,
+      teaLeafBedroomsB,
+      teaLeafBedA,
+      teaLeafBedroom,
+      teaLeafBedB,
     ],
     description: "Enveloped by sprawling, lush organic tea plantations in Ooty, Tea Leaf Stays by Brown Tree Resorts is an exquisite sanctuary designed for discerning travelers. Enjoy high-altitude luxury with private mist-shrouded sun decks, premium tea-tasting sessions, and custom architectural glass facades that offer views of the spectacular Nilgiri peaks.",
     highlights: [
@@ -175,14 +217,17 @@ export const PROPERTIES: Property[] = [
     price: 5000,
     rating: 4.8,
     reviewCount: 36,
-    image: mistyPeaks,
+    image: hummingBirdMain,
     gallery: [
-      mistyPeaks,
-      "https://picsum.photos/seed/swiss1/1200/800",
-      "https://picsum.photos/seed/swiss2/1200/800",
-      "https://picsum.photos/seed/swiss3/1200/800"
+      hummingBirdMain,
+      hummingBirdNightview,
+      hummingBirdDoublebed,
+      hummingBirdSinglebed,
+      hummingBirdSinglebedA,
+      hummingBirdParking,
+      hummingBirdDining,
     ],
-    description: "Perched majestically among Kothagiri's cloud-kissed heights, Humming Bird by Brown Tree Resorts combines rough-hewn cedar timber structures with soaring minimalist floor-to-ceiling glass. Enjoy private stargazing, a warm hand-carved stone fireplace, and pristine views of cascading waterfalls.",
+    description: "Humming Bird by BrownTree – A Nature Lover's Retreat\n\nNestled in the serene hills of Kotagiri, Humming Bird by BrownTree is a peaceful retreat surrounded by breathtaking valley views, lush greenery, and abundant birdlife. A haven for nature lovers, it's the perfect destination to enjoy scenic landscapes, bird watching, and the refreshing charm of the Nilgiris.\n\nLocated away from the city's hustle yet conveniently accessible from Mettupalayam, Humming Bird offers the perfect escape to slow down and reconnect with nature. Whether you're planning a family vacation, a getaway with friends, or simply seeking peace amidst the hills, every stay promises comfort, tranquility, and unforgettable views.",
     highlights: [
       "Quiet Offbeat Highland Escape",
       "In-Lodge Stargazing Telescope",

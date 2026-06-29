@@ -87,9 +87,11 @@ export default function PropertyDetailModal({ property, onClose, onBookSuite }: 
             {/* Narrative description */}
             <div className="space-y-4">
               <h3 className="font-display text-xl font-medium text-brand-primary">The Sanctuary Narrative</h3>
-              <p className="font-sans text-xs md:text-sm text-brand-primary/75 font-light leading-relaxed">
-                {property.description}
-              </p>
+              <div className="font-sans text-xs md:text-sm text-brand-primary/75 font-light leading-relaxed space-y-3">
+                {property.description.split("\n\n").map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
             </div>
 
             {/* Highlights bullet boxes */}
