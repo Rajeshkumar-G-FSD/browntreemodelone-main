@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Star, Check, Sparkles, MapPin, BedDouble, Expand, ShieldCheck } from "lucide-react";
 import { motion } from "motion/react";
 import { Property, Suite } from "../types";
@@ -15,7 +15,29 @@ interface PropertyDetailPageProps {
 }
 
 export default function PropertyDetailPage({ property, onBack, onBookSuite }: PropertyDetailPageProps) {
-  const [activeImage, setActiveImage] = useState(property.gallery[0] || property.image);
+  const gallery = property.gallery.length > 0 ? property.gallery : [property.image];
+  const [activeImage, setActiveImage] = useState(gallery[0]);
+  const indexRef = useRef(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startSlide = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      indexRef.current = (indexRef.current + 1) % gallery.length;
+      setActiveImage(gallery[indexRef.current]);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    startSlide();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [property]);
+
+  const handleThumbnailClick = (img: string, idx: number) => {
+    indexRef.current = idx;
+    setActiveImage(img);
+    startSlide();
+  };
 
   return (
     // pt-20 md:pt-24 = clears the fixed header (header is ~80px mobile / ~96px desktop)
@@ -41,11 +63,11 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
       </div>
 
       {/* ── Hero image ── */}
-      <div className="relative w-full h-[40vh] sm:h-[48vh] md:h-[60vh] overflow-hidden">
+      <div className="relative w-full overflow-hidden bg-brand-primary/5">
         <img
           src={activeImage}
           alt={property.name}
-          className="w-full h-full object-cover transition-all duration-700"
+          className="w-full h-auto object-contain transition-all duration-700 max-h-[80vh]"
         />
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/85 via-brand-primary/20 to-transparent" />
@@ -84,10 +106,10 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
       <div className="bg-white border-b border-brand-primary/8 px-4 md:px-8 py-3">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center space-x-2 overflow-x-auto pb-1 scrollbar-none no-scrollbar">
-            {property.gallery.map((img, idx) => (
+            {gallery.map((img, idx) => (
               <button
                 key={idx}
-                onClick={() => setActiveImage(img)}
+                onClick={() => handleThumbnailClick(img, idx)}
                 className={`relative shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer
                   w-12 h-9 sm:w-16 sm:h-11 md:w-20 md:h-14
                   ${activeImage === img
