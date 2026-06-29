@@ -93,7 +93,7 @@ export default function ChatBot() {
     
     let botText = "";
     if (location === "OOTY") {
-      botText = "Excellent choice. Here are our premier properties in **OOTY**:\n\n1. **THE ABODE BY BROWN TREE**\n2. **The Earthy Nest by Brown Tree**\n3. **Tea Leaf Stays by Brown Tree Resorts**\n\nClick on any property below to explore its luxurious details!";
+      botText = "Excellent choice. Here are our premier properties in **OOTY**:\n\n1. **THE ABODE BY BROWN TREE**\n2. **The Earthy Nest by Brown Tree**\n3. **Tea Leaf Stays by Brown Tree Resorts**\n4. **Solar Residency by Brown Tree**\n\nClick on any property below to explore its luxurious details!";
     } else if (location === "KOTHAGIRI") {
       botText = "Excellent choice. Here is our retreat in **KOTHAGIRI**:\n\n- **Humming Bird by Brown Tree Resorts**\n\nClick below to explore its details!";
     } else if (location === "KODAIKANAL") {
@@ -332,6 +332,21 @@ export default function ChatBot() {
                           </div>
                           <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">BOOK →</span>
                         </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleSelectProperty("Solar Residency by Brown Tree")}
+                          className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="text-lg">☀️</span>
+                            <div>
+                              <p className="text-xs font-semibold text-stone-850">Solar Residency by Brown Tree</p>
+                              <p className="text-[10px] text-stone-500">Boutique stay in the heart of Ooty</p>
+                            </div>
+                          </div>
+                          <span className="text-[10px] font-bold text-stone-600 group-hover:translate-x-1 transition-transform">BOOK →</span>
+                        </button>
                       </>
                     )}
 
@@ -530,34 +545,45 @@ export default function ChatBot() {
       </AnimatePresence>
 
       {/* Trigger Button */}
-      <button
-        id="chatbot-trigger-btn"
-        onClick={handleOpenToggle}
-        className={`w-14 h-14 rounded-full flex items-center justify-center text-white shadow-xl transition-all duration-300 relative select-none cursor-pointer ${
-          isOpen
-            ? "bg-stone-850 rotate-90 scale-95"
-            : "bg-gradient-to-tr from-stone-900 to-stone-850 hover:shadow-2xl hover:scale-105"
-        }`}
-        title="Chat with Brown tree"
-      >
-        {isOpen ? (
-          <X className="w-6 h-6" />
-        ) : (
-          <>
-            <MessageSquare className="w-6 h-6" />
-            {/* Unread dot */}
-            {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-brand-secondary text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center animate-pulse border border-white">
-                {unreadCount}
-              </span>
-            )}
-            {/* Soft pulsing halo */}
-            {!isOpen && messages.length === 1 && (
-              <span className="absolute inset-0 rounded-full border border-stone-900/40 animate-ping opacity-75"></span>
-            )}
-          </>
+      <div className="relative flex flex-col items-center">
+        {/* LIVE badge above button */}
+        {!isOpen && (
+          <div className="flex items-center space-x-1 bg-white/95 border border-stone-200 shadow-md rounded-full px-2 py-0.5 mb-2 self-center">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span className="text-[9px] font-bold tracking-widest text-stone-700 uppercase">Live</span>
+          </div>
         )}
-      </button>
+
+        <button
+          id="chatbot-trigger-btn"
+          onClick={handleOpenToggle}
+          className={`w-14 h-14 rounded-full flex items-center justify-center text-white shadow-xl transition-all duration-300 relative select-none cursor-pointer ${
+            isOpen
+              ? "bg-stone-800 rotate-90 scale-95"
+              : "bg-gradient-to-tr from-stone-900 to-stone-700 hover:shadow-2xl hover:scale-105"
+          }`}
+          title="Chat with Brown tree"
+        >
+          {isOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <>
+              <MessageSquare className="w-6 h-6" />
+              {/* Continuous outer pulse ring */}
+              <span className="absolute inset-0 rounded-full animate-ping bg-stone-800/30"></span>
+              {/* Unread count badge */}
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-brand-secondary text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white z-10">
+                  {unreadCount}
+                </span>
+              )}
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }

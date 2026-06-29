@@ -4,7 +4,7 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { MapPin, Calendar, User, Search, Check, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
+import { MapPin, Calendar, User, Search, Check, ChevronDown, ChevronUp } from "lucide-react";
 import TextType from "./TextType";
 import BlurText from "./BlurText";
 
@@ -40,7 +40,7 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
   ];
 
   const destinationProperties: Record<string, string[]> = {
-    Ooty: ["THE ABODE BY BROWN TREE", "The Earthy Nest by Brown Tree", "Tea Leaf Stays by Brown Tree Resorts"],
+    Ooty: ["THE ABODE BY BROWN TREE", "The Earthy Nest by Brown Tree", "Tea Leaf Stays by Brown Tree Resorts", "Solar Residency by Brown Tree"],
     Kothagiri: ["Humming Bird by Brown Tree Resorts"],
     Kodaikanal: ["Hotel Vetrivel International by Brown Tree Resorts"]
   };
@@ -91,13 +91,8 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
 
       {/* Main Hero Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6 md:space-y-8 animate-fade-in-up mt-8 md:mt-16">
-        <div className="flex items-center justify-center space-x-2 text-xs md:text-sm font-semibold tracking-[0.3em] text-brand-gold-light uppercase">
-          <Sparkles size={16} />
-          <span>Curated Global Sanctuaries</span>
-        </div>
-
         <TextType
-          text="Luxury Stay Experience"
+          text="BROWN TREE"
           className="font-display text-4xl sm:text-5xl md:text-7xl font-medium tracking-tight text-brand-background leading-[1.1]"
           as="h1"
           typingSpeed={60}
@@ -108,31 +103,15 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
           cursorClassName="text-brand-gold-light"
         />
 
-        <BlurText
-          text="Discover unparalleled tranquility and bespoke elegance at our curated global properties. Your sanctuary awaits."
-          className="font-sans text-sm sm:text-base md:text-lg text-brand-background/85 max-w-2xl mx-auto font-light leading-relaxed px-2"
-          delay={40}
-          animateBy="words"
-          direction="top"
-        />
-
-        {/* Hero CTA Action buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-          <button
-            id="hero-book-now-cta"
-            onClick={onOpenBooking}
-            className="w-full sm:w-auto bg-brand-primary text-brand-gold-light hover:bg-brand-secondary hover:text-white font-sans text-xs font-semibold tracking-[0.2em] py-4 px-8 rounded-full shadow-lg shadow-brand-primary/30 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
-          >
-            BOOK NOW
-          </button>
-          <button
-            id="hero-explore-cta"
-            onClick={onExploreClick}
-            className="w-full sm:w-auto glass-panel text-white hover:bg-white hover:text-brand-primary font-sans text-xs font-semibold tracking-[0.2em] py-4 px-8 rounded-full border border-white/20 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
-          >
-            EXPLORE PROPERTIES
-          </button>
+        <div className="space-y-2">
+          <p className="font-sans text-sm sm:text-base md:text-lg font-semibold tracking-[0.18em] text-brand-gold-light uppercase">
+            Resort &nbsp;·&nbsp; Home Stay &nbsp;·&nbsp; Heritage
+          </p>
+          <p className="font-display text-base sm:text-lg md:text-xl text-brand-background/90 font-light italic">
+            Where Every Stay Tells a Story
+          </p>
         </div>
+
       </div>
 
       {/* Floating Glassmorphic Search Container */}

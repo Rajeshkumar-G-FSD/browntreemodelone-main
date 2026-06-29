@@ -195,7 +195,7 @@ export const PROPERTIES: Property[] = [
       teaLeafBedroom,
       teaLeafBedB,
     ],
-    description: "Enveloped by sprawling, lush organic tea plantations in Ooty, Tea Leaf Stays by Brown Tree Resorts is an exquisite sanctuary designed for discerning travelers. Enjoy high-altitude luxury with private mist-shrouded sun decks, premium tea-tasting sessions, and custom architectural glass facades that offer views of the spectacular Nilgiri peaks.",
+    description: "TeaLeaf Stays by BrownTree – A Refreshing Escape Amidst Tea Gardens\n\nSurrounded by the rolling tea estates and misty hills of the Nilgiris, TeaLeaf Stays by BrownTree offers a peaceful retreat where nature and comfort come together. Wake up to refreshing views, crisp mountain air, and the soothing charm of lush tea plantations, making every moment a truly relaxing experience.\n\nWhether you're seeking a quiet family getaway, a romantic escape, or a refreshing break with friends, TeaLeaf Stays provides cozy accommodations, serene surroundings, and warm BrownTree hospitality. Immerse yourself in the beauty of the hills and enjoy a stay that leaves you refreshed, rejuvenated, and inspired.",
     highlights: [
       "Organic Tea Plantation Views",
       "Bespoke Tea Sommelier Tasting",

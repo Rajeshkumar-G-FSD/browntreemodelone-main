@@ -30,7 +30,6 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
     { label: "HOME", id: "home" },
     { label: "PROPERTIES", id: "properties" },
     { label: "DESTINATIONS", id: "destinations" },
-    { label: "EXPERIENCES", id: "experiences" },
     { label: "REVIEWS", id: "reviews" }
   ];
 

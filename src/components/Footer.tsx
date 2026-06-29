@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Globe, Camera, Heart } from "lucide-react";
+import { Facebook, Instagram, Youtube } from "lucide-react";
 
 const btLogo = "https://i.postimg.cc/7ZFbxYFr/browntree-logo.png";
 
@@ -47,21 +47,34 @@ export default function Footer({ onNavigate }: FooterProps) {
             <p className="font-sans text-xs sm:text-sm text-brand-background/70 font-light leading-relaxed max-w-sm">
               Curating extraordinary sanctuaries for the modern traveler. Experience luxury redefined.
             </p>
-            {/* Social media icons with gold circular frames */}
+            {/* Social media icons */}
             <div className="flex items-center space-x-4 pt-2">
               <a
-                href="#"
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-brand-gold-light/35 flex items-center justify-center text-brand-gold-light hover:bg-brand-secondary hover:text-white hover:border-brand-secondary transition-all duration-300"
-                title="Global Website"
+                title="Facebook"
               >
-                <Globe size={16} />
+                <Facebook size={16} />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-brand-gold-light/35 flex items-center justify-center text-brand-gold-light hover:bg-brand-secondary hover:text-white hover:border-brand-secondary transition-all duration-300"
-                title="Instagram Profile"
+                title="Instagram"
               >
-                <Camera size={16} />
+                <Instagram size={16} />
+              </a>
+              <a
+                href="https://www.youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-brand-gold-light/35 flex items-center justify-center text-brand-gold-light hover:bg-brand-secondary hover:text-white hover:border-brand-secondary transition-all duration-300"
+                title="YouTube"
+              >
+                <Youtube size={16} />
               </a>
             </div>
           </div>
@@ -82,11 +95,6 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <li>
                   <button onClick={() => handleLinkClick("destinations")} className="hover:text-brand-gold-light transition duration-300 cursor-pointer text-left">
                     Destinations
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => handleLinkClick("experiences")} className="hover:text-brand-gold-light transition duration-300 cursor-pointer text-left">
-                    Experiences
                   </button>
                 </li>
                 <li>
@@ -153,13 +161,18 @@ export default function Footer({ onNavigate }: FooterProps) {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-brand-background/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-brand-background/55">
-          <p>© {currentYear} Luxe Sanctuary. All rights reserved.</p>
-          <div className="flex items-center space-x-1.5">
-            <span>Designed with</span>
-            <Heart size={12} className="text-brand-gold-light fill-brand-gold-light animate-pulse" />
-            <span>for the discerning traveler.</span>
-          </div>
+        <div className="border-t border-brand-background/10 pt-8 flex items-center justify-center text-xs font-medium text-brand-background/55">
+          <p>
+            © {currentYear} Luxe Sanctuary. All rights reserved. · developed by{" "}
+            <a
+              href="https://www.datazync.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brand-gold-light hover:text-white transition-colors duration-200 underline underline-offset-2"
+            >
+              datazync
+            </a>
+          </p>
         </div>
       </div>
     </footer>

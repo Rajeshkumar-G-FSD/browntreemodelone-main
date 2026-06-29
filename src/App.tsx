@@ -8,7 +8,6 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import PropertiesSection from "./components/PropertiesSection";
 import DestinationsSection from "./components/DestinationsSection";
-import ExperiencesSection from "./components/ExperiencesSection";
 import ReviewsSection from "./components/ReviewsSection";
 import ContactSection from "./components/ContactSection";
 import PropertyDetailPage from "./components/PropertyDetailPage";
@@ -16,8 +15,8 @@ import BookingDrawer from "./components/BookingDrawer";
 import Footer from "./components/Footer";
 import ChatBot from "./components/ChatBot";
 
-import { PROPERTIES, EXPERIENCES, REVIEWS, DESTINATIONS } from "./data";
-import { Property, Suite, Experience } from "./types";
+import { PROPERTIES, REVIEWS, DESTINATIONS } from "./data";
+import { Property, Suite } from "./types";
 
 // Converts a property to a URL slug: /ooty-the-earthy-nest-by-brown-tree
 function toPropertySlug(property: Property): string {
@@ -135,17 +134,6 @@ export default function App() {
     setBookingOpen(true);
   };
 
-  // Experience click
-  const handleBookExperience = (exp: Experience) => {
-    let linked: Property | undefined;
-    if (exp.id === "exp-heli") linked = PROPERTIES.find((p) => p.id === "misty-peaks");
-    else if (exp.id === "exp-healing") linked = PROPERTIES.find((p) => p.id === "heritage-pine");
-    else linked = PROPERTIES.find((p) => p.id === "azure-orchid");
-    setBookingProperty(linked ?? null);
-    setPreselectedSuite(null);
-    setBookingOpen(true);
-  };
-
   // Direct Book Now on property card
   const handleBookPropertyDirect = (property: Property) => {
     setBookingProperty(property);
@@ -191,12 +179,7 @@ export default function App() {
               onSelectDestination={handleSelectDestination}
             />
 
-            <ExperiencesSection
-              experiences={EXPERIENCES}
-              onBookExperience={handleBookExperience}
-            />
-
-            <ReviewsSection reviews={REVIEWS} />
+<ReviewsSection reviews={REVIEWS} />
 
             <ContactSection />
           </main>
