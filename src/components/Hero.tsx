@@ -7,8 +7,7 @@ import { useState, useRef, useEffect } from "react";
 import { MapPin, Calendar, User, Search, Check, ChevronDown, ChevronUp } from "lucide-react";
 import TextType from "./TextType";
 import BlurText from "./BlurText";
-
-const heroNature = "https://i.postimg.cc/9MBBdTWW/nature.png";
+import heroNature from "../assets/images/nature.png";
 
 interface HeroProps {
   onSearch: (filters: { destination: string; checkIn: string; checkOut: string; guests: number }) => void;
