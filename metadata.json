@@ -1,0 +1,8 @@
+{
+  "name": "Luxe Sanctuary",
+  "description": "Discover handpicked sanctuaries designed for the discerning traveler, blending local heritage with modern luxury.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
