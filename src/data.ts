@@ -233,7 +233,7 @@ export const PROPERTIES: Property[] = [
   },
   {
     id: "solar-residency",
-    name: "Solar Residency by Brown Tree",
+    name: "Sholas Residency by Brown Tree",
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",

@@ -39,7 +39,7 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
   ];
 
   const destinationProperties: Record<string, string[]> = {
-    Ooty: ["THE ABODE BY BROWN TREE", "The Earthy Nest by Brown Tree", "Tea Leaf Stays by Brown Tree Resorts", "Solar Residency by Brown Tree"],
+    Ooty: ["THE ABODE BY BROWN TREE", "The Earthy Nest by Brown Tree", "Tea Leaf Stays by Brown Tree Resorts", "Sholas Residency by Brown Tree"],
     Kothagiri: ["Humming Bird by Brown Tree Resorts"],
     Kodaikanal: ["Hotel Vetrivel International by Brown Tree Resorts"]
   };

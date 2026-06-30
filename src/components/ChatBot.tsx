@@ -93,7 +93,7 @@ export default function ChatBot() {
     
     let botText = "";
     if (location === "OOTY") {
-      botText = "Excellent choice. Here are our premier properties in **OOTY**:\n\n1. **THE ABODE BY BROWN TREE**\n2. **The Earthy Nest by Brown Tree**\n3. **Tea Leaf Stays by Brown Tree Resorts**\n4. **Solar Residency by Brown Tree**\n\nClick on any property below to explore its luxurious details!";
+      botText = "Excellent choice. Here are our premier properties in **OOTY**:\n\n1. **THE ABODE BY BROWN TREE**\n2. **The Earthy Nest by Brown Tree**\n3. **Tea Leaf Stays by Brown Tree Resorts**\n4. **Sholas Residency by Brown Tree**\n\nClick on any property below to explore its luxurious details!";
     } else if (location === "KOTHAGIRI") {
       botText = "Excellent choice. Here is our retreat in **KOTHAGIRI**:\n\n- **Humming Bird by Brown Tree Resorts**\n\nClick below to explore its details!";
     } else if (location === "KODAIKANAL") {
@@ -335,13 +335,13 @@ export default function ChatBot() {
 
                         <button
                           type="button"
-                          onClick={() => handleSelectProperty("Solar Residency by Brown Tree")}
+                          onClick={() => handleSelectProperty("Sholas Residency by Brown Tree")}
                           className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
                         >
                           <div className="flex items-center space-x-3">
                             <span className="text-lg">☀️</span>
                             <div>
-                              <p className="text-xs font-semibold text-stone-850">Solar Residency by Brown Tree</p>
+                              <p className="text-xs font-semibold text-stone-850">Sholas Residency by Brown Tree</p>
                               <p className="text-[10px] text-stone-500">Boutique stay in the heart of Ooty</p>
                             </div>
                           </div>
