@@ -4,6 +4,9 @@
  */
 
 import { Property, Experience, Review, Destination } from "./types";
+import ootyDestImage from "./assets/images/ooty.png";
+import kothagiriDestImage from "./assets/images/kothagiri.jpg";
+import kodaikanaldestImage from "./assets/images/kodaikanal.jpg";
 import theAbodeMain from "./assets/images/theabodebybrowntree.png";
 import theAbodeGarden from "./assets/images/theabodebybrowntree_gareden.jpg";
 import theAbodeInterior from "./assets/images/theabodebybrowntree_.jpg";
@@ -555,7 +558,7 @@ export const DESTINATIONS: Destination[] = [
     id: "dest-ooty",
     name: "Ooty",
     country: "Tamil Nadu, India",
-    image: "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=600&q=80",
+    image: ootyDestImage,
     description: "Queen of Hill Stations, known for its sprawling tea gardens and misty valleys.",
     propertyCount: 3
   },
@@ -563,7 +566,7 @@ export const DESTINATIONS: Destination[] = [
     id: "dest-kothagiri",
     name: "Kothagiri",
     country: "Tamil Nadu, India",
-    image: "https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?auto=format&fit=crop&w=600&q=80",
+    image: kothagiriDestImage,
     description: "A peaceful offbeat heaven of green slopes and cascading waterfalls.",
     propertyCount: 1
   },
@@ -571,7 +574,7 @@ export const DESTINATIONS: Destination[] = [
     id: "dest-kodaikanal",
     name: "Kodaikanal",
     country: "Tamil Nadu, India",
-    image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80",
+    image: kodaikanaldestImage,
     description: "Princess of Hill Stations, featuring beautiful lakes, pine forests and cold mist.",
     propertyCount: 1
   }
