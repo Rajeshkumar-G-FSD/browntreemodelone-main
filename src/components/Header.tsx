@@ -91,8 +91,8 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
                   ? "border-brand-secondary text-brand-secondary bg-brand-secondary/8"
                   : "border-brand-primary/30 text-brand-primary hover:border-brand-secondary hover:text-brand-secondary"
                 : activeSection === "contact"
-                  ? "border-brand-gold-light text-brand-gold-light bg-white/10"
-                  : "border-white/40 text-white/90 hover:border-white hover:text-white"
+                  ? "border-white bg-white text-brand-primary"
+                  : "border-white/40 text-white/90 hover:bg-white hover:border-white hover:text-brand-primary"
             }`}
           >
             CONTACT
