@@ -7,7 +7,7 @@ import { useState, useRef, useEffect } from "react";
 import { MapPin, Calendar, User, Search, Check, ChevronDown, ChevronUp } from "lucide-react";
 import TextType from "./TextType";
 import BlurText from "./BlurText";
-import heroNature from "../assets/images/nature.png";
+import browntreeVideo from "../assets/images/broentree_video.mp4";
 
 interface HeroProps {
   onSearch: (filters: { destination: string; checkIn: string; checkOut: string; guests: number }) => void;
@@ -31,6 +31,20 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
   const destRef = useRef<HTMLDivElement>(null);
   const datesRef = useRef<HTMLDivElement>(null);
   const guestsRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Seamless video loop — seek back just before end to avoid flicker
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const handleTimeUpdate = () => {
+      if (video.duration && video.currentTime >= video.duration - 0.18) {
+        video.currentTime = 0;
+      }
+    };
+    video.addEventListener("timeupdate", handleTimeUpdate);
+    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
+  }, []);
 
   const destinationsList = [
     { label: "Ooty", region: "Nilgiri Hills, India" },
@@ -77,13 +91,16 @@ export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroPr
       id="home"
       className="relative min-h-[92vh] md:min-h-screen flex flex-col justify-center items-center text-white px-4 pt-24 md:pt-16 pb-20 md:pb-32 overflow-hidden"
     >
-      {/* Background Image with Dark Linear Overlay for contrast */}
+      {/* Background Video with Dark Overlay */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={heroNature}
-          alt="Misty Nilgiri hillside landscape with lush green forests and rolling hills – natural setting of Brown Tree Resorts in South India"
-          referrerPolicy="no-referrer"
-          className="w-full h-full object-cover brightness-[0.75] scale-105 transition-transform duration-[10s] ease-out select-none"
+        <video
+          ref={videoRef}
+          src={browntreeVideo}
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover brightness-[0.75] select-none"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-brand-primary/40 via-brand-primary/10 to-brand-primary/60" />
       </div>
