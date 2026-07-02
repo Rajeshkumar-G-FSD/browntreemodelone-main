@@ -372,14 +372,6 @@ export default function BookingDrawer({
               <span>Confirm Booking</span>
             </button>
 
-            <button
-              type="button"
-              onClick={handleWhatsAppShare}
-              className="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-sans text-xs font-semibold tracking-widest py-4 rounded-full flex items-center justify-center space-x-2 shadow-lg cursor-pointer uppercase transition-all duration-300"
-            >
-              <Share2 size={14} />
-              <span>Share via WhatsApp</span>
-            </button>
           </div>
         </form>
       </div>
