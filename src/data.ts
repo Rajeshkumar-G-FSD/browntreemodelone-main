@@ -533,7 +533,7 @@ export const PROPERTIES: Property[] = [
   },
   {
     id: "solar-residency",
-    name: "Sholas Residency by Brown Tree",
+    name: "Sholas Residency by Brown Tree Resorts",
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
@@ -558,38 +558,183 @@ export const PROPERTIES: Property[] = [
       solarDinning,
       solarRestroom,
     ],
-    description: "Sholas Residency by BrownTree – A Boutique Stay in the Heart of Ooty\n\nExperience the charm of Sholas Residency by BrownTree, a boutique hotel thoughtfully designed for travelers who value comfort, style, and personalized hospitality. Ideally located in the heart of Ooty, it places you close to the town's iconic attractions, vibrant markets, and local dining, making every outing effortless.\n\nWhether you're visiting for a family holiday, a romantic escape, or a group vacation, Sholas Residency offers elegant accommodations and a warm, inviting atmosphere. Blending modern comforts with BrownTree's signature hospitality, it promises a relaxing stay and an authentic Ooty experience you'll cherish.",
+    description: "Sholas Residency by Brown Tree Resorts is a stylish hotel located on Palace Road in the heart of Ooty. Perfectly positioned near the city's major attractions, shopping areas, railway station, and bus terminal, the hotel offers guests the perfect combination of convenience and comfort.\n\nDesigned with contemporary interiors and modern amenities, Sholas Residency welcomes families, couples, business travelers, and holidaymakers seeking a relaxing stay in the Queen of Hill Stations.\n\nEnjoy thoughtfully designed rooms, warm hospitality, high-speed Wi-Fi, and a delightful dining experience while exploring everything Ooty has to offer.",
     highlights: [
-      "Eco-Powered Solar Property",
-      "Panoramic Nilgiri Hill Views",
+      "Prime City Location",
+      "Modern Comfortable Rooms",
       "Warm BrownTree Hospitality"
     ],
     amenities: [
-      "Solar-Powered Rooms",
-      "Spacious Garden Lounge",
-      "Mountain View Terrace",
-      "Organic Breakfast Service",
-      "In-House Bonfire Setup",
-      "Free Parking"
+      "Restaurant",
+      "Free Parking",
+      "High-Speed Wi-Fi",
+      "Power Backup",
+      "Housekeeping",
+      "Doctor on Call",
+      "CCTV Surveillance"
+    ],
+    aboutSectionTitle: "Comfort Meets Convenience",
+    propertyHighlightCards: [
+      "Prime City Location",
+      "Comfortable Accommodation",
+      "High-Speed Wi-Fi",
+      "Multi-Cuisine Restaurant",
+      "Family Friendly",
+      "Dedicated Hospitality",
+      "Secure Parking",
+      "Modern Comfort"
+    ],
+    popularAmenities: [
+      "Restaurant",
+      "Free Parking",
+      "High-Speed Wi-Fi",
+      "Power Backup",
+      "Housekeeping",
+      "Room Service",
+      "CCTV Surveillance"
+    ],
+    roomAmenities: [
+      "Complimentary Toiletries",
+      "Mineral Water",
+      "Electric Kettle",
+      "Flat Screen TV",
+      "Hair Dryer",
+      "Wardrobe",
+      "Telephone",
+      "Alarm Clock",
+      "Geyser with Hot & Cold Water",
+      "Heater (Available on Request)"
+    ],
+    whyStayCards: [
+      { title: "Prime City Location", description: "Located close to Ooty Railway Station, Bus Stand, shopping streets, and major attractions." },
+      { title: "Comfortable Accommodation", description: "Modern Deluxe and Premium Rooms designed for restful stays." },
+      { title: "High-Speed Wi-Fi", description: "Stay connected throughout your visit." },
+      { title: "Multi-Cuisine Restaurant", description: "Enjoy delicious local and international cuisine." },
+      { title: "Family Friendly", description: "Ideal for families, couples, and business travelers." },
+      { title: "Dedicated Hospitality", description: "Friendly multilingual staff committed to exceptional service." },
+      { title: "Secure Parking", description: "Convenient on-site parking for guests." },
+      { title: "Modern Comfort", description: "Well-equipped rooms with contemporary amenities and elegant interiors." }
+    ],
+    houseRules: {
+      checkIn: "2:00 PM",
+      checkOut: "11:00 AM",
+      rules: [
+        "No Smoking Inside Rooms",
+        "Family Friendly",
+        "Valid Government ID Required",
+        "Pets on Request"
+      ]
+    },
+    amenityCategories: [
+      {
+        category: "Highlighted Amenities",
+        items: ["Restaurant", "Free Parking", "High-Speed Wi-Fi"]
+      },
+      {
+        category: "Basic Facilities",
+        items: ["Parking", "Wi-Fi", "Power Backup", "Housekeeping", "Room Service"]
+      },
+      {
+        category: "General Services",
+        items: ["Multilingual Staff", "Caretaker", "Doctor on Call", "Luggage Assistance"]
+      },
+      {
+        category: "Health & Wellness",
+        items: ["First Aid Services"]
+      },
+      {
+        category: "Room Amenities",
+        items: ["Complimentary Toiletries", "Mineral Water", "Electric Kettle", "Flat Screen TV", "Hair Dryer", "Wardrobe", "Telephone", "Alarm Clock", "Geyser with Hot & Cold Water", "Heater (Available on Request)"]
+      },
+      {
+        category: "Dining",
+        items: ["Multi-Cuisine Restaurant", "Dining Area"]
+      },
+      {
+        category: "Safety & Security",
+        items: ["CCTV Surveillance", "Fire Extinguishers", "Security Alarms"]
+      },
+      {
+        category: "Media & Entertainment",
+        items: ["Smart Television"]
+      },
+      {
+        category: "Common Areas",
+        items: ["Reception", "Balcony / Terrace"]
+      },
+      {
+        category: "Additional Facilities",
+        items: ["Cloak Room"]
+      }
+    ],
+    guestHighlights: [
+      "Central location close to major attractions",
+      "Comfortable and spacious rooms",
+      "Friendly and helpful staff",
+      "Convenient restaurant facilities",
+      "Excellent connectivity to transport hubs"
+    ],
+    amenitiesRating: 4.0,
+    nearbyAttractions: [
+      "Ooty Lake – 3.5 km",
+      "Coonoor Falls – 17.4 km",
+      "Rallia Dam – 18 km",
+      "Elk Hill – 1.5 km",
+      "Government Botanical Garden – 1.7 km",
+      "Honeymoon Boat House – 4.9 km",
+      "Ketti Valley – 5 km"
+    ],
+    nearbyLandmarks: [
+      { name: "Elk Hill", distance: "1.5 km" },
+      { name: "Government Botanical Garden", distance: "1.7 km" },
+      { name: "Ooty Lake", distance: "3.5 km" },
+      { name: "Honeymoon Boat House", distance: "4.9 km" },
+      { name: "Ketti Valley", distance: "5 km" },
+      { name: "Coonoor Falls", distance: "17.4 km" },
+      { name: "Rallia Dam", distance: "18 km" }
+    ],
+    nearbyFoodShopping: [
+      { name: "Tibetan Market", distance: "1.4 km" },
+      { name: "Municipal Market", distance: "1.7 km" },
+      { name: "Main Bazaar", distance: "2 km" }
+    ],
+    nearbyTransport: [
+      {
+        type: "Bus Terminals",
+        items: [
+          { name: "ATC Bus Stand", distance: "1.2 km" },
+          { name: "Ooty Bus Station", distance: "2.3 km" }
+        ]
+      },
+      {
+        type: "Railway & Transit",
+        items: [
+          { name: "Ooty Taxi Stand", distance: "1.8 km" },
+          { name: "Udhagamandalam Railway Station", distance: "2.3 km" },
+          { name: "Lovedale Railway Station", distance: "4.5 km" },
+          { name: "Ketti Railway Station", distance: "6.9 km" },
+          { name: "Coonoor Railway Station", distance: "15.8 km" }
+        ]
+      }
     ],
     suites: [
       {
-        id: "solar-standard-room",
-        name: "Solar Standard Room",
-        description: "A cozy, well-appointed room with garden views, natural ventilation, and all modern comforts powered by solar energy.",
+        id: "deluxe-room",
+        name: "Deluxe Room",
+        description: "Perfect for solo travelers and couples. A comfortable, well-appointed room featuring a standard bed, Flat Screen TV, and a modern bathroom with complimentary toiletries. Enjoy the convenience of high-speed Wi-Fi and daily housekeeping.",
         pricePerNight: 3500,
         maxGuests: 2,
-        size: "120 sqm / 1,290 sqft",
-        amenities: ["Solar Heating", "Garden View", "Free Wi-Fi", "Daily Breakfast"]
+        size: "125 sq. ft.",
+        amenities: ["Comfortable Standard Bed", "High-Speed Wi-Fi", "Flat Screen TV", "Electric Kettle", "Wardrobe", "Telephone", "Hair Dryer", "Modern Bathroom", "Complimentary Toiletries", "Daily Housekeeping"]
       },
       {
-        id: "solar-family-suite",
-        name: "Solar Family Suite",
-        description: "A spacious family suite with a private sit-out, stunning hill views, and extra beds for a comfortable group stay.",
-        pricePerNight: 5500,
+        id: "premium-room",
+        name: "Premium Room",
+        description: "Ideal for families and guests seeking extra space. A spacious room with a king size bed, a comfortable seating area, and elegant interior design — perfect for a relaxing and luxurious stay in Ooty.",
+        pricePerNight: 5000,
         maxGuests: 4,
-        size: "200 sqm / 2,150 sqft",
-        amenities: ["Private Sit-Out", "Hill View", "Extra Beds", "Kitchenette", "Bonfire Access"]
+        size: "150 sq. ft.",
+        amenities: ["King Size Bed", "Spacious Living Area", "Elegant Interior Design", "Flat Screen TV", "Electric Kettle", "High-Speed Wi-Fi", "Premium Bathroom", "Hair Dryer", "Daily Housekeeping", "Comfortable Seating Area"]
       }
     ],
     coordinates: { lat: 11.4180, lng: 76.7000 }

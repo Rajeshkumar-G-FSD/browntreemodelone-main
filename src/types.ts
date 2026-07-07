@@ -52,7 +52,9 @@ export interface Property {
   guestHighlights?: string[];
   amenitiesRating?: number;
   nearbyLandmarks?: { name: string; distance: string }[];
+  nearbyFoodShopping?: { name: string; distance: string }[];
   nearbyTransport?: { type: string; items: { name: string; distance: string }[] }[];
+  aboutSectionTitle?: string;
 }
 
 export interface Experience {

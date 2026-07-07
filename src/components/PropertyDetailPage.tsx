@@ -11,7 +11,7 @@ import {
   Tv, Plug, Wind, Flame, Phone, Mail, Clock, Key, Sparkles,
   Smile, Sun, Cigarette, ChevronRight, Flower2, Landmark,
   ParkingCircle, ShieldCheck, Bed, Leaf, Utensils, Bus,
-  ThumbsUp, Award, Camera, MapPinned
+  ThumbsUp, Award, Camera, MapPinned, ShoppingBag
 } from "lucide-react";
 import { motion } from "motion/react";
 import { Property, Suite } from "../types";
@@ -110,6 +110,9 @@ function resolveAttractionIcon(name: string) {
   if (n.includes("museum") || n.includes("tea museum")) return <Landmark size={20} />;
   if (n.includes("railway") || n.includes("train")) return <Train size={20} />;
   if (n.includes("coffee") || n.includes("tea")) return <Coffee size={20} />;
+  if (n.includes("market") || n.includes("bazaar") || n.includes("shopping") || n.includes("tibetan")) return <ShoppingBag size={20} />;
+  if (n.includes("dam") || n.includes("falls") || n.includes("waterfall")) return <Waves size={20} />;
+  if (n.includes("valley") || n.includes("boat")) return <Mountain size={20} />;
   return <MapPin size={20} />;
 }
 
@@ -132,7 +135,7 @@ interface PropertyDetailPageProps {
 export default function PropertyDetailPage({ property, onBack, onBookSuite }: PropertyDetailPageProps) {
   const gallery = property.gallery.length > 0 ? property.gallery : [property.image];
   const [activeImage, setActiveImage] = useState(gallery[0]);
-  const [nearbyTab, setNearbyTab] = useState<"landmarks" | "transport">("landmarks");
+  const [nearbyTab, setNearbyTab] = useState<"landmarks" | "food-shopping" | "transport">("landmarks");
   const indexRef = useRef(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -253,11 +256,11 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
           PREMIUM CONTENT SECTIONS — everything below the hero
       ════════════════════════════════════════════════════════════════════════ */}
 
-      {/* ── 1. About The Homestay ── */}
+      {/* ── 1. About The Property ── */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeUp>
-            <SectionHeading eyebrow="Our Story" title="About The Homestay" />
+            <SectionHeading eyebrow="Our Story" title={property.aboutSectionTitle ?? "About The Property"} />
           </FadeUp>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
             <FadeUp delay={80} className="lg:col-span-3">
@@ -480,6 +483,54 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
         </div>
       </section>
 
+      {/* ── 6. Room Types ── */}
+      {property.suites && property.suites.length > 0 && (
+        <section className="py-16 md:py-24 bg-brand-background">
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
+            <FadeUp>
+              <SectionHeading eyebrow="Accommodation" title="Room Types" />
+            </FadeUp>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {property.suites.map((suite, idx) => (
+                <FadeUp key={idx} delay={idx * 100} className="h-full">
+                  <div className="h-full bg-white border border-brand-primary/8 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
+                    <div className="flex items-start justify-between gap-4 mb-4">
+                      <div>
+                        <h3 className="font-display text-lg md:text-xl font-semibold text-brand-primary mb-1">{suite.name}</h3>
+                        <span className="text-[10px] font-bold text-brand-secondary uppercase tracking-wider">{suite.size}</span>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <div className="flex items-baseline gap-1 justify-end">
+                          <span className="text-[10px] text-brand-primary/50">From</span>
+                          <span className="font-display text-xl font-bold text-brand-primary">₹{suite.pricePerNight.toLocaleString()}</span>
+                        </div>
+                        <span className="text-[10px] text-brand-primary/50">/night · up to {suite.maxGuests} guests</span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-brand-primary/65 font-light leading-relaxed mb-6">{suite.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-6 flex-1">
+                      {suite.amenities.map((amenity, i) => (
+                        <span key={i} className="flex items-center gap-1.5 text-[10px] font-semibold text-brand-primary/80 bg-brand-background border border-brand-primary/8 rounded-lg px-2.5 py-1.5">
+                          <Check size={10} strokeWidth={3} className="text-brand-secondary shrink-0" />
+                          {amenity}
+                        </span>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => onBookSuite(property, suite)}
+                      className="mt-auto w-full flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-secondary text-white font-bold text-xs tracking-widest uppercase px-6 py-3.5 rounded-xl transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg"
+                    >
+                      <span>View Room</span>
+                      <ChevronRight size={14} />
+                    </button>
+                  </div>
+                </FadeUp>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── 7. House Rules ── */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -538,7 +589,7 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
               /* ── Tabbed view for structured landmark + transport data ── */
               <div>
                 <FadeUp delay={60}>
-                  <div className="flex items-center gap-2 mb-8 bg-white border border-brand-primary/8 rounded-xl p-1.5 w-fit shadow-sm">
+                  <div className="flex items-center gap-2 mb-8 bg-white border border-brand-primary/8 rounded-xl p-1.5 w-fit shadow-sm flex-wrap">
                     <button
                       onClick={() => setNearbyTab("landmarks")}
                       className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer
@@ -550,6 +601,19 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
                       <MapPinned size={13} />
                       <span>Key Landmarks</span>
                     </button>
+                    {property.nearbyFoodShopping && property.nearbyFoodShopping.length > 0 && (
+                      <button
+                        onClick={() => setNearbyTab("food-shopping")}
+                        className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer
+                          ${nearbyTab === "food-shopping"
+                            ? "bg-brand-primary text-white shadow-md"
+                            : "text-brand-primary/50 hover:text-brand-primary"
+                          }`}
+                      >
+                        <ShoppingBag size={13} />
+                        <span>Food &amp; Shopping</span>
+                      </button>
+                    )}
                     <button
                       onClick={() => setNearbyTab("transport")}
                       className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer
@@ -582,6 +646,24 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
                   </div>
                 )}
 
+                {nearbyTab === "food-shopping" && property.nearbyFoodShopping && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {property.nearbyFoodShopping.map((place, idx) => (
+                      <FadeUp key={idx} delay={idx * 60}>
+                        <div className="bg-white border border-brand-primary/8 rounded-2xl p-5 flex items-center gap-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-brand-secondary/30 transition-all duration-300">
+                          <span className="w-12 h-12 rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
+                            {resolveAttractionIcon(place.name)}
+                          </span>
+                          <div>
+                            <p className="text-xs font-bold text-brand-primary leading-snug">{place.name}</p>
+                            <p className="text-[10px] text-brand-secondary font-semibold mt-0.5">{place.distance}</p>
+                          </div>
+                        </div>
+                      </FadeUp>
+                    ))}
+                  </div>
+                )}
+
                 {nearbyTab === "transport" && (
                   <div className="space-y-6">
                     {property.nearbyTransport.map((group, gIdx) => (
@@ -596,7 +678,9 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
                                 <span className="w-12 h-12 rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
                                   {group.type.toLowerCase().includes("railway") || group.type.toLowerCase().includes("train")
                                     ? <Train size={20} />
-                                    : <Bus size={20} />
+                                    : item.name.toLowerCase().includes("taxi") || item.name.toLowerCase().includes("stand")
+                                      ? <Car size={20} />
+                                      : <Bus size={20} />
                                   }
                                 </span>
                                 <div>
