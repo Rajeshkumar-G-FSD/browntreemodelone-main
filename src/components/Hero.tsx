@@ -87,6 +87,8 @@ interface HeroProps {
   onSearch: (filters: { destination: string; checkIn: string; checkOut: string; guests: number }) => void;
   onExploreClick: () => void;
   onOpenBooking: () => void;
+  preFill?: { location: string; property: string } | null;
+  onPreFillConsumed?: () => void;
 }
 
 const LOCATIONS = [
@@ -117,7 +119,7 @@ const PROPERTY_URLS: Record<string, string> = {
 
 type ActivePanel = "location" | "property" | "checkin" | "checkout" | null;
 
-export default function Hero({ }: HeroProps) {
+export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
   const { toast } = useToast();
 
   const [location, setLocation] = useState("");
@@ -165,6 +167,23 @@ export default function Hero({ }: HeroProps) {
 
   const open = (panel: ActivePanel) => setActivePanel(panel);
   const close = useCallback(() => setActivePanel(null), []);
+
+  // Pre-fill from "Book Suite" on property detail page
+  useEffect(() => {
+    if (!preFill) return;
+    setLocation(preFill.location);
+    setProperty(preFill.property);
+    setCheckIn("");
+    setCheckOut("");
+    setCheckoutEnabled(false);
+    setActivePanel(null);
+    // Small delay so the home page has mounted before opening calendar
+    const t = setTimeout(() => {
+      setActivePanel("checkin");
+      onPreFillConsumed?.();
+    }, 450);
+    return () => clearTimeout(t);
+  }, [preFill]);
 
   // Auto-advance after location selected
   const handleSelectLocation = (loc: string) => {

@@ -37,6 +37,7 @@ export default function App() {
   const [bookingProperty, setBookingProperty] = useState<Property | null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [preselectedSuite, setPreselectedSuite] = useState<Suite | null>(null);
+  const [heroPreFill, setHeroPreFill] = useState<{ location: string; property: string } | null>(null);
 
   // Property shown as full page (null = show home)
   const propertyOnPage = findPropertyBySlug(currentPath);
@@ -121,11 +122,18 @@ export default function App() {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Book suite from property detail page
-  const handleBookSuiteFromPage = (property: Property, suite: Suite) => {
-    setBookingProperty(property);
-    setPreselectedSuite(suite);
-    setBookingOpen(true);
+  // Book suite from property detail page — navigate home, prefill hero widget
+  const handleBookSuiteFromPage = (property: Property, _suite: Suite) => {
+    // Extract city from "Ooty, India" → "Ooty"
+    const city = property.location.split(",")[0].trim();
+    setHeroPreFill({ location: city, property: property.name });
+    window.history.pushState({}, "", "/");
+    setCurrentPath("/");
+    // Scroll to hero after home page mounts
+    setTimeout(() => {
+      const el = document.getElementById("home");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 120);
   };
 
   // Open booking drawer
@@ -135,11 +143,14 @@ export default function App() {
     setBookingOpen(true);
   };
 
-  // Direct Book Now on property card
+  // Direct Book Now on property card — navigate home, prefill hero widget
   const handleBookPropertyDirect = (property: Property) => {
-    setBookingProperty(property);
-    setPreselectedSuite(null);
-    setBookingOpen(true);
+    const city = property.location.split(",")[0].trim();
+    setHeroPreFill({ location: city, property: property.name });
+    setTimeout(() => {
+      const el = document.getElementById("home");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 80);
   };
 
   return (
@@ -165,6 +176,8 @@ export default function App() {
             onSearch={handleHeroSearch}
             onExploreClick={() => handleNavigate("properties")}
             onOpenBooking={handleOpenBooking}
+            preFill={heroPreFill}
+            onPreFillConsumed={() => setHeroPreFill(null)}
           />
 
           <main id="main-content">

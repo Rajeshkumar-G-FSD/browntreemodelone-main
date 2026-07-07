@@ -59,7 +59,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <Facebook size={16} />
               </a>
               <a
-                href="https://www.instagram.com"
+                href="https://www.instagram.com/brown_tree_1/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-brand-gold-light/35 flex items-center justify-center text-brand-gold-light hover:bg-brand-secondary hover:text-white hover:border-brand-secondary transition-all duration-300"
