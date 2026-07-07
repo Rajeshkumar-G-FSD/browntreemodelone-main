@@ -43,8 +43,16 @@ export interface Property {
   popularAmenities?: string[];
   roomAmenities?: string[];
   whyStayFeatures?: string[];
+  whyStayCards?: { title: string; description: string }[];
   houseRules?: HouseRules;
   nearbyAttractions?: string[];
+  // Rich structured data for Tea Leaf Stays and future properties
+  signatureExperiences?: { title: string; description: string }[];
+  amenityCategories?: { category: string; items: string[] }[];
+  guestHighlights?: string[];
+  amenitiesRating?: number;
+  nearbyLandmarks?: { name: string; distance: string }[];
+  nearbyTransport?: { type: string; items: { name: string; distance: string }[] }[];
 }
 
 export interface Experience {

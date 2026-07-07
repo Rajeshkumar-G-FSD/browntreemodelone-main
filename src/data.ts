@@ -337,38 +337,196 @@ export const PROPERTIES: Property[] = [
       teaLeafBedroom,
       teaLeafBedB,
     ],
-    description: "TeaLeaf Stays by BrownTree – A Refreshing Escape Amidst Tea Gardens\n\nSurrounded by the rolling tea estates and misty hills of the Nilgiris, TeaLeaf Stays by BrownTree offers a peaceful retreat where nature and comfort come together. Wake up to refreshing views, crisp mountain air, and the soothing charm of lush tea plantations, making every moment a truly relaxing experience.\n\nWhether you're seeking a quiet family getaway, a romantic escape, or a refreshing break with friends, TeaLeaf Stays provides cozy accommodations, serene surroundings, and warm BrownTree hospitality. Immerse yourself in the beauty of the hills and enjoy a stay that leaves you refreshed, rejuvenated, and inspired.",
+    description: "Stay Close to Nature\n\nTea Leaf Stays by Brown Tree Resorts is nestled in the peaceful tea estates of Ooty, offering guests an authentic hill-country experience surrounded by rolling green plantations and mist-covered mountains.\n\nDesigned to blend naturally with its surroundings, the resort combines rustic charm with modern comfort. Every stay offers tranquility, scenic beauty, and personalized hospitality, making it an ideal destination for couples, families, photographers, and nature lovers.\n\nRelax on your private balcony, enjoy freshly brewed Nilgiri tea, explore nearby plantations, or simply soak in the breathtaking landscapes that make Ooty one of India's most loved hill stations.",
     highlights: [
-      "Organic Tea Plantation Views",
-      "Bespoke Tea Sommelier Tasting",
-      "Panoramic Mist-View Sun Decks"
+      "Tea Plantation Views",
+      "Cozy Wooden Interiors",
+      "Panoramic Mist-View Balconies"
     ],
     amenities: [
-      "Private Organic Tea Gardens",
-      "Dedicated Butler & Estate Chef",
-      "Panoramic Sun Decks",
-      "Glass-Wall Mountain Showers",
-      "Artisanal Teapot Selection",
-      "In-Villa Fireplace Lounge"
+      "Free On-site Parking",
+      "Halal Restaurant",
+      "Power Backup",
+      "Housekeeping",
+      "Bonfire (Paid)",
+      "CCTV Surveillance",
+      "Kids Play Area"
+    ],
+    propertyHighlightCards: [
+      "Tea Plantation Views",
+      "Cozy Wooden Interiors",
+      "Peaceful Nature Retreat",
+      "Fresh Mountain Climate",
+      "Scenic Photography Spots",
+      "Local Cuisine",
+      "Bonfire Evenings",
+      "Personalized Hospitality"
+    ],
+    popularAmenities: [
+      "Free On-site Parking",
+      "Restaurant (Halal)",
+      "Paid Bonfire",
+      "Power Backup",
+      "Housekeeping",
+      "Room Service",
+      "CCTV Surveillance"
+    ],
+    roomAmenities: [
+      "Coffee Machine (Selected Rooms)",
+      "Fireplace (Selected Rooms)",
+      "Living Area",
+      "Hair Dryer",
+      "Dental Kit",
+      "LED Television",
+      "Premium Toiletries",
+      "Comfortable Bedding",
+      "Spacious Bathrooms"
+    ],
+    whyStayFeatures: [
+      "Tea Plantation Views",
+      "Cozy Wooden Interiors",
+      "Peaceful Nature Retreat",
+      "Fresh Mountain Climate",
+      "Scenic Photography Spots",
+      "Local Cuisine",
+      "Bonfire Evenings",
+      "Personalized Hospitality"
+    ],
+    whyStayCards: [
+      { title: "Tea Plantation Views", description: "Wake up to endless green tea gardens stretching across the Nilgiri hills." },
+      { title: "Cozy Wooden Interiors", description: "Warm and elegant interiors inspired by traditional hill cottages." },
+      { title: "Peaceful Nature Retreat", description: "Perfect escape from busy city life into the serenity of the mountains." },
+      { title: "Fresh Mountain Climate", description: "Cool, crisp Ooty weather to keep you refreshed throughout the year." },
+      { title: "Scenic Photography Spots", description: "Beautiful sunrise, mist and valley viewpoints at every turn." },
+      { title: "Local Cuisine", description: "Enjoy authentic South Indian and local Nilgiri specialties." },
+      { title: "Bonfire Evenings", description: "Relax with family around a warm bonfire under the stars." },
+      { title: "Personalized Hospitality", description: "Friendly staff dedicated to making every stay truly memorable." }
+    ],
+    houseRules: {
+      checkIn: "2:00 PM",
+      checkOut: "11:00 AM",
+      rules: [
+        "No Smoking Inside Rooms",
+        "Family Friendly",
+        "Valid Government ID Required",
+        "Pets on Request"
+      ]
+    },
+    signatureExperiences: [
+      { title: "Tea Garden Walks", description: "Enjoy guided walks through lush tea plantations and learn about tea cultivation from experts." },
+      { title: "Nature Walks", description: "Explore beautiful forest trails surrounded by native flora and breathtaking Nilgiri hillscapes." },
+      { title: "Sunrise Views", description: "Watch spectacular golden sunrises paint the sky over the mist-draped Nilgiri Mountains." },
+      { title: "Bonfire Nights", description: "Experience memorable evenings gathered around a warm bonfire under a canopy of stars." },
+      { title: "Local Cuisine", description: "Taste delicious regional dishes prepared with fresh, locally sourced Nilgiri ingredients." }
+    ],
+    amenityCategories: [
+      {
+        category: "Highlighted Amenities",
+        items: ["Free On-site Parking", "Restaurant (Halal)", "Paid Bonfire"]
+      },
+      {
+        category: "Basic Facilities",
+        items: ["Free Parking", "Power Backup", "Housekeeping", "Room Service (Limited Hours)", "Umbrellas"]
+      },
+      {
+        category: "General Services",
+        items: ["Doctor on Call", "Luggage Assistance", "Multilingual Staff (English & Tamil)"]
+      },
+      {
+        category: "Health & Wellness",
+        items: ["First Aid Services"]
+      },
+      {
+        category: "Transfers",
+        items: ["Shuttle Service (Paid)", "Airport Transfers (Private Taxi)"]
+      },
+      {
+        category: "Room Amenities",
+        items: ["Coffee Machine (Selected Rooms)", "Fireplace (Selected Rooms)", "Living Area", "Hair Dryer", "Dental Kit", "LED Television", "Premium Toiletries", "Comfortable Bedding", "Spacious Bathrooms"]
+      },
+      {
+        category: "Dining",
+        items: ["Halal Restaurant", "Dining Area", "Barbecue Facilities"]
+      },
+      {
+        category: "Safety",
+        items: ["CCTV Surveillance", "Fire Extinguishers"]
+      },
+      {
+        category: "Outdoor Activities",
+        items: ["Bonfire", "Outdoor Games", "Nature Walks"]
+      },
+      {
+        category: "Common Areas",
+        items: ["Reception", "Balcony", "Terrace"]
+      },
+      {
+        category: "Family Facilities",
+        items: ["Kids Play Area"]
+      },
+      {
+        category: "Beauty & Wellness",
+        items: ["Open Air Bath"]
+      }
+    ],
+    guestHighlights: [
+      "Stunning tea plantation views",
+      "Spacious, well-appointed rooms",
+      "Peaceful and serene surroundings",
+      "Friendly and attentive caretaker",
+      "Cool, refreshing mountain climate"
+    ],
+    amenitiesRating: 3.8,
+    nearbyAttractions: [
+      "Rallia Dam – 8 km",
+      "Ooty Lake – 13.7 km",
+      "Coonoor Falls – 18.8 km",
+      "John Sullivan Memorial – 19.6 km",
+      "ATC Bus Stand – 11.8 km",
+      "Ooty Bus Station – 12.5 km",
+      "Ketti Railway Station – 8.3 km",
+      "Udhagamandalam Railway Station – 12.6 km"
+    ],
+    nearbyLandmarks: [
+      { name: "Rallia Dam", distance: "8 km" },
+      { name: "Ooty Lake", distance: "13.7 km" },
+      { name: "Coonoor Falls", distance: "18.8 km" },
+      { name: "John Sullivan Memorial", distance: "19.6 km" }
+    ],
+    nearbyTransport: [
+      {
+        type: "Bus Terminals",
+        items: [
+          { name: "ATC Bus Stand", distance: "11.8 km" },
+          { name: "Ooty Bus Station", distance: "12.5 km" }
+        ]
+      },
+      {
+        type: "Railway Stations",
+        items: [
+          { name: "Ketti Railway Station", distance: "8.3 km" },
+          { name: "Udhagamandalam Railway Station", distance: "12.6 km" }
+        ]
+      }
     ],
     suites: [
       {
-        id: "tea-leaf-estate-suite",
-        name: "Organic Tea Leaf Suite",
-        description: "A gorgeous wood-trimmed suite overlooking the lush estate, complete with local organic tea selections and cozy fireplaces.",
+        id: "tea-leaf-standard-room",
+        name: "Cozy Tea Garden Room",
+        description: "A warmly furnished room with wooden interiors and a private balcony overlooking the rolling tea estates. Perfect for couples and solo travelers seeking a peaceful mountain retreat.",
         pricePerNight: 5500,
         maxGuests: 2,
-        size: "135 sqm / 1,450 sqft",
-        amenities: ["Artisanal Teapot", "Fireplace Lounge", "Terrace Loungers", "Luxury Silk Linens"]
+        size: "Standard",
+        amenities: ["Private Balcony", "Tea Plantation View", "LED Television", "Coffee Machine", "Premium Toiletries", "Daily Housekeeping"]
       },
       {
-        id: "tea-leaf-presidential-pavilion",
-        name: "Presidential Tea Valley Pavilion",
-        description: "An ultra-luxury estate pavilion featuring an outdoor heated jacuzzi and 360-degree views of the mist-shrouded valleys.",
+        id: "tea-leaf-family-suite",
+        name: "Premium Valley Suite",
+        description: "A spacious suite with a separate living area, fireplace, and panoramic valley views. Ideal for families and groups wanting extra space amidst the Nilgiri tea gardens.",
         pricePerNight: 7500,
         maxGuests: 4,
-        size: "260 sqm / 2,800 sqft",
-        amenities: ["Heated Geothermal Jacuzzi", "Outdoor Dining Area", "Fully Retractable Glass Walls", "Personal Butler Services"]
+        size: "Suite",
+        amenities: ["Fireplace", "Separate Living Area", "Panoramic Valley View", "Coffee Machine", "Premium Toiletries", "Spacious Bathroom", "Daily Housekeeping"]
       }
     ],
     coordinates: { lat: 11.4150, lng: 76.6850 }
