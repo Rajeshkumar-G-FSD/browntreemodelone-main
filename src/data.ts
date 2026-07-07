@@ -742,11 +742,11 @@ export const PROPERTIES: Property[] = [
   {
     id: "misty-peaks",
     name: "Humming Bird by Brown Tree Resorts",
-    type: "Kothagiri",
+    type: "Private Villa",
     location: "Kothagiri, India",
     region: "Nilgiri Hills",
     price: 5000,
-    rating: 4.8,
+    rating: 4.6,
     reviewCount: 36,
     image: hummingBirdMain,
     gallery: [
@@ -758,38 +758,180 @@ export const PROPERTIES: Property[] = [
       hummingBirdParking,
       hummingBirdDining,
     ],
-    description: "Humming Bird by BrownTree – A Nature Lover's Retreat\n\nNestled in the serene hills of Kotagiri, Humming Bird by BrownTree is a peaceful retreat surrounded by breathtaking valley views, lush greenery, and abundant birdlife. A haven for nature lovers, it's the perfect destination to enjoy scenic landscapes, bird watching, and the refreshing charm of the Nilgiris.\n\nLocated away from the city's hustle yet conveniently accessible from Mettupalayam, Humming Bird offers the perfect escape to slow down and reconnect with nature. Whether you're planning a family vacation, a getaway with friends, or simply seeking peace amidst the hills, every stay promises comfort, tranquility, and unforgettable views.",
+    description: "Nestled amidst the tranquil hills of Kothagiri, Humming Bird by Brown Tree Resorts offers a serene villa experience designed for families, couples, and small groups looking to escape the rush of city life.\n\nSurrounded by lush greenery and refreshing mountain air, the property combines modern comforts with warm interiors to create a relaxing home-away-from-home. Spacious accommodations, beautiful outdoor spaces, and personalized hospitality make every stay memorable.\n\nWhether you're planning a family vacation, a romantic getaway, or a weekend retreat with friends, Humming Bird offers the perfect setting to relax, reconnect, and rejuvenate.",
     highlights: [
-      "Quiet Offbeat Highland Escape",
-      "In-Lodge Stargazing Telescope",
-      "Geothermal Outdoor Hot Pool"
+      "Private Villa Experience",
+      "Peaceful Mountain Location",
+      "Spacious Family Accommodation",
+      "Beautiful Garden & Outdoor Spaces",
+      "Delicious Dining",
+      "Indoor & Outdoor Activities",
+      "Personalized Hospitality",
+      "Ideal for Relaxation"
     ],
     amenities: [
-      "Double-sided Stone Fireplace",
-      "Observatory Deck",
-      "Geothermal Hot Tub",
-      "Organic Spice Garden",
-      "In-Villa Coffee Curation tasting",
-      "Bespoke Highland Trekking Guide"
+      "Halal Restaurant",
+      "Indoor Games",
+      "Free Parking",
+      "Free High-Speed Wi-Fi",
+      "24-Hour Room Service",
+      "Power Backup",
+      "Housekeeping",
+      "CCTV Surveillance",
+      "Badminton",
+      "Barbecue"
     ],
     suites: [
       {
-        id: "alpine-hearth",
-        name: "Highland Hearth Loft",
-        description: "A cozy log-and-glass loft with double-sided stone fireplace, premium local upholstery, and spectacular waterfall views.",
+        id: "hb-family-suite",
+        name: "Family Villa Suite",
+        description: "A spacious and comfortable family suite with a double bed, cozy living area, and a private terrace overlooking the garden. Perfect for families and small groups seeking a home-away-from-home experience.",
         pricePerNight: 5000,
-        maxGuests: 2,
-        size: "95 sqm / 1,020 sqft",
-        amenities: ["Stone Fireplace", "Telescope Access", "Heated Floors", "Steam Shower", "Fine Local Tea Bar"]
+        maxGuests: 4,
+        size: "Spacious Suite",
+        amenities: ["Double Bed", "Spacious Living Area", "Private Terrace", "Geyser", "LED Television", "Premium Toiletries", "Comfortable Bedding"]
       },
       {
-        id: "glacial-vista",
-        name: "Summit Ridge Vista Suite",
-        description: "Superb split-level suite offering panoramic Nilgiri peak vistas, private outdoor hot tub, and direct plantation path access.",
-        pricePerNight: 7500,
-        maxGuests: 4,
-        size: "185 sqm / 1,990 sqft",
-        amenities: ["Outdoor Geothermal Tub", "Private Sauna", "Vaulted Cedar Ceilings", "Wine Dispenser"]
+        id: "hb-fireplace-room",
+        name: "Cozy Fireplace Room",
+        description: "A warm and intimate room featuring a cozy fireplace for cool Kothagiri evenings, ideal for couples or solo travelers seeking a peaceful retreat in nature.",
+        pricePerNight: 4000,
+        maxGuests: 2,
+        size: "Comfortable Room",
+        amenities: ["Fireplace", "Single / Double Bed", "Balcony", "Geyser", "LED Television", "Dental Kit", "Comfortable Bedding"]
+      }
+    ],
+    aboutSectionTitle: "Experience Peace, Privacy & Nature",
+    propertyHighlightCards: [
+      "Private Villa Experience",
+      "Peaceful Mountain Location",
+      "Spacious Family Accommodation",
+      "Beautiful Garden & Outdoor Spaces",
+      "Delicious Dining",
+      "Indoor & Outdoor Activities",
+      "Personalized Hospitality",
+      "Ideal for Relaxation"
+    ],
+    popularAmenities: [
+      "Halal Restaurant",
+      "Indoor Games",
+      "Free Parking",
+      "Free High-Speed Wi-Fi",
+      "Power Backup",
+      "Badminton",
+      "Barbecue"
+    ],
+    roomAmenities: [
+      "Spacious Living Area",
+      "Fireplace (Selected Rooms)",
+      "Terrace",
+      "Dining Area",
+      "Geyser",
+      "Premium Toiletries",
+      "Dental Kit",
+      "Comfortable Bedding",
+      "LED Television",
+      "Refrigerator"
+    ],
+    whyStayCards: [
+      { title: "Private Villa Experience", description: "Enjoy complete privacy in a spacious villa designed for comfort and relaxation." },
+      { title: "Peaceful Mountain Location", description: "Wake up to fresh air, lush greenery, and serene mountain surroundings every morning." },
+      { title: "Spacious Family Accommodation", description: "Perfect for families, couples, and small groups with spacious and comfortable rooms." },
+      { title: "Beautiful Garden & Outdoor Spaces", description: "Relax in beautifully maintained garden and outdoor areas surrounded by nature." },
+      { title: "Delicious Dining", description: "Enjoy freshly prepared meals with Indian and local specialties in our Halal restaurant." },
+      { title: "Indoor & Outdoor Activities", description: "Badminton, indoor games, and barbecue evenings for an active and fun stay." },
+      { title: "Personalized Hospitality", description: "Friendly and attentive staff dedicated to making every moment of your stay memorable." },
+      { title: "Ideal for Relaxation", description: "Escape city life and experience complete tranquility in the hills of Kothagiri." }
+    ],
+    houseRules: {
+      checkIn: "2:00 PM",
+      checkOut: "11:00 AM",
+      rules: [
+        "No Smoking Inside Rooms",
+        "Family Friendly",
+        "Valid Government ID Required"
+      ]
+    },
+    signatureExperiences: [
+      { title: "Spacious Living Areas", description: "Comfortable interiors with cozy seating and family-friendly spaces to unwind." },
+      { title: "Fireplace Rooms", description: "Selected rooms feature a cozy fireplace for warm, relaxing cool mountain evenings." },
+      { title: "Balcony & Terrace", description: "Relax on your private balcony or terrace while enjoying refreshing views of the surrounding hills." },
+      { title: "Garden Retreat", description: "Spend peaceful evenings surrounded by lush nature in our beautifully maintained garden." },
+      { title: "Barbecue Evenings", description: "Create memorable moments with family and friends around an outdoor barbecue." },
+      { title: "Mountain Fresh Air", description: "Experience one of Kothagiri's most peaceful and refreshing natural environments." }
+    ],
+    amenityCategories: [
+      {
+        category: "Highlighted Amenities",
+        items: ["Halal Restaurant", "Indoor Games", "Free Parking", "Free High-Speed Wi-Fi"]
+      },
+      {
+        category: "Basic Facilities",
+        items: ["24-Hour Room Service", "Free Wi-Fi", "Free Parking", "Power Backup", "Housekeeping", "Refrigerator", "Laundry Service", "Elevator", "LAN Connectivity", "Umbrellas"]
+      },
+      {
+        category: "General Services",
+        items: ["Multilingual Staff", "Caretaker", "Luggage Assistance"]
+      },
+      {
+        category: "Health & Wellness",
+        items: ["First Aid Services"]
+      },
+      {
+        category: "Transfers",
+        items: ["Pickup & Drop (On Request)", "Airport Transfers (On Request)", "Railway Transfers (On Request)", "Bus Station Transfers (On Request)", "Shuttle Service (On Request)"]
+      },
+      {
+        category: "Room Amenities",
+        items: ["Spacious Living Area", "Fireplace (Selected Rooms)", "Terrace", "Dining Area", "Geyser", "Premium Toiletries", "Dental Kit", "Comfortable Bedding"]
+      },
+      {
+        category: "Dining",
+        items: ["Halal Restaurant", "Breakfast", "Indian Cuisine", "Jain Food Available", "Kid's Menu", "Barbecue", "Indian Chef"]
+      },
+      {
+        category: "Safety & Security",
+        items: ["CCTV Surveillance", "Security Guard", "Security Alarms", "Fire Extinguishers"]
+      },
+      {
+        category: "Entertainment",
+        items: ["LED Television"]
+      },
+      {
+        category: "Outdoor Activities",
+        items: ["Badminton", "Garden Walks", "Outdoor Games"]
+      },
+      {
+        category: "Indoor Activities",
+        items: ["Carrom Board", "Indoor Games"]
+      },
+      {
+        category: "Common Areas",
+        items: ["Living Room", "Balcony", "Terrace", "Garden", "24-Hour Reception"]
+      },
+      {
+        category: "Additional Facilities",
+        items: ["Accessible Parking", "Wide Pathways", "Accessible Washrooms", "Grocery Purchase Assistance", "Food Options Available"]
+      }
+    ],
+    guestHighlights: [
+      "Peaceful and private villa experience",
+      "Spacious and comfortable rooms",
+      "Beautiful natural surroundings",
+      "Friendly and attentive hospitality",
+      "Perfect destination for family getaways"
+    ],
+    amenitiesRating: 4.6,
+    nearbyLandmarks: [
+      { name: "John Sullivan Memorial", distance: "8.1 km" },
+      { name: "Rallia Dam", distance: "15.1 km" }
+    ],
+    nearbyTransport: [
+      {
+        type: "Railway",
+        items: [
+          { name: "Coonoor Railway Station", distance: "23 km" }
+        ]
       }
     ],
     coordinates: { lat: 11.4300, lng: 76.8800 }
