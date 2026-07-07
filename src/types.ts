@@ -13,6 +13,12 @@ export interface Suite {
   amenities: string[];
 }
 
+export interface HouseRules {
+  checkIn: string;
+  checkOut: string;
+  rules: string[];
+}
+
 export interface Property {
   id: string;
   name: string;
@@ -32,6 +38,13 @@ export interface Property {
     lat: number;
     lng: number;
   };
+  // Extended premium sections (optional — Earthy Nest and others may define these)
+  propertyHighlightCards?: string[];
+  popularAmenities?: string[];
+  roomAmenities?: string[];
+  whyStayFeatures?: string[];
+  houseRules?: HouseRules;
+  nearbyAttractions?: string[];
 }
 
 export interface Experience {

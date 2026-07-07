@@ -81,24 +81,99 @@ export const PROPERTIES: Property[] = [
       earthyNestBrestosgroom,
       earthyNestGarden,
     ],
-    description: "Earthy Nest by BrownTree – A Peaceful Nature Retreat\n\nNestled amidst the lush greenery of Ooty, Earthy Nest by BrownTree is a serene retreat offering breathtaking views of the Nilgiris. Wake up to crisp mountain air, explore Ooty's scenic beauty, and unwind in a peaceful setting designed for relaxation and unforgettable moments.\n\nWhether it's a family vacation, a friends' getaway, or a team get-together, Earthy Nest is the perfect escape from the fast-paced routine of everyday life. With cozy comforts, tranquil surroundings, and warm BrownTree hospitality, every stay is an opportunity to reconnect, recharge, and create lasting memories.",
+    description: "Nestled amidst the serene beauty of nature, The Earthy Nest by Brown Tree offers the perfect escape for travelers seeking peace, comfort, and unforgettable experiences. Surrounded by lush greenery and refreshing mountain air, our homestay creates a warm and welcoming atmosphere where guests can truly relax and reconnect with nature.\n\nWake up to scenic views, enjoy peaceful morning walks, and unwind in thoughtfully designed rooms featuring cozy interiors, comfortable bedding, elegant furnishings, and modern amenities. Every room is equipped with an individual geyser providing 24-hour hot water, ensuring complete comfort at any time of the day.\n\nWhether you're planning a family vacation, a romantic getaway, or a short weekend retreat, our attentive caretaker and friendly staff are always available to make your stay seamless, relaxing, and memorable.",
     highlights: [
       "Overlooking Nilgiri Tea Valleys",
-      "Heated Glass-Wall Infinity Pool",
+      "Peaceful Nature Retreat",
       "Guided Plantation Walk & Tea Tasting"
     ],
     amenities: [
-      "Heated Infinity Pool",
-      "Dedicated 24/7 Butler",
-      "Fully Retractable Glass Balconies",
-      "In-Villa Spa Curation",
-      "Private Sunset Deck",
-      "Personal Tea Sommelier"
+      "Parking",
+      "Wi-Fi",
+      "Power Backup",
+      "Room Service",
+      "Daily Housekeeping",
+      "Caretaker Assistance",
+      "Kids Play Area"
+    ],
+    propertyHighlightCards: [
+      "Private Room in a Homestay",
+      "1 Bedroom",
+      "2 Double Beds",
+      "Ideal for Couples & Families",
+      "Managed by Caretaker",
+      "Daily Housekeeping",
+      "Peaceful Nature Location",
+      "Scenic Balcony",
+      "Mountain Views"
+    ],
+    popularAmenities: [
+      "Parking",
+      "Wi-Fi",
+      "Power Backup",
+      "Room Service",
+      "Housekeeping",
+      "Caretaker Assistance",
+      "Kids Play Area"
+    ],
+    roomAmenities: [
+      "Bathroom",
+      "Comfortable Seating Area",
+      "Private Balcony",
+      "Balcony / Terrace",
+      "Blackout Curtains",
+      "Ceiling Fan",
+      "Fireplace",
+      "Closet",
+      "Sofa",
+      "Chair",
+      "LED TV",
+      "Electric Kettle",
+      "Charging Points",
+      "International Plug Adapters",
+      "24-Hour Hot & Cold Water",
+      "Private Bathroom",
+      "Bath Towels",
+      "Shampoo",
+      "Shower Gel",
+      "Premium Toiletries",
+      "Toilet with Grab Rails",
+      "Woollen Blanket",
+      "In-room Dining"
+    ],
+    whyStayFeatures: [
+      "Peaceful Natural Surroundings",
+      "Comfortable Spacious Rooms",
+      "Family Friendly",
+      "Ideal for Weekend Getaways",
+      "Warm Hospitality",
+      "Private Balcony",
+      "Scenic Mountain Views",
+      "Personalized Guest Service"
+    ],
+    houseRules: {
+      checkIn: "2:00 PM",
+      checkOut: "11:00 AM",
+      rules: [
+        "No Smoking inside Rooms",
+        "Pets on Request",
+        "Family Friendly",
+        "Valid Government ID Required"
+      ]
+    },
+    nearbyAttractions: [
+      "Ooty Lake",
+      "Botanical Garden",
+      "Rose Garden",
+      "Doddabetta Peak",
+      "Tea Museum",
+      "Pykara Lake",
+      "Nilgiri Mountain Railway"
     ],
     suites: [
       {
         id: "orchid-pavilion",
-        name: "Orchid Valley Pavilion",
+        name: "1BHK First Floor",
         description: "Elegant mountain-view pavilion boasting floor-to-ceiling glass looking out over the tea estates, with a private warm tub.",
         pricePerNight: 3000,
         maxGuests: 2,
@@ -107,7 +182,7 @@ export const PROPERTIES: Property[] = [
       },
       {
         id: "sunset-valley-suite",
-        name: "Sunset Valley Suite",
+        name: "2BHK First Floor",
         description: "A sprawling mountain-top residence with premium sunset vistas and a private outdoor fireplace setup.",
         pricePerNight: 4500,
         maxGuests: 4,
