@@ -55,6 +55,8 @@ export interface Property {
   nearbyFoodShopping?: { name: string; distance: string }[];
   nearbyTransport?: { type: string; items: { name: string; distance: string }[] }[];
   aboutSectionTitle?: string;
+  heroSubtitle?: string;
+  hideHouseRules?: boolean;
 }
 
 export interface Experience {

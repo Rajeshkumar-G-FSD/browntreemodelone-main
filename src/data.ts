@@ -957,29 +957,184 @@ export const PROPERTIES: Property[] = [
       vetrivelBedRed,
       vetrivelBed,
     ],
-    description: "Vetrivel International by BrownTree – Stay Close to the Heart of Kodaikanal\n\nIdeally located just a short walk from the iconic Kodaikanal Lake, Vetrivel International by BrownTree offers the perfect blend of comfort, convenience, and warm hospitality. Its prime location allows guests to easily explore the town's popular attractions, charming cafés, shopping streets, and scenic viewpoints.\n\nWhether you're planning a family vacation, a getaway with friends, or a relaxing holiday, Vetrivel International provides comfortable accommodations and a welcoming ambiance for a memorable stay. Discover the beauty of Kodaikanal while enjoying the trusted hospitality and personalized service that define the BrownTree experience.",
+    heroSubtitle: "Experience modern comfort in the heart of Kodaikanal with spacious rooms, premium hospitality, delicious dining, wellness experiences, and easy access to the city's iconic attractions.",
+    description: "Hotel Vetrivel International by Brown Tree Resorts is a modern hotel located in the heart of Kodaikanal, offering guests a perfect blend of comfort, convenience, and personalized hospitality.\n\nWhether you're visiting for a family vacation, honeymoon, business trip, or weekend getaway, the hotel provides spacious accommodations, modern amenities, and warm service designed to make every stay memorable.\n\nLocated close to Kodaikanal's major attractions, shopping streets, restaurants, and transport hubs, the hotel allows guests to explore the beauty of the Princess of Hill Stations while enjoying a relaxing and comfortable stay.",
+    aboutSectionTitle: "Comfort, Convenience & Hospitality",
     highlights: [
-      "Epic Valley-Sunset Views",
-      "Astronomer-Guided Stargazing",
-      "Private Trek in Shola Reserve"
+      "Prime City Location",
+      "Spacious Modern Rooms",
+      "Warm BrownTree Hospitality"
     ],
     amenities: [
-      "Valley View Pool",
-      "Hammam Wellness Room",
-      "Mountain Glamping Star-Deck",
-      "Brass Firepit Lounge",
-      "Local Culinary Chef Services",
-      "Premium Leather Lounge"
+      "Free Parking",
+      "Multi-Cuisine Restaurant",
+      "24-Hour Room Service",
+      "Lounge",
+      "Yoga",
+      "Bonfire"
+    ],
+    propertyHighlightCards: [
+      "Prime City Location",
+      "Spacious Modern Rooms",
+      "Multi-Cuisine Restaurant",
+      "Wellness Experiences",
+      "Family Friendly",
+      "Business & Events",
+      "Free High-Speed Wi-Fi",
+      "Warm Hospitality"
+    ],
+    popularAmenities: [
+      "Free Parking",
+      "Multi-Cuisine Restaurant",
+      "24-Hour Room Service",
+      "Lounge",
+      "Yoga",
+      "Bonfire",
+      "Free High-Speed Wi-Fi"
+    ],
+    roomAmenities: [
+      "Living Area",
+      "Balcony (Selected Rooms)",
+      "Terrace (Selected Rooms)",
+      "Work Desk",
+      "Sofa",
+      "Dining Area",
+      "Geyser",
+      "Dental Kit",
+      "Premium Toiletries",
+      "Interconnected Rooms (Selected Rooms)"
+    ],
+    whyStayCards: [
+      { title: "Prime City Location", description: "Easy access to Kodaikanal Lake, Bryant Park, shopping areas, and transport hubs." },
+      { title: "Spacious Modern Rooms", description: "Elegant accommodations designed for comfort and relaxation." },
+      { title: "Multi-Cuisine Restaurant", description: "Enjoy delicious Indian and international cuisine prepared by experienced chefs." },
+      { title: "Wellness Experiences", description: "Yoga, meditation, and peaceful surroundings for complete relaxation." },
+      { title: "Family Friendly", description: "Ideal for families, couples, business travelers, and groups." },
+      { title: "Business & Events", description: "Banquet facilities available for meetings and celebrations." },
+      { title: "Free High-Speed Wi-Fi", description: "Stay connected throughout your visit." },
+      { title: "Warm Hospitality", description: "Friendly staff dedicated to providing exceptional guest experiences." }
+    ],
+    hideHouseRules: true,
+    signatureExperiences: [
+      { title: "Morning Yoga", description: "Refresh your body and mind with guided yoga sessions." },
+      { title: "Meditation Room", description: "Find peace and relaxation in a quiet wellness space." },
+      { title: "Evening Bonfire", description: "Enjoy cozy evenings with family and friends under the stars." }
+    ],
+    amenityCategories: [
+      {
+        category: "Highlighted Amenities",
+        items: ["Free Parking", "Multi-Cuisine Restaurant", "24-Hour Room Service", "Lounge", "Yoga", "Bonfire"]
+      },
+      {
+        category: "Basic Facilities",
+        items: ["Free High-Speed Wi-Fi", "Housekeeping", "24-Hour Room Service", "Free Parking", "Laundry Service", "Elevator", "Power Backup", "Umbrellas"]
+      },
+      {
+        category: "General Services",
+        items: ["Caretaker", "Luggage Assistance", "Multilingual Staff", "Facilities for Guests with Disabilities"]
+      },
+      {
+        category: "Wellness",
+        items: ["Yoga Sessions", "Meditation Room", "First Aid Services"]
+      },
+      {
+        category: "Transfers",
+        items: ["Airport Transfers (On Request)", "Railway Transfers (On Request)", "Bus Station Transfers (On Request)", "Shuttle Service (On Request)"]
+      },
+      {
+        category: "Room Amenities",
+        items: ["Living Area", "Balcony (Selected Rooms)", "Terrace (Selected Rooms)", "Work Desk", "Sofa", "Dining Area", "Geyser", "Dental Kit", "Premium Toiletries", "Interconnected Rooms (Selected Rooms)"]
+      },
+      {
+        category: "Dining",
+        items: ["Multi-Cuisine Restaurant", "Halal Cuisine", "Kosher Cuisine", "Indian Vegetarian Cuisine", "Dining Area", "Barbecue"]
+      },
+      {
+        category: "Safety & Security",
+        items: ["CCTV Surveillance", "Security Guards", "Fire Extinguishers"]
+      },
+      {
+        category: "Media & Entertainment",
+        items: ["LED Television"]
+      },
+      {
+        category: "Outdoor Experiences",
+        items: ["Bonfire"]
+      },
+      {
+        category: "Common Areas",
+        items: ["Lounge", "Reception", "Living Room", "Balcony", "Terrace"]
+      },
+      {
+        category: "Business Facilities",
+        items: ["Banquet Hall"]
+      },
+      {
+        category: "Additional Facilities",
+        items: ["Garden", "Cloak Room", "Food Options Available"]
+      }
+    ],
+    guestHighlights: [
+      "Spacious and comfortable rooms",
+      "Friendly and welcoming staff",
+      "Convenient central location",
+      "Delicious dining options",
+      "Peaceful atmosphere",
+      "Great value for families and couples"
+    ],
+    amenitiesRating: 4.5,
+    nearbyLandmarks: [
+      { name: "Bryant Park", distance: "1.8 km" },
+      { name: "Kodaikanal Lake", distance: "2.7 km" },
+      { name: "Pine Forest", distance: "2.9 km" },
+      { name: "Bear Shola Falls", distance: "1.5 km" },
+      { name: "Kurinji Andavar Temple", distance: "2.2 km" },
+      { name: "Fairy Falls", distance: "3.5 km" },
+      { name: "Liril Falls", distance: "4.1 km" }
+    ],
+    nearbyFoodShopping: [
+      { name: "Organic Farmers Market", distance: "7 min walk" },
+      { name: "Potter's Shed", distance: "10 min walk" },
+      { name: "Corsack", distance: "10 min walk" },
+      { name: "Eco Nut", distance: "11 min walk" },
+      { name: "Bazar Road", distance: "1.3 km" },
+      { name: "Spices Corner", distance: "4 km" }
+    ],
+    nearbyTransport: [
+      {
+        type: "Bus Terminals",
+        items: [
+          { name: "Kodaikanal Bus Stand", distance: "1.2 km" },
+          { name: "Srinivasapuram Bus Stand", distance: "2.8 km" }
+        ]
+      },
+      {
+        type: "Nearby Transit Points",
+        items: [
+          { name: "7 Roads Junction", distance: "9 min walk" },
+          { name: "Kodaikanal Bus Stand", distance: "1.2 km" },
+          { name: "Srinivasapuram Bus Stand", distance: "2.8 km" }
+        ]
+      }
     ],
     suites: [
       {
-        id: "nomad-dome",
-        name: "Royal Ridge Dome",
-        description: "An elegant structure featuring a retractable star-viewing roof, local plaster details, and a cozy central fire pit.",
+        id: "vetrivel-deluxe-room",
+        name: "Deluxe Room",
+        description: "Perfect for couples and business travelers.",
         pricePerNight: 4500,
         maxGuests: 2,
-        size: "110 sqm / 1,180 sqft",
-        amenities: ["Retractable Sky Roof", "Hammam Shower", "Handmade Woolen Carpet", "Astronomical Telescope"]
+        size: "Deluxe",
+        amenities: ["Comfortable Queen Bed", "LED Smart TV", "High-Speed Wi-Fi", "Work Desk", "Premium Bathroom", "Daily Housekeeping", "Complimentary Toiletries", "Modern Interiors"]
+      },
+      {
+        id: "vetrivel-premium-room",
+        name: "Premium Room",
+        description: "Ideal for families and longer stays.",
+        pricePerNight: 6000,
+        maxGuests: 4,
+        size: "Premium",
+        amenities: ["Spacious Living Area", "Balcony (Selected Rooms)", "Sofa Seating", "Dining Area", "Work Desk", "Premium Bathroom", "LED Television", "Complimentary Toiletries", "Comfortable Bedding"]
       }
     ],
     coordinates: { lat: 10.2381, lng: 77.4892 }

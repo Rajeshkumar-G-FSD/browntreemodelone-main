@@ -213,6 +213,11 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
             <h1 className="font-display text-xl sm:text-2xl md:text-4xl font-medium text-white tracking-tight leading-tight mb-2">
               {property.name}
             </h1>
+            {property.heroSubtitle && (
+              <p className="text-xs sm:text-sm text-white/75 font-light leading-relaxed max-w-2xl mb-3">
+                {property.heroSubtitle}
+              </p>
+            )}
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center space-x-1.5 text-white/70">
                 <MapPin size={12} />
@@ -532,6 +537,7 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
       )}
 
       {/* ── 7. House Rules ── */}
+      {!property.hideHouseRules && (
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeUp>
@@ -576,6 +582,7 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
           </div>
         </div>
       </section>
+      )}
 
       {/* ── 8. Nearby Attractions — tabbed when structured data available ── */}
       {(nearbyAttractions.length > 0 || (property.nearbyLandmarks && property.nearbyLandmarks.length > 0)) && (
