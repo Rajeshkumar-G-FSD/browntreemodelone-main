@@ -59,7 +59,8 @@ export default function ContactSection() {
                 <span className="block text-[8px] font-bold tracking-widest text-brand-primary/40 uppercase">
                   DIRECT LINE
                 </span>
-                <span className="text-sm font-semibold text-brand-primary">+1 (800) LUXE-SANC</span>
+                <a href="tel:+919095487848" className="block text-sm font-semibold text-brand-primary hover:text-brand-secondary transition-colors">+91 90954 87848</a>
+                <a href="tel:+919363036766" className="block text-sm font-semibold text-brand-primary hover:text-brand-secondary transition-colors">+91 93630 36766</a>
               </div>
             </div>
 
@@ -71,7 +72,7 @@ export default function ContactSection() {
                 <span className="block text-[8px] font-bold tracking-widest text-brand-primary/40 uppercase">
                   GENERAL INQUIRY EMAIL
                 </span>
-                <span className="text-sm font-semibold text-brand-primary">concierge@luxesanctuary.com</span>
+                <a href="mailto:browntreeresort@gmail.com" className="text-sm font-semibold text-brand-primary hover:text-brand-secondary transition-colors">browntreeresort@gmail.com</a>
               </div>
             </div>
 
@@ -81,9 +82,9 @@ export default function ContactSection() {
               </div>
               <div>
                 <span className="block text-[8px] font-bold tracking-widest text-brand-primary/40 uppercase">
-                  RESPONSE TIME
+                  AVAILABILITY
                 </span>
-                <span className="text-sm font-semibold text-brand-primary">Typically within 2 Hours</span>
+                <span className="text-sm font-semibold text-brand-primary">24 × 7</span>
               </div>
             </div>
           </div>
