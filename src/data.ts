@@ -210,38 +210,102 @@ export const PROPERTIES: Property[] = [
       theAbodeCot,
       theAbodeDoubleHot,
     ],
-    description: "Abode by BrownTree – Comfort in the Heart of Ooty\n\nLocated in the heart of Ooty, Abode by BrownTree offers the perfect balance of convenience and tranquility. While you're just minutes away from the town's popular attractions, shopping streets, and restaurants, the property provides a calm and peaceful ambiance where you can truly relax and unwind.\n\nDesigned with families, couples, and leisure travelers in mind, Abode features comfortable, well-appointed rooms and warm, personalized hospitality that makes every guest feel at home. Whether you're exploring the scenic beauty of the Nilgiris or simply looking for a cozy retreat after a day of sightseeing, Abode is the ideal place to create lasting memories with your loved ones.",
+    description: "THE ABODE BY BROWN TREE RESORTS – French Styled Hillside Villa in Ooty\n\nNestled on a peaceful hillside in Ooty, THE ABODE BY BROWN TREE RESORTS is surrounded by lush greenery and panoramic views of the Nilgiri Mountains. Inspired by elegant French-style architecture, the resort offers a perfect escape from city life while providing modern comforts for couples, families, and leisure travelers.\n\nWhether you're enjoying a relaxing vacation, celebrating special moments, or exploring Ooty's attractions, every stay promises warmth, comfort, and unforgettable memories. Wake up to breathtaking valley and hill views, savour freshly prepared meals in our cozy dining area, and experience the warmth of dedicated hospitality that makes every moment truly special.",
     highlights: [
-      "Colonial-Era Heritage Estate",
-      "Acre-Wide Pine Gardens",
-      "Bespoke Ayurvedic Healing Cures"
+      "French Styled Hillside Villa",
+      "Panoramic Nilgiri Mountain Views",
+      "Warm Personalized Hospitality"
     ],
     amenities: [
-      "Private Pine Gardens",
-      "Bespoke Royal Chauffeur",
-      "Ayurvedic Spa Treatments",
-      "10-meter Arched Glass Salon",
-      "In-Suite Classical Music Performances",
-      "Fine Dining Nilgiri Kitchen"
+      "Free Parking",
+      "Power Backup",
+      "Refrigerator",
+      "Housekeeping",
+      "Doctor on Call",
+      "Luggage Assistance",
+      "CCTV Surveillance"
+    ],
+    propertyHighlightCards: [
+      "Quiet Hillside Location",
+      "French Styled Architecture",
+      "Comfortable Accommodation",
+      "Scenic Mountain Views",
+      "On-site Dining",
+      "Friendly Hospitality",
+      "Complimentary Parking",
+      "Bonfire Experience"
+    ],
+    popularAmenities: [
+      "Free Parking",
+      "Power Backup",
+      "Housekeeping",
+      "Luggage Assistance",
+      "Doctor on Call",
+      "CCTV Surveillance",
+      "Bonfire"
+    ],
+    roomAmenities: [
+      "Attached Bathroom",
+      "LED Television",
+      "Sofa",
+      "Living Area",
+      "Heater (Selected Rooms)",
+      "Complimentary Toiletries",
+      "Iron & Ironing Board",
+      "Dental Kit",
+      "Refrigerator",
+      "Fresh Towels",
+      "Hot Water",
+      "Dining Area"
+    ],
+    whyStayFeatures: [
+      "Peaceful Hillside Atmosphere",
+      "French Styled Architecture",
+      "Beautiful Mountain Views",
+      "Family Friendly Stay",
+      "Warm Personalized Hospitality",
+      "On-site Dining",
+      "Comfortable Spacious Rooms",
+      "Pickup & Drop Available"
+    ],
+    houseRules: {
+      checkIn: "2:00 PM",
+      checkOut: "11:00 AM",
+      rules: [
+        "No Smoking Inside Rooms",
+        "Family Friendly",
+        "Valid Government ID Required",
+        "Pets on Request"
+      ]
+    },
+    nearbyAttractions: [
+      "Ooty Lake – 4.8 km",
+      "Government Botanical Garden – 1.9 km",
+      "Elk Hill – 3.6 km",
+      "Tiger Hill – 5 km",
+      "Tibetan Market – 1.7 km",
+      "ATC Bus Stand – 2.9 km",
+      "Udhagamandalam Railway Station – 3.7 km",
+      "Rallia Dam – 17.1 km"
     ],
     suites: [
       {
-        id: "pine-palace-suite",
-        name: "Maharaja Pine Suite",
-        description: "A grand colonial suite featuring wood paneling, copper soaking tubs, and private garden views.",
+        id: "deluxe-room",
+        name: "Deluxe Room",
+        description: "Perfect for couples and solo travelers. A comfortable, well-appointed room featuring a queen-size bed, LED TV, and an attached bathroom with complimentary toiletries and fresh towels. Enjoy beautiful mountain or garden views and daily housekeeping.",
         pricePerNight: 3000,
         maxGuests: 2,
-        size: "120 sqm / 1,290 sqft",
-        amenities: ["Copper Soaking Tub", "Hand-woven Indian Rugs", "Terrace Bed", "Luxury Linens", "Pillow Menu"]
+        size: "Deluxe",
+        amenities: ["Queen-size Bed", "LED TV", "Attached Bathroom", "Complimentary Toiletries", "Fresh Towels", "Mountain or Garden Views", "Daily Housekeeping", "Cozy Interiors"]
       },
       {
-        id: "royal-garden-pavilion",
-        name: "Royal Garden Pavilion",
-        description: "Grand historic sanctuary with exclusive garden access, high ceilings, private pool, and historical antique furnishings.",
+        id: "suite-room",
+        name: "Suite Room",
+        description: "Ideal for families and groups. A spacious suite with a separate living area, sofa, and LED TV. Features an attached bathroom with premium amenities, extra seating space, and beautiful hillside views for a truly comfortable stay.",
         pricePerNight: 4500,
-        maxGuests: 3,
-        size: "210 sqm / 2,260 sqft",
-        amenities: ["Private Courtyard Pool", "Dedicated Chauffeur", "Antique Desk", "Outdoor Daybed"]
+        maxGuests: 4,
+        size: "Suite",
+        amenities: ["Spacious Bedroom", "Separate Living Area", "Sofa", "LED TV", "Attached Bathroom", "Premium Amenities", "Extra Seating Space", "Beautiful Hillside Views"]
       }
     ],
     coordinates: { lat: 11.4050, lng: 76.7120 }
