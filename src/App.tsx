@@ -14,6 +14,7 @@ import PropertyDetailPage from "./components/PropertyDetailPage";
 import BookingDrawer from "./components/BookingDrawer";
 import Footer from "./components/Footer";
 import ChatBot from "./components/ChatBot";
+import Toaster from "./components/Toaster";
 
 import { PROPERTIES, REVIEWS, DESTINATIONS } from "./data";
 import { Property, Suite } from "./types";
@@ -198,6 +199,7 @@ export default function App() {
       />
 
       <ChatBot />
+      <Toaster />
     </div>
   );
 }

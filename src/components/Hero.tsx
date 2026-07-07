@@ -3,11 +3,85 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useRef, useEffect } from "react";
-import { MapPin, Calendar, User, Search, Check, ChevronDown, ChevronUp } from "lucide-react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { MapPin, Home, Calendar, Search, Check, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import TextType from "./TextType";
-import BlurText from "./BlurText";
 import browntreeVideo from "../assets/images/broentree_video.mp4";
+import { useToast } from "./useToast";
+
+const DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+function MiniCalendar({ value, minDate, onChange }: { value: string; minDate: string; onChange: (v: string) => void }) {
+  const today = new Date();
+  const init = value ? new Date(value + "T12:00:00") : today;
+  const [view, setView] = useState({ year: init.getFullYear(), month: init.getMonth() });
+
+  const firstDay = new Date(view.year, view.month, 1).getDay();
+  const daysInMonth = new Date(view.year, view.month + 1, 0).getDate();
+  const minD = minDate ? new Date(minDate + "T00:00:00") : null;
+
+  const prevMonth = () => setView(v => v.month === 0 ? { year: v.year - 1, month: 11 } : { ...v, month: v.month - 1 });
+  const nextMonth = () => setView(v => v.month === 11 ? { year: v.year + 1, month: 0 } : { ...v, month: v.month + 1 });
+
+  const cells: (number | null)[] = [...Array(firstDay).fill(null), ...Array.from({ length: daysInMonth }, (_, i) => i + 1)];
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  const toStr = (d: number) => `${view.year}-${String(view.month + 1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+  const isSelected = (d: number) => toStr(d) === value;
+  const isDisabled = (d: number) => !!(minD && new Date(toStr(d) + "T00:00:00") < minD);
+  const isToday = (d: number) => new Date(toStr(d)).toDateString() === today.toDateString();
+
+  return (
+    <div style={{ width: 248 }}>
+      {/* Month/Year nav */}
+      <div className="flex items-center justify-between mb-3">
+        <button type="button" onClick={prevMonth} className="p-1 rounded-lg hover:bg-[#F8F5EF] transition-colors cursor-pointer focus:outline-none">
+          <ChevronLeft size={14} style={{ color: "#4A2C1D" }} />
+        </button>
+        <span className="text-xs font-bold tracking-wide" style={{ color: "#4A2C1D" }}>
+          {MONTHS[view.month]} {view.year}
+        </span>
+        <button type="button" onClick={nextMonth} className="p-1 rounded-lg hover:bg-[#F8F5EF] transition-colors cursor-pointer focus:outline-none">
+          <ChevronRight size={14} style={{ color: "#4A2C1D" }} />
+        </button>
+      </div>
+      {/* Day headers */}
+      <div className="grid grid-cols-7 mb-1">
+        {DAYS.map(d => (
+          <div key={d} className="text-center text-[9px] font-bold tracking-wide py-0.5" style={{ color: "#b8a090" }}>{d}</div>
+        ))}
+      </div>
+      {/* Date cells */}
+      <div className="grid grid-cols-7 gap-y-0.5">
+        {cells.map((d, i) => (
+          <div key={i} className="flex items-center justify-center">
+            {d ? (
+              <button
+                type="button"
+                disabled={isDisabled(d)}
+                onClick={() => !isDisabled(d) && onChange(toStr(d))}
+                className={`w-8 h-8 rounded-full text-xs font-medium transition-all duration-150 focus:outline-none ${
+                  isDisabled(d) ? "opacity-30 cursor-not-allowed" :
+                  isSelected(d) ? "text-white font-bold cursor-pointer" :
+                  isToday(d) ? "font-bold cursor-pointer hover:bg-[#F8F5EF]" :
+                  "cursor-pointer hover:bg-[#F8F5EF]"
+                }`}
+                style={{
+                  background: isSelected(d) ? "linear-gradient(135deg,#D4AF37,#b8941f)" : "transparent",
+                  color: isSelected(d) ? "#fff" : isToday(d) ? "#D4AF37" : "#18281e",
+                  boxShadow: isSelected(d) ? "0 2px 8px rgba(212,175,55,0.4)" : "none",
+                }}
+              >
+                {d}
+              </button>
+            ) : <div className="w-8 h-8" />}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 interface HeroProps {
   onSearch: (filters: { destination: string; checkIn: string; checkOut: string; guests: number }) => void;
@@ -15,441 +89,593 @@ interface HeroProps {
   onOpenBooking: () => void;
 }
 
-export default function Hero({ onSearch, onExploreClick, onOpenBooking }: HeroProps) {
-  const [destination, setDestination] = useState("");
+const LOCATIONS = [
+  { label: "Ooty", region: "Nilgiri Hills, India" },
+  { label: "Kothagiri", region: "Nilgiri Hills, India" },
+  { label: "Kodaikanal", region: "Palani Hills, India" },
+];
+
+const PROPERTIES: Record<string, string[]> = {
+  Ooty: [
+    "THE ABODE BY BROWN TREE",
+    "The Earthy Nest by Brown Tree",
+    "Tea Leaf Stays by Brown Tree Resorts",
+    "Sholas Residency by Brown Tree",
+  ],
+  Kothagiri: ["Humming Bird by Brown Tree Resorts"],
+  Kodaikanal: ["Hotel Vetrivel International by Brown Tree Resorts"],
+};
+
+const PROPERTY_URLS: Record<string, string> = {
+  "THE ABODE BY BROWN TREE":                          "https://bookings.asiatech.in/?page=4160&type=website",
+  "The Earthy Nest by Brown Tree":                    "https://bookings.asiatech.in/?page=11117&type=website",
+  "Tea Leaf Stays by Brown Tree Resorts":             "https://bookings.asiatech.in/?page=5303&type=website",
+  "Sholas Residency by Brown Tree":                   "https://bookings.asiatech.in/?page=10425&type=website",
+  "Humming Bird by Brown Tree Resorts":               "https://bookings.asiatech.in/?page=9542&type=website",
+  "Hotel Vetrivel International by Brown Tree Resorts": "https://bookings.asiatech.in/?page=6541&type=website",
+};
+
+type ActivePanel = "location" | "property" | "checkin" | "checkout" | null;
+
+export default function Hero({ }: HeroProps) {
+  const { toast } = useToast();
+
+  const [location, setLocation] = useState("");
+  const [property, setProperty] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-  const [adults, setAdults] = useState(2);
-  const [children, setChildren] = useState(0);
+  const [activePanel, setActivePanel] = useState<ActivePanel>(null);
+  const [rippling, setRippling] = useState(false);
+  const [checkoutEnabled, setCheckoutEnabled] = useState(false);
 
-  // Popover States
-  const [showDestPopover, setShowDestPopover] = useState(false);
-  const [showDatesPopover, setShowDatesPopover] = useState(false);
-  const [showGuestsPopover, setShowGuestsPopover] = useState(false);
-  const [expandedDest, setExpandedDest] = useState<string | null>(null);
-
-  const destRef = useRef<HTMLDivElement>(null);
-  const datesRef = useRef<HTMLDivElement>(null);
-  const guestsRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Seamless video loop — seek back just before end to avoid flicker
+  const todayStr = new Date().toISOString().split("T")[0];
+  const allFilled = !!(location && property && checkIn && checkOut);
+
+  // Seamless video loop
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    const handleTimeUpdate = () => {
-      if (video.duration && video.currentTime >= video.duration - 0.18) {
-        video.currentTime = 0;
+    const onTime = () => {
+      if (video.duration && video.currentTime >= video.duration - 0.18) video.currentTime = 0;
+    };
+    video.addEventListener("timeupdate", onTime);
+    return () => video.removeEventListener("timeupdate", onTime);
+  }, []);
+
+  // Close panel on outside click
+  useEffect(() => {
+    const handle = (e: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+        setActivePanel(null);
       }
     };
-    video.addEventListener("timeupdate", handleTimeUpdate);
-    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
+    document.addEventListener("mousedown", handle);
+    return () => document.removeEventListener("mousedown", handle);
   }, []);
 
-  const destinationsList = [
-    { label: "Ooty", region: "Nilgiri Hills, India" },
-    { label: "Kothagiri", region: "Nilgiri Hills, India" },
-    { label: "Kodaikanal", region: "Palani Hills, India" }
-  ];
-
-  const destinationProperties: Record<string, string[]> = {
-    Ooty: ["THE ABODE BY BROWN TREE", "The Earthy Nest by Brown Tree", "Tea Leaf Stays by Brown Tree Resorts", "Sholas Residency by Brown Tree"],
-    Kothagiri: ["Humming Bird by Brown Tree Resorts"],
-    Kodaikanal: ["Hotel Vetrivel International by Brown Tree Resorts"]
-  };
-
-  // Close popovers on click outside
+  // Keyboard: Escape closes
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (destRef.current && !destRef.current.contains(event.target as Node)) {
-        setShowDestPopover(false);
-      }
-      if (datesRef.current && !datesRef.current.contains(event.target as Node)) {
-        setShowDatesPopover(false);
-      }
-      if (guestsRef.current && !guestsRef.current.contains(event.target as Node)) {
-        setShowGuestsPopover(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    const handle = (e: KeyboardEvent) => { if (e.key === "Escape") setActivePanel(null); };
+    document.addEventListener("keydown", handle);
+    return () => document.removeEventListener("keydown", handle);
   }, []);
 
-  const handleSearchClick = () => {
-    onSearch({
-      destination,
-      checkIn: checkIn || "Anytime",
-      checkOut: checkOut || "Anytime",
-      guests: adults + children
-    });
+  const open = (panel: ActivePanel) => setActivePanel(panel);
+  const close = useCallback(() => setActivePanel(null), []);
+
+  // Auto-advance after location selected
+  const handleSelectLocation = (loc: string) => {
+    setLocation(loc);
+    const props = PROPERTIES[loc] || [];
+    if (props.length === 1) {
+      // Single property → auto-select, skip to check-in
+      setProperty(props[0]);
+      close();
+      setTimeout(() => open("checkin"), 280);
+    } else {
+      // Multiple → open property panel
+      close();
+      setTimeout(() => open("property"), 200);
+    }
   };
 
-  const todayStr = new Date().toISOString().split("T")[0];
+  // Auto-advance after property selected
+  const handleSelectProperty = (prop: string) => {
+    setProperty(prop);
+    close();
+    setTimeout(() => open("checkin"), 280);
+  };
+
+  // Auto-advance after check-in; clears checkout, enables checkout field
+  const handleCheckinChange = (val: string) => {
+    setCheckIn(val);
+    setCheckOut("");           // clear stale checkout on every checkin change
+    setCheckoutEnabled(true);  // unlock checkout field
+    close();
+    setTimeout(() => open("checkout"), 280);
+  };
+
+  const handleCheckoutChange = (val: string) => {
+    setCheckOut(val);
+    close();
+  };
+
+  // Disabled checkout click → show toast
+  const handleDisabledCheckoutClick = () => {
+    toast({
+      variant: "destructive",
+      title: "Check-in Required",
+      description: "Please select your check-in date before choosing a check-out date.",
+    });
+    setTimeout(() => open("checkin"), 200);
+  };
+
+  // ── Validation + Search ──
+  const handleSearchClick = () => {
+    if (!location) {
+      toast({ variant: "destructive", title: "Location Required", description: "Please select a location to continue." });
+      setTimeout(() => open("location"), 150);
+      return;
+    }
+    if (!property) {
+      toast({ variant: "destructive", title: "Property Required", description: "Please select a destination / property." });
+      setTimeout(() => open("property"), 150);
+      return;
+    }
+    if (!checkIn) {
+      toast({ variant: "destructive", title: "Check-in Required", description: "Please select your check-in date." });
+      setTimeout(() => open("checkin"), 150);
+      return;
+    }
+    if (!checkOut) {
+      toast({ variant: "destructive", title: "Check-out Required", description: "Please select your check-out date." });
+      setTimeout(() => open("checkout"), 150);
+      return;
+    }
+    if (checkOut <= checkIn) {
+      toast({ variant: "destructive", title: "Invalid Dates", description: "Check-out date must be after the check-in date." });
+      setCheckOut("");
+      setTimeout(() => open("checkout"), 150);
+      return;
+    }
+
+    // All good — ripple + navigate
+    setRippling(true);
+    setTimeout(() => setRippling(false), 600);
+    const base = PROPERTY_URLS[property] ?? "https://bookings.asiatech.in/?page=4160&type=website";
+    const url = `${base}&checkin=${checkIn}&checkout=${checkOut}`;
+    setTimeout(() => window.open(url, "_blank"), 150);
+  };
+
+
+  const availableProperties = location ? PROPERTIES[location] || [] : [];
+
+
+  const isActive = (panel: ActivePanel) => activePanel === panel;
+  const isDone = (panel: ActivePanel) => {
+    if (panel === "location") return !!location;
+    if (panel === "property") return !!property;
+    if (panel === "checkin") return !!checkIn;
+    if (panel === "checkout") return !!checkOut;
+    return false;
+  };
+
+  const fieldLabel = "block text-[9px] font-bold tracking-[0.15em] uppercase mb-0.5 transition-colors duration-200";
+  const fieldValue = "block text-sm font-semibold truncate transition-colors duration-200";
+
+  const panelClass = `
+    absolute z-50 bg-white rounded-[18px] shadow-2xl
+    animate-popup-in
+  `;
 
   return (
-    <section
-      id="home"
-      className="relative min-h-[92vh] md:min-h-screen flex flex-col justify-center items-center text-white px-4 pt-24 md:pt-16 pb-20 md:pb-32 overflow-hidden"
-    >
-      {/* Background Video with Dark Overlay */}
-      <div className="absolute inset-0 z-0">
-        <video
-          ref={videoRef}
-          src={browntreeVideo}
-          autoPlay
-          muted
-          playsInline
-          preload="auto"
-          className="w-full h-full object-cover brightness-[0.75] select-none"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-primary/40 via-brand-primary/10 to-brand-primary/60" />
-      </div>
+    <>
+      {/* Keyframe injection */}
+      <style>{`
+        @keyframes popupIn {
+          0%   { opacity: 0; transform: translateY(10px) scale(0.97); }
+          100% { opacity: 1; transform: translateY(0)    scale(1); }
+        }
+        .animate-popup-in {
+          animation: popupIn 0.28s cubic-bezier(0.34,1.3,0.64,1) both;
+        }
+        @keyframes ripple {
+          0%   { transform: scale(0); opacity: 0.45; }
+          100% { transform: scale(4); opacity: 0; }
+        }
+        .btn-ripple::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: rgba(255,255,255,0.35);
+          animation: ripple 0.55s ease-out forwards;
+          pointer-events: none;
+        }
+        .field-active-ring {
+          box-shadow: 0 0 0 2px rgba(212,175,55,0.55) inset;
+          background: rgba(248,245,239,0.7) !important;
+        }
+      `}</style>
 
-      {/* Main Hero Content */}
-      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6 md:space-y-8 animate-fade-in-up mt-8 md:mt-16">
-        <TextType
-          text="BROWN TREE"
-          className="font-display text-4xl sm:text-5xl md:text-7xl font-medium tracking-tight text-brand-background leading-[1.1]"
-          as="h1"
-          typingSpeed={60}
-          initialDelay={300}
-          loop={false}
-          showCursor={true}
-          cursorCharacter="|"
-          cursorClassName="text-brand-gold-light"
-        />
-
-        {/* Double gold rule divider */}
-        <div className="flex flex-col items-center justify-center gap-1 mx-auto w-40 sm:w-56">
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-brand-gold-light/80 to-transparent" />
-          <div className="w-3/4 h-px bg-gradient-to-r from-transparent via-brand-gold-light/40 to-transparent" />
+      <section
+        id="home"
+        className="relative min-h-[92vh] md:min-h-screen flex flex-col justify-center items-center text-white px-4 pt-24 md:pt-16 pb-20 md:pb-32 overflow-hidden"
+      >
+        {/* Background Video */}
+        <div className="absolute inset-0 z-0">
+          <video
+            ref={videoRef}
+            src={browntreeVideo}
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover brightness-[0.72] select-none"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#18281e]/50 via-[#18281e]/10 to-[#18281e]/65" />
         </div>
 
-        <div className="space-y-2">
-          <p className="font-sans text-sm sm:text-base md:text-lg font-semibold tracking-[0.18em] text-brand-gold-light uppercase">
-            Resort &nbsp;·&nbsp; Home Stay &nbsp;·&nbsp; Hotels
-          </p>
-          <p className="font-display text-base sm:text-lg md:text-xl text-brand-background/90 font-light italic">
-            Where Every Stay Tells a Story
-          </p>
+        {/* Hero Title */}
+        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-5 md:space-y-7 animate-fade-in-up mt-8 md:mt-12">
+          <TextType
+            text="BROWN TREE"
+            className="font-display text-4xl sm:text-5xl md:text-7xl font-medium tracking-tight text-brand-background leading-[1.1]"
+            as="h1"
+            typingSpeed={60}
+            initialDelay={300}
+            loop={false}
+            showCursor={true}
+            cursorCharacter="|"
+            cursorClassName="text-brand-gold-light"
+          />
+          <div className="flex flex-col items-center justify-center gap-1 mx-auto w-40 sm:w-56">
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-brand-gold-light/80 to-transparent" />
+            <div className="w-3/4 h-px bg-gradient-to-r from-transparent via-brand-gold-light/40 to-transparent" />
+          </div>
+          <div className="space-y-1.5">
+            <p className="font-sans text-sm sm:text-base md:text-lg font-semibold tracking-[0.18em] text-brand-gold-light uppercase">
+              Resort &nbsp;·&nbsp; Home Stay &nbsp;·&nbsp; Hotels
+            </p>
+            <p className="font-display text-base sm:text-lg md:text-xl text-brand-background/90 font-light italic">
+              Where Every Stay Tells a Story
+            </p>
+          </div>
         </div>
 
-      </div>
+        {/* ── LUXURY BOOKING WIDGET ── */}
+        <div className="relative z-20 w-full max-w-5xl mx-auto mt-10 md:mt-16 px-2">
 
-      {/* Floating Glassmorphic Search Container */}
-      <div className="relative z-20 w-full max-w-5xl mx-auto mt-12 md:mt-20 px-2">
-        <div
-          id="hero-search-bar"
-          className="glass-panel rounded-2xl md:rounded-full p-4 md:py-3 md:pl-8 md:pr-3 flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-between shadow-2xl border border-white/40 shadow-brand-primary/10 w-full"
-        >
-          {/* Destination Field */}
-          <div ref={destRef} className="relative flex-1 w-full text-left md:border-r border-brand-primary/10 md:pr-4">
-            <button
-              id="search-dest-button"
-              onClick={() => {
-                setShowDestPopover(!showDestPopover);
-                setShowDatesPopover(false);
-                setShowGuestsPopover(false);
-              }}
-              className="flex items-center space-x-3 w-full p-2 hover:bg-black/5 rounded-xl transition text-left focus:outline-none cursor-pointer"
+          {/* Widget heading */}
+          <div className="text-center mb-5">
+            <h2
+              className="font-display text-xl sm:text-2xl md:text-3xl font-semibold tracking-wide"
+              style={{ color: "#F8F5EF", textShadow: "0 2px 12px rgba(0,0,0,0.35)" }}
             >
-              <MapPin className="text-brand-secondary shrink-0" size={18} />
-              <div className="overflow-hidden">
-                <span className="block text-[10px] font-bold tracking-[0.1em] text-brand-primary/65 uppercase">
-                  DESTINATION
-                </span>
-                <span className="block text-sm font-semibold text-brand-primary truncate">
-                  {destination || "Where to?"}
-                </span>
-              </div>
-            </button>
-
-            {showDestPopover && (
-              <div className="absolute bottom-[115%] left-0 z-40 w-full sm:w-[320px] bg-white rounded-2xl shadow-2xl border border-stone-200/50 p-4 mb-2 animate-scale-up">
-                <p className="text-[10px] font-bold tracking-widest text-stone-400 px-2 pb-2.5 border-b border-stone-100 uppercase">
-                  POPULAR SANCTUARIES
-                </p>
-                <div className="space-y-2 mt-3 max-h-[360px] overflow-y-auto pr-1">
-                  <button
-                    onClick={() => {
-                      setDestination("");
-                      setShowDestPopover(false);
-                      setExpandedDest(null);
-                    }}
-                    className="flex items-center justify-between w-full text-left text-xs font-semibold py-2 px-3 rounded-xl hover:bg-stone-50 text-brand-primary cursor-pointer transition-all"
-                  >
-                    <span>All Locations</span>
-                    {destination === "" && <Check size={14} className="text-brand-secondary" />}
-                  </button>
-
-                  {destinationsList.map((dest) => {
-                    const isExpanded = expandedDest === dest.label;
-                    const props = destinationProperties[dest.label] || [];
-                    
-                    return (
-                      <div key={dest.label} className="border border-stone-100 rounded-xl overflow-hidden bg-white shadow-sm transition-all duration-300">
-                        {/* Parent Destination Header Button */}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setExpandedDest(isExpanded ? null : dest.label);
-                          }}
-                          className={`flex items-center justify-between w-full text-left py-2.5 px-3 transition-all cursor-pointer ${
-                            isExpanded ? "bg-stone-50 font-semibold" : "hover:bg-stone-50/50"
-                          }`}
-                        >
-                          <div>
-                            <span className="block text-xs font-bold text-brand-primary uppercase tracking-wide">{dest.label}</span>
-                            <span className="block text-[10px] text-stone-400 font-medium">{dest.region}</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            {destination.toLowerCase().includes(dest.label.toLowerCase()) && (
-                              <Check size={14} className="text-brand-secondary" />
-                            )}
-                            {isExpanded ? (
-                              <ChevronUp size={14} className="text-stone-400" />
-                            ) : (
-                              <ChevronDown size={14} className="text-stone-400" />
-                            )}
-                          </div>
-                        </button>
-
-                        {/* Children Properties Accordion Content */}
-                        {isExpanded && (
-                          <div className="bg-stone-50/40 px-2 py-2 border-t border-stone-100 space-y-1">
-                            {/* Option to select all of the destination */}
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setDestination(dest.label);
-                                setShowDestPopover(false);
-                                setExpandedDest(null);
-                              }}
-                              className="flex items-center justify-between w-full text-left text-[11px] font-semibold py-1.5 px-2.5 rounded-lg hover:bg-stone-100 text-stone-500 transition"
-                            >
-                              <span>Explore All in {dest.label}</span>
-                              {destination === dest.label && <Check size={12} className="text-brand-secondary" />}
-                            </button>
-
-                            {/* Specific properties */}
-                            {props.map((prop) => (
-                              <button
-                                key={prop}
-                                type="button"
-                                onClick={() => {
-                                  setDestination(prop);
-                                  setShowDestPopover(false);
-                                  setExpandedDest(null);
-                                }}
-                                className="flex items-center justify-between w-full text-left text-[11px] font-medium py-2 px-2.5 rounded-lg bg-white border border-stone-200/50 hover:border-stone-300 text-brand-primary transition shadow-sm hover:shadow-md"
-                              >
-                                <div className="flex items-center space-x-1.5">
-                                  <span className="text-xs">🏡</span>
-                                  <span className="truncate">{prop}</span>
-                                </div>
-                                {destination === prop && <Check size={12} className="text-brand-secondary" />}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+              Find Your Perfect Stay
+            </h2>
+            <p className="font-sans text-[11px] sm:text-xs tracking-[0.2em] uppercase mt-1.5 font-medium" style={{ color: "#D4AF37" }}>
+              Luxury Resorts &nbsp;•&nbsp; Heritage Hotels &nbsp;•&nbsp; Nature Homestays
+            </p>
           </div>
 
-          {/* Check In / Out Dates Field */}
-          <div ref={datesRef} className="relative flex-1 w-full text-left md:border-r border-brand-primary/10 md:px-6">
-            <button
-              id="search-dates-button"
-              onClick={() => {
-                setShowDatesPopover(!showDatesPopover);
-                setShowDestPopover(false);
-                setShowGuestsPopover(false);
-              }}
-              className="flex items-center space-x-3 w-full p-2 hover:bg-black/5 rounded-xl transition text-left focus:outline-none cursor-pointer"
-            >
-              <Calendar className="text-brand-secondary shrink-0" size={18} />
-              <div>
-                <span className="block text-[10px] font-bold tracking-[0.1em] text-brand-primary/65 uppercase">
-                  TRAVEL DATES
-                </span>
-                <span className="block text-sm font-semibold text-brand-primary truncate">
-                  {checkIn && checkOut ? `${checkIn} to ${checkOut}` : "Add dates"}
-                </span>
-              </div>
-            </button>
+          {/* Booking Card */}
+          <div
+            ref={wrapperRef}
+            className="w-full rounded-[18px] bg-white/96 backdrop-blur-md shadow-2xl transition-all duration-300"
+            style={{
+              border: activePanel ? "1.5px solid rgba(212,175,55,0.7)" : "1.5px solid rgba(212,175,55,0.28)",
+              boxShadow: "0 8px 40px rgba(24,40,30,0.18)",
+            }}
+          >
+            <div className="flex flex-col md:flex-row md:items-stretch divide-y md:divide-y-0 md:divide-x divide-[#E9D9B3]/60">
 
-            {showDatesPopover && (
-              <div className="absolute top-[110%] left-0 sm:left-1/2 sm:-translate-x-1/2 z-30 w-full sm:w-[320px] bg-white rounded-2xl shadow-xl border border-brand-primary/5 p-4 mt-1 animate-scale-up">
-                <p className="text-[10px] font-bold tracking-widest text-brand-primary/50 pb-2 border-b border-brand-primary/5 text-center">
-                  SELECT DATES
-                </p>
-                <div className="grid grid-cols-2 gap-3 mt-3">
-                  <div>
-                    <label className="block text-[9px] font-bold text-brand-primary/50 tracking-wider uppercase mb-1">
-                      Check-In
-                    </label>
-                    <input
-                      type="date"
-                      value={checkIn}
-                      min={todayStr}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setCheckIn(val);
-                        if (!checkOut || checkOut < val) {
-                          setCheckOut(val);
-                        }
-                      }}
-                      className="w-full border border-brand-primary/15 rounded-lg p-2 text-xs text-brand-primary focus:outline-none focus:border-brand-secondary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[9px] font-bold text-brand-primary/50 tracking-wider uppercase mb-1">
-                      Check-Out
-                    </label>
-                    <input
-                      type="date"
-                      value={checkOut}
-                      min={checkIn || todayStr}
-                      onChange={(e) => setCheckOut(e.target.value)}
-                      className="w-full border border-brand-primary/15 rounded-lg p-2 text-xs text-brand-primary focus:outline-none focus:border-brand-secondary"
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-between items-center mt-4 pt-3 border-t border-brand-primary/5">
-                  <button
-                    onClick={() => {
-                      setCheckIn("");
-                      setCheckOut("");
-                    }}
-                    className="text-[10px] font-bold text-brand-primary/40 hover:text-brand-secondary"
-                  >
-                    RESET
-                  </button>
-                  <button
-                    onClick={() => setShowDatesPopover(false)}
-                    className="bg-brand-primary text-brand-gold-light text-[10px] font-bold px-3 py-1.5 rounded-full"
-                  >
-                    APPLY
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Guests Field */}
-          <div ref={guestsRef} className="relative flex-1 w-full text-left md:px-6">
-            <button
-              id="search-guests-button"
-              onClick={() => {
-                setShowGuestsPopover(!showGuestsPopover);
-                setShowDestPopover(false);
-                setShowDatesPopover(false);
-              }}
-              className="flex items-center space-x-3 w-full p-2 hover:bg-black/5 rounded-xl transition text-left focus:outline-none cursor-pointer"
-            >
-              <User className="text-brand-secondary shrink-0" size={18} />
-              <div>
-                <span className="block text-[10px] font-bold tracking-[0.1em] text-brand-primary/65 uppercase">
-                  GUESTS
-                </span>
-                <span className="block text-sm font-semibold text-brand-primary truncate">
-                  {adults} Ad, {children} Ch
-                </span>
-              </div>
-            </button>
-
-            {showGuestsPopover && (
-              <div className="absolute top-[110%] right-0 z-30 w-full sm:w-[260px] bg-white rounded-2xl shadow-xl border border-brand-primary/5 p-4 mt-1 animate-scale-up space-y-3">
-                <p className="text-[10px] font-bold tracking-widest text-brand-primary/50 pb-2 border-b border-brand-primary/5">
-                  SELECT GUESTS
-                </p>
-                
-                {/* Adults row */}
-                <div className="flex items-center justify-between py-1">
-                  <div>
-                    <span className="block text-xs font-semibold text-brand-primary">Adults</span>
-                    <span className="block text-[9px] text-stone-400">Ages 13 or above</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <button
-                      onClick={() => setAdults(Math.max(1, adults - 1))}
-                      className="w-8 h-8 rounded-full border border-brand-primary/10 flex items-center justify-center text-brand-primary hover:border-brand-secondary hover:text-brand-secondary text-sm font-bold focus:outline-none cursor-pointer"
-                    >
-                      -
-                    </button>
-                    <span className="text-sm font-bold text-brand-primary w-4 text-center">{adults}</span>
-                    <button
-                      onClick={() => setAdults(Math.min(10, adults + 1))}
-                      className="w-8 h-8 rounded-full border border-brand-primary/10 flex items-center justify-center text-brand-primary hover:border-brand-secondary hover:text-brand-secondary text-sm font-bold focus:outline-none cursor-pointer"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                {/* Children row */}
-                <div className="flex items-center justify-between py-1">
-                  <div>
-                    <span className="block text-xs font-semibold text-brand-primary">Children</span>
-                    <span className="block text-[9px] text-stone-400">Ages 2–12</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <button
-                      onClick={() => setChildren(Math.max(0, children - 1))}
-                      className="w-8 h-8 rounded-full border border-brand-primary/10 flex items-center justify-center text-brand-primary hover:border-brand-secondary hover:text-brand-secondary text-sm font-bold focus:outline-none cursor-pointer"
-                    >
-                      -
-                    </button>
-                    <span className="text-sm font-bold text-brand-primary w-4 text-center">{children}</span>
-                    <button
-                      onClick={() => setChildren(Math.min(10, children + 1))}
-                      className="w-8 h-8 rounded-full border border-brand-primary/10 flex items-center justify-center text-brand-primary hover:border-brand-secondary hover:text-brand-secondary text-sm font-bold focus:outline-none cursor-pointer"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
+              {/* ── FIELD 1: Location ── */}
+              <div className="relative flex-1">
                 <button
-                  onClick={() => setShowGuestsPopover(false)}
-                  className="w-full bg-brand-primary text-brand-gold-light text-[10px] font-bold py-2 rounded-full text-center mt-2 uppercase tracking-wider cursor-pointer"
+                  type="button"
+                  onClick={() => open(isActive("location") ? null : "location")}
+                  className={`w-full h-full flex items-center gap-3 px-5 py-4 transition-all duration-200 rounded-tl-[18px] rounded-tr-[18px] md:rounded-tr-none md:rounded-bl-[18px] focus:outline-none cursor-pointer ${isActive("location") ? "field-active-ring" : "hover:bg-[#F8F5EF]/60"}`}
+                  aria-expanded={isActive("location")}
                 >
-                  Confirm Guests
+                  <div className="relative">
+                    <MapPin size={18} style={{ color: isActive("location") ? "#D4AF37" : location ? "#D4AF37" : "#b8a090", flexShrink: 0, transition: "color 0.2s" }} />
+                    {isDone("location") && (
+                      <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#D4AF37] flex items-center justify-center">
+                        <Check size={7} color="#fff" strokeWidth={3} />
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-left overflow-hidden flex-1">
+                    <span className={fieldLabel} style={{ color: isActive("location") ? "#D4AF37" : "#4A2C1D" }}>Location</span>
+                    <span className={fieldValue} style={{ color: location ? "#18281e" : "#9c8170" }}>
+                      {location || "Select Location"}
+                    </span>
+                  </div>
+                  <ChevronDown
+                    size={14}
+                    style={{
+                      color: "#D4AF37",
+                      flexShrink: 0,
+                      transform: isActive("location") ? "rotate(180deg)" : "rotate(0deg)",
+                      transition: "transform 0.25s ease",
+                    }}
+                  />
+                </button>
+
+                {isActive("location") && (
+                  <div
+                    className={`${panelClass} top-[calc(100%+10px)] left-0 w-64 p-3`}
+                    style={{ border: "1px solid #E9D9B3" }}
+                  >
+                    <p className="text-[9px] font-bold tracking-widest px-2 pb-2 mb-1 border-b border-[#E9D9B3]" style={{ color: "#9c8170" }}>
+                      SELECT LOCATION
+                    </p>
+                    {LOCATIONS.map((loc, i) => (
+                      <button
+                        key={loc.label}
+                        type="button"
+                        onClick={() => handleSelectLocation(loc.label)}
+                        className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-150 cursor-pointer group/item"
+                        style={{
+                          background: location === loc.label ? "linear-gradient(90deg,#F8F5EF,#fdf6e8)" : "transparent",
+                          animationDelay: `${i * 40}ms`,
+                        }}
+                        onMouseEnter={e => { if (location !== loc.label) (e.currentTarget as HTMLButtonElement).style.background = "#faf7f3"; }}
+                        onMouseLeave={e => { if (location !== loc.label) (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+                      >
+                        <div className="text-left">
+                          <span className="block text-xs font-bold" style={{ color: "#4A2C1D" }}>📍 {loc.label}</span>
+                          <span className="block text-[10px] mt-0.5" style={{ color: "#9c8170" }}>{loc.region}</span>
+                        </div>
+                        {location === loc.label
+                          ? <Check size={13} style={{ color: "#D4AF37" }} />
+                          : <span className="text-[10px] font-medium opacity-0 group-hover/item:opacity-100 transition-opacity" style={{ color: "#D4AF37" }}>
+                              {PROPERTIES[loc.label]?.length} {PROPERTIES[loc.label]?.length === 1 ? "property" : "properties"}
+                            </span>
+                        }
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* ── FIELD 2: Property ── */}
+              <div className="relative flex-1">
+                <button
+                  type="button"
+                  onClick={() => { if (!location) return; open(isActive("property") ? null : "property"); }}
+                  className={`w-full h-full flex items-center gap-3 px-5 py-4 transition-all duration-200 focus:outline-none ${
+                    !location ? "opacity-50 cursor-not-allowed" : isActive("property") ? "field-active-ring cursor-pointer" : "hover:bg-[#F8F5EF]/60 cursor-pointer"
+                  }`}
+                  aria-expanded={isActive("property")}
+                  aria-disabled={!location}
+                >
+                  <div className="relative">
+                    <Home size={18} style={{ color: isActive("property") ? "#D4AF37" : property ? "#D4AF37" : "#b8a090", flexShrink: 0, transition: "color 0.2s" }} />
+                    {isDone("property") && (
+                      <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#D4AF37] flex items-center justify-center">
+                        <Check size={7} color="#fff" strokeWidth={3} />
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-left overflow-hidden flex-1">
+                    <span className={fieldLabel} style={{ color: isActive("property") ? "#D4AF37" : "#4A2C1D" }}>Property</span>
+                    <span className={fieldValue} style={{ color: property ? "#18281e" : "#9c8170" }}>
+                      {property || (location ? "Select Property" : "Choose location first")}
+                    </span>
+                  </div>
+                  <ChevronDown
+                    size={14}
+                    style={{
+                      color: "#D4AF37",
+                      flexShrink: 0,
+                      transform: isActive("property") ? "rotate(180deg)" : "rotate(0deg)",
+                      transition: "transform 0.25s ease",
+                    }}
+                  />
+                </button>
+
+                {isActive("property") && availableProperties.length > 0 && (
+                  <div
+                    className={`${panelClass} top-[calc(100%+10px)] left-0 w-72 p-3`}
+                    style={{ border: "1px solid #E9D9B3" }}
+                  >
+                    <p className="text-[9px] font-bold tracking-widest px-2 pb-2 mb-1 border-b border-[#E9D9B3]" style={{ color: "#9c8170" }}>
+                      PROPERTIES IN {location.toUpperCase()}
+                    </p>
+                    {availableProperties.map((prop, i) => (
+                      <button
+                        key={prop}
+                        type="button"
+                        onClick={() => handleSelectProperty(prop)}
+                        className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-150 cursor-pointer"
+                        style={{
+                          background: property === prop ? "linear-gradient(90deg,#F8F5EF,#fdf6e8)" : "transparent",
+                          animationDelay: `${i * 40}ms`,
+                        }}
+                        onMouseEnter={e => { if (property !== prop) (e.currentTarget as HTMLButtonElement).style.background = "#faf7f3"; }}
+                        onMouseLeave={e => { if (property !== prop) (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+                      >
+                        <div className="flex items-center gap-2 text-left">
+                          <span className="text-base">🏡</span>
+                          <span className="text-[11px] font-medium leading-snug" style={{ color: "#18281e" }}>{prop}</span>
+                        </div>
+                        {property === prop && <Check size={13} style={{ color: "#D4AF37", flexShrink: 0 }} />}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* ── FIELD 3: Check-in ── */}
+              <div className="relative flex-1">
+                <button
+                  type="button"
+                  onClick={() => open(isActive("checkin") ? null : "checkin")}
+                  className={`w-full h-full flex items-center gap-3 px-5 py-4 transition-all duration-200 focus:outline-none cursor-pointer ${isActive("checkin") ? "field-active-ring" : "hover:bg-[#F8F5EF]/60"}`}
+                  aria-expanded={isActive("checkin")}
+                >
+                  <div className="relative">
+                    <Calendar size={18} style={{ color: isActive("checkin") ? "#D4AF37" : checkIn ? "#D4AF37" : "#b8a090", flexShrink: 0, transition: "color 0.2s" }} />
+                    {isDone("checkin") && (
+                      <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#D4AF37] flex items-center justify-center">
+                        <Check size={7} color="#fff" strokeWidth={3} />
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-left overflow-hidden flex-1">
+                    <span className={fieldLabel} style={{ color: isActive("checkin") ? "#D4AF37" : "#4A2C1D" }}>Check-in</span>
+                    <span className={fieldValue} style={{ color: checkIn ? "#18281e" : "#9c8170" }}>
+                      {checkIn ? new Date(checkIn + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "Select Date"}
+                    </span>
+                  </div>
+                </button>
+
+                {isActive("checkin") && (
+                  <div
+                    className={`${panelClass} top-[calc(100%+10px)] left-0 p-4`}
+                    style={{ border: "1px solid #E9D9B3" }}
+                  >
+                    <p className="text-[9px] font-bold tracking-widest pb-2 mb-3 border-b border-[#E9D9B3]" style={{ color: "#9c8170" }}>
+                      CHECK-IN DATE
+                    </p>
+                    <MiniCalendar value={checkIn} minDate={todayStr} onChange={handleCheckinChange} />
+                  </div>
+                )}
+              </div>
+
+              {/* ── FIELD 4: Check-out ── */}
+              <div className="relative flex-1">
+                <button
+                  type="button"
+                  onClick={() => checkoutEnabled ? open(isActive("checkout") ? null : "checkout") : handleDisabledCheckoutClick()}
+                  className={`w-full h-full flex items-center gap-3 px-5 py-4 transition-all duration-200 focus:outline-none ${
+                    !checkoutEnabled
+                      ? "cursor-not-allowed"
+                      : isActive("checkout")
+                      ? "field-active-ring cursor-pointer"
+                      : "hover:bg-[#F8F5EF]/60 cursor-pointer"
+                  }`}
+                  style={{
+                    opacity: checkoutEnabled ? 1 : 0.5,
+                    transition: "opacity 0.3s ease, transform 0.3s ease",
+                  }}
+                  aria-expanded={isActive("checkout")}
+                  aria-disabled={!checkoutEnabled}
+                >
+                  <div className="relative">
+                    <Calendar size={18} style={{ color: isActive("checkout") ? "#D4AF37" : checkOut ? "#D4AF37" : "#b8a090", flexShrink: 0, transition: "color 0.2s" }} />
+                    {isDone("checkout") && (
+                      <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#D4AF37] flex items-center justify-center">
+                        <Check size={7} color="#fff" strokeWidth={3} />
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-left overflow-hidden flex-1">
+                    <span className={fieldLabel} style={{ color: isActive("checkout") ? "#D4AF37" : "#4A2C1D" }}>Check-out</span>
+                    <span className={fieldValue} style={{ color: checkOut ? "#18281e" : "#9c8170" }}>
+                      {checkOut ? new Date(checkOut + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "Select Date"}
+                    </span>
+                  </div>
+                </button>
+
+                {isActive("checkout") && (
+                  <div
+                    className={`${panelClass} top-[calc(100%+10px)] left-0 p-4`}
+                    style={{ border: "1px solid #E9D9B3" }}
+                  >
+                    <p className="text-[9px] font-bold tracking-widest pb-2 mb-3 border-b border-[#E9D9B3]" style={{ color: "#9c8170" }}>
+                      CHECK-OUT DATE
+                    </p>
+                    <MiniCalendar value={checkOut} minDate={checkIn || todayStr} onChange={handleCheckoutChange} />
+                  </div>
+                )}
+              </div>
+
+              {/* ── Search Button ── */}
+              <div className="flex items-stretch p-2.5 md:p-3">
+                <button
+                  type="button"
+                  onClick={handleSearchClick}
+                  className={`relative overflow-hidden flex items-center justify-center gap-2.5 font-sans font-semibold text-xs tracking-[0.13em] uppercase px-6 py-4 rounded-[14px] transition-all duration-300 w-full md:w-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer active:scale-95 ${rippling ? "btn-ripple" : ""}`}
+                  style={{
+                    background: "linear-gradient(135deg,#D4AF37 0%,#b8941f 60%,#96770f 100%)",
+                    color: "#FFFFFF",
+                    boxShadow: "0 4px 22px rgba(212,175,55,0.48)",
+                    minWidth: "160px",
+                  }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "linear-gradient(135deg,#4A2C1D 0%,#5D3A29 100%)"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "linear-gradient(135deg,#D4AF37 0%,#b8941f 60%,#96770f 100%)"; }}
+                >
+                  <Search size={15} style={{ flexShrink: 0 }} />
+                  <span>Search Availability</span>
                 </button>
               </div>
-            )}
+
+            </div>
+
+            {/* Step progress indicator */}
+            <div className="flex items-center justify-center py-2.5 border-t border-[#E9D9B3]/40">
+              {(["location", "property", "checkin", "checkout"] as ActivePanel[]).map((step, i) => {
+                const done = isDone(step);
+                return (
+                  <div key={step} className="flex items-center">
+                    <div
+                      className="flex items-center justify-center rounded-full transition-all duration-400"
+                      style={{
+                        width: 20,
+                        height: 20,
+                        background: done ? "linear-gradient(135deg,#D4AF37,#b8941f)" : "transparent",
+                        border: `1.5px solid ${done ? "#D4AF37" : "#c8c8c8"}`,
+                        boxShadow: done ? "0 1px 6px rgba(212,175,55,0.3)" : "none",
+                        transition: "all 0.35s ease",
+                      }}
+                    >
+                      {done ? (
+                        <Check size={10} color="#fff" strokeWidth={2.5} />
+                      ) : (
+                        <span style={{ fontSize: 9, fontWeight: 700, color: "#c8c8c8", lineHeight: 1 }}>
+                          {i + 1}
+                        </span>
+                      )}
+                    </div>
+                    {i < 3 && (
+                      <div
+                        style={{
+                          width: 28,
+                          height: 1.5,
+                          background: done ? "#D4AF37" : "#d9d9d9",
+                          margin: "0 2px",
+                          borderRadius: 2,
+                          transition: "background 0.4s ease",
+                        }}
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Search CTA Round Button */}
-          <div className="w-full md:w-auto flex justify-end">
-            <button
-              id="search-submit-cta"
-              onClick={handleSearchClick}
-              className="bg-brand-primary hover:bg-brand-secondary text-brand-gold-light p-4 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-brand-primary/10 flex items-center justify-center w-full md:w-12 md:h-12 border border-brand-gold-light/20 cursor-pointer"
-              title="Search Sanctuaries"
-            >
-              <Search size={20} className="shrink-0" />
-              <span className="md:hidden ml-2 font-semibold text-xs tracking-widest">SEARCH PROPERTIES</span>
-            </button>
-          </div>
+          {/* Validation hint */}
+          {!allFilled && (
+            <p className="text-center text-[10px] font-medium tracking-wide mt-3" style={{ color: "rgba(248,245,239,0.6)" }}>
+              {!location ? "Start by selecting your destination" : !property ? "Now choose a property" : !checkIn ? "Pick your check-in date" : "Add your check-out date"}
+            </p>
+          )}
         </div>
-      </div>
 
-      {/* Swoooping Organic Curved Separator */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 overflow-hidden line-height-0 pointer-events-none select-none">
-        <svg
-          viewBox="0 0 1440 120"
-          fill="none"
-          preserveAspectRatio="none"
-          className="relative block w-full h-[40px] sm:h-[80px] md:h-[120px]"
-        >
-          <path d="M0,0 Q720,120 1440,0 L1440,120 L0,120 Z" fill="#fcf9f8" />
-        </svg>
-      </div>
-    </section>
+        {/* Bottom Curve */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 overflow-hidden pointer-events-none select-none">
+          <svg viewBox="0 0 1440 120" fill="none" preserveAspectRatio="none" className="relative block w-full h-[40px] sm:h-[80px] md:h-[120px]">
+            <path d="M0,0 Q720,120 1440,0 L1440,120 L0,120 Z" fill="#fcf9f8" />
+          </svg>
+        </div>
+      </section>
+    </>
   );
 }
