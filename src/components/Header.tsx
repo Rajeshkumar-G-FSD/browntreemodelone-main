@@ -47,21 +47,23 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
           : "py-5 px-4 md:px-16 bg-gradient-to-b from-black/50 to-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Brand Logo */}
-        <button
-          id="logo-button"
-          onClick={() => handleItemClick("home")}
-          className="flex items-center focus:outline-none group cursor-pointer"
-        >
-          <img
-            src={btLogo}
-            alt="Brown Tree Resorts logo – luxury resort, home stay and heritage stays in Ooty, Kothagiri and Kodaikanal"
-            className="h-11 md:h-14 w-auto object-contain transition-all duration-300 group-hover:scale-105"
-          />
-        </button>
+      <div className="max-w-7xl mx-auto flex items-center">
+        {/* Brand Logo — left anchor */}
+        <div className="flex-1 flex justify-start">
+          <button
+            id="logo-button"
+            onClick={() => handleItemClick("home")}
+            className="flex items-center focus:outline-none group cursor-pointer"
+          >
+            <img
+              src={btLogo}
+              alt="Brown Tree Resorts logo – luxury resort, home stay and heritage stays in Ooty, Kothagiri and Kodaikanal"
+              className="h-11 md:h-14 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+            />
+          </button>
+        </div>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation — centered */}
         <nav id="desktop-nav" className="hidden lg:flex items-center space-x-8">
           {navItems.map((item) => (
             <button
@@ -99,43 +101,19 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
           </button>
         </nav>
 
-        {/* Right CTA */}
-        <div className="hidden lg:flex items-center space-x-4">
-          <button
-            id="book-now-header-cta"
-            onClick={onOpenBooking}
-            className={`font-sans text-xs font-semibold tracking-widest py-3 px-6 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-md ${
-              isScrolled
-                ? "bg-brand-primary text-brand-gold-light hover:bg-brand-secondary hover:text-white shadow-brand-primary/20"
-                : "bg-brand-gold-light text-brand-primary hover:bg-white hover:text-brand-primary shadow-black/20"
-            }`}
-          >
-            BOOK NOW
-          </button>
-        </div>
-
-        {/* Mobile right actions */}
-        <div className="flex lg:hidden items-center space-x-3">
-          <button
-            id="book-now-mobile-cta"
-            onClick={onOpenBooking}
-            className={`font-sans text-[10px] font-bold tracking-wider py-2 px-4 rounded-full active:scale-95 cursor-pointer transition-all duration-300 ${
-              isScrolled
-                ? "bg-brand-primary text-brand-gold-light"
-                : "bg-brand-gold-light text-brand-primary"
-            }`}
-          >
-            BOOK
-          </button>
-          <button
-            id="mobile-menu-toggle"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`focus:outline-none p-1 cursor-pointer transition-colors duration-300 ${
-              isScrolled ? "text-brand-primary" : "text-white"
-            }`}
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+        {/* Right side — balances logo width; mobile menu button lives here */}
+        <div className="flex-1 flex justify-end">
+          <div className="flex lg:hidden items-center space-x-3">
+            <button
+              id="mobile-menu-toggle"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className={`focus:outline-none p-1 cursor-pointer transition-colors duration-300 ${
+                isScrolled ? "text-brand-primary" : "text-white"
+              }`}
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -167,19 +145,6 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
             >
               CONTACT
             </button>
-            <div className="pt-6">
-              <button
-                id="mobile-nav-book-cta"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onOpenBooking();
-                }}
-                className="w-full bg-brand-primary text-brand-gold-light font-sans text-sm font-semibold tracking-widest py-4 rounded-full text-center hover:bg-brand-secondary hover:text-white transition-all shadow-md cursor-pointer"
-              >
-                BOOK NOW
-              </button>
-            </div>
-            
             <div className="flex items-center justify-center space-x-2 text-xs text-brand-primary/45 pt-12">
               <Sparkles size={14} className="text-brand-gold-light" />
               <span>An exquisite digital sanctuary experience.</span>

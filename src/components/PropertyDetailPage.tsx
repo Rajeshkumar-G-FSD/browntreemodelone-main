@@ -271,12 +271,6 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
                     <span className="text-xs text-brand-primary/50">/night</span>
                   </div>
                 </div>
-                <button
-                  onClick={() => onBookSuite(property, property.suites[0])}
-                  className="w-full bg-brand-primary hover:bg-brand-secondary text-brand-gold-light hover:text-white text-xs font-bold tracking-widest py-3.5 rounded-xl transition-all duration-300 cursor-pointer uppercase mt-2"
-                >
-                  Book Now
-                </button>
               </div>
             </FadeUp>
           </div>
