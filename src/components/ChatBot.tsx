@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageSquare, X, Send, Sparkles, AlertCircle, Calendar, Users } from "lucide-react";
+import { MessageSquare, X, Send, Sparkles, AlertCircle, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface Message {
@@ -7,7 +7,13 @@ interface Message {
   text: string;
 }
 
-export default function ChatBot() {
+type ChatLocation = "OOTY" | "KOTHAGIRI" | "KODAIKANAL";
+
+interface ChatBotProps {
+  onBookNow?: (location: ChatLocation | null, propertyName: string) => void;
+}
+
+export default function ChatBot({ onBookNow }: ChatBotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -19,14 +25,13 @@ export default function ChatBot() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [unreadCount, setUnreadCount] = useState(0);
-  const [selectedLocation, setSelectedLocation] = useState<"OOTY" | "KOTHAGIRI" | "KODAIKANAL" | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<ChatLocation | null>(null);
 
   // Booking Flow States
   const [bookingProperty, setBookingProperty] = useState<string | null>(null);
+  const [bookingLocation, setBookingLocation] = useState<ChatLocation | null>(null);
   const [checkIn, setCheckIn] = useState<string>("");
   const [checkOut, setCheckOut] = useState<string>("");
-  const [adults, setAdults] = useState<number>(2);
-  const [children, setChildren] = useState<number>(0);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -87,7 +92,7 @@ export default function ChatBot() {
     }
   };
 
-  const handleSelectLocation = (location: "OOTY" | "KOTHAGIRI" | "KODAIKANAL") => {
+  const handleSelectLocation = (location: ChatLocation) => {
     setSelectedLocation(location);
     const userMsg: Message = { sender: "user", text: location };
     
@@ -105,6 +110,7 @@ export default function ChatBot() {
   };
 
   const handleSelectProperty = (propertyName: string) => {
+    setBookingLocation(selectedLocation);
     setSelectedLocation(null);
     setBookingProperty(propertyName);
     const userMsg: Message = { sender: "user", text: `I prefer ${propertyName}` };
@@ -122,20 +128,25 @@ export default function ChatBot() {
     }
     setError(null);
 
-    const userMsgText = `Confirm booking for ${bookingProperty} from ${checkIn} to ${checkOut} (${adults} Adults, ${children} Children)`;
+    const userMsgText = `Confirm booking for ${bookingProperty} from ${checkIn} to ${checkOut}`;
     const userMsg: Message = { sender: "user", text: userMsgText };
-    
-    const confirmationId = `BT-${Math.floor(100000 + Math.random() * 900000)}`;
-    const botMsgText = `🎉 **Reservation Confirmed!**\n\nYour stay at **${bookingProperty}** has been successfully booked.\n\n**Booking Summary:**\n- **Property:** ${bookingProperty}\n- **Check-in:** ${checkIn}\n- **Check-out:** ${checkOut}\n- **Guests:** ${adults} Adult(s), ${children} Child(ren)\n- **Confirmation ID:** \`${confirmationId}\`\n\nOur hospitality host will contact you shortly to coordinate luxury transfers and personalized check-in privileges. We look forward to welcoming you! 🌿`;
-    
+
+    const botMsgText = `Wonderful! Taking you to the booking widget for **${bookingProperty}** — just confirm your check-in date there to complete your reservation. 🌿`;
     const botMsg: Message = { sender: "bot", text: botMsgText };
-    
+
     setMessages((prev) => [...prev, userMsg, botMsg]);
+
+    const propertyName = bookingProperty;
+    const location = bookingLocation;
     setBookingProperty(null);
+    setBookingLocation(null);
     setCheckIn("");
     setCheckOut("");
-    setAdults(2);
-    setChildren(0);
+
+    setTimeout(() => {
+      setIsOpen(false);
+      if (propertyName) onBookNow?.(location, propertyName);
+    }, 900);
   };
 
   // Simple formatter to support basic Markdown like bolding (**) and lists
@@ -426,53 +437,10 @@ export default function ChatBot() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Adults</label>
-                      <div className="flex items-center border border-stone-200 rounded-lg bg-stone-50 overflow-hidden">
-                        <button
-                          type="button"
-                          onClick={() => setAdults(prev => Math.max(1, prev - 1))}
-                          className="px-2.5 py-1 text-stone-500 hover:bg-stone-200 text-sm font-bold transition-all cursor-pointer"
-                        >
-                          -
-                        </button>
-                        <span className="flex-1 text-center text-xs font-semibold text-stone-850">{adults}</span>
-                        <button
-                          type="button"
-                          onClick={() => setAdults(prev => Math.min(10, prev + 1))}
-                          className="px-2.5 py-1 text-stone-500 hover:bg-stone-200 text-sm font-bold transition-all cursor-pointer"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Children</label>
-                      <div className="flex items-center border border-stone-200 rounded-lg bg-stone-50 overflow-hidden">
-                        <button
-                          type="button"
-                          onClick={() => setChildren(prev => Math.max(0, prev - 1))}
-                          className="px-2.5 py-1 text-stone-500 hover:bg-stone-200 text-sm font-bold transition-all cursor-pointer"
-                        >
-                          -
-                        </button>
-                        <span className="flex-1 text-center text-xs font-semibold text-stone-850">{children}</span>
-                        <button
-                          type="button"
-                          onClick={() => setChildren(prev => Math.min(10, prev + 1))}
-                          className="px-2.5 py-1 text-stone-500 hover:bg-stone-200 text-sm font-bold transition-all cursor-pointer"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
                   <div className="flex gap-2 pt-1">
                     <button
                       type="button"
-                      onClick={() => setBookingProperty(null)}
+                      onClick={() => { setBookingProperty(null); setBookingLocation(null); }}
                       className="flex-1 border border-stone-200 hover:bg-stone-100 text-stone-600 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer"
                     >
                       Cancel

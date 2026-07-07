@@ -488,54 +488,6 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
         </div>
       </section>
 
-      {/* ── 6. Room Types ── */}
-      {property.suites && property.suites.length > 0 && (
-        <section className="py-16 md:py-24 bg-brand-background">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <FadeUp>
-              <SectionHeading eyebrow="Accommodation" title="Room Types" />
-            </FadeUp>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {property.suites.map((suite, idx) => (
-                <FadeUp key={idx} delay={idx * 100} className="h-full">
-                  <div className="h-full bg-white border border-brand-primary/8 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
-                    <div className="flex items-start justify-between gap-4 mb-4">
-                      <div>
-                        <h3 className="font-display text-lg md:text-xl font-semibold text-brand-primary mb-1">{suite.name}</h3>
-                        <span className="text-[10px] font-bold text-brand-secondary uppercase tracking-wider">{suite.size}</span>
-                      </div>
-                      <div className="text-right shrink-0">
-                        <div className="flex items-baseline gap-1 justify-end">
-                          <span className="text-[10px] text-brand-primary/50">From</span>
-                          <span className="font-display text-xl font-bold text-brand-primary">₹{suite.pricePerNight.toLocaleString()}</span>
-                        </div>
-                        <span className="text-[10px] text-brand-primary/50">/night · up to {suite.maxGuests} guests</span>
-                      </div>
-                    </div>
-                    <p className="text-sm text-brand-primary/65 font-light leading-relaxed mb-6">{suite.description}</p>
-                    <div className="flex flex-wrap gap-2 mb-6 flex-1">
-                      {suite.amenities.map((amenity, i) => (
-                        <span key={i} className="flex items-center gap-1.5 text-[10px] font-semibold text-brand-primary/80 bg-brand-background border border-brand-primary/8 rounded-lg px-2.5 py-1.5">
-                          <Check size={10} strokeWidth={3} className="text-brand-secondary shrink-0" />
-                          {amenity}
-                        </span>
-                      ))}
-                    </div>
-                    <button
-                      onClick={() => onBookSuite(property, suite)}
-                      className="mt-auto w-full flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-secondary text-white font-bold text-xs tracking-widest uppercase px-6 py-3.5 rounded-xl transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg"
-                    >
-                      <span>View Room</span>
-                      <ChevronRight size={14} />
-                    </button>
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* ── 7. House Rules ── */}
       {!property.hideHouseRules && (
       <section className="py-16 md:py-24 bg-white">

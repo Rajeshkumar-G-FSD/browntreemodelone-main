@@ -967,7 +967,6 @@ export const PROPERTIES: Property[] = [
     ],
     amenities: [
       "Free Parking",
-      "Multi-Cuisine Restaurant",
       "24-Hour Room Service",
       "Lounge",
       "Yoga",
@@ -976,7 +975,6 @@ export const PROPERTIES: Property[] = [
     propertyHighlightCards: [
       "Prime City Location",
       "Spacious Modern Rooms",
-      "Multi-Cuisine Restaurant",
       "Wellness Experiences",
       "Family Friendly",
       "Business & Events",
@@ -985,7 +983,6 @@ export const PROPERTIES: Property[] = [
     ],
     popularAmenities: [
       "Free Parking",
-      "Multi-Cuisine Restaurant",
       "24-Hour Room Service",
       "Lounge",
       "Yoga",
@@ -1007,7 +1004,6 @@ export const PROPERTIES: Property[] = [
     whyStayCards: [
       { title: "Prime City Location", description: "Easy access to Kodaikanal Lake, Bryant Park, shopping areas, and transport hubs." },
       { title: "Spacious Modern Rooms", description: "Elegant accommodations designed for comfort and relaxation." },
-      { title: "Multi-Cuisine Restaurant", description: "Enjoy delicious Indian and international cuisine prepared by experienced chefs." },
       { title: "Wellness Experiences", description: "Yoga, meditation, and peaceful surroundings for complete relaxation." },
       { title: "Family Friendly", description: "Ideal for families, couples, business travelers, and groups." },
       { title: "Business & Events", description: "Banquet facilities available for meetings and celebrations." },
@@ -1023,7 +1019,7 @@ export const PROPERTIES: Property[] = [
     amenityCategories: [
       {
         category: "Highlighted Amenities",
-        items: ["Free Parking", "Multi-Cuisine Restaurant", "24-Hour Room Service", "Lounge", "Yoga", "Bonfire"]
+        items: ["Free Parking", "24-Hour Room Service", "Lounge", "Yoga", "Bonfire"]
       },
       {
         category: "Basic Facilities",
@@ -1047,7 +1043,7 @@ export const PROPERTIES: Property[] = [
       },
       {
         category: "Dining",
-        items: ["Multi-Cuisine Restaurant", "Halal Cuisine", "Kosher Cuisine", "Indian Vegetarian Cuisine", "Dining Area", "Barbecue"]
+        items: ["Halal Cuisine", "Kosher Cuisine", "Indian Vegetarian Cuisine", "Dining Area", "Barbecue"]
       },
       {
         category: "Safety & Security",
