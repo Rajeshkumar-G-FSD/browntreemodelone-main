@@ -3,32 +3,154 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, FormEvent } from "react";
+import { useState, useRef, FormEvent, ChangeEvent } from "react";
 import { Mail, Phone, Clock, Send, CheckCircle2, Sparkles } from "lucide-react";
+
+const WHATSAPP_NUMBER = "919095487848"; // +91 90954 87848
+
+// nsnLength = exact National Significant Number length for that country's
+// numbering plan, when known. Omit it for countries with variable-length
+// numbers — those are only checked against the overall E.164 15-digit cap.
+const COUNTRY_CODES: { code: string; label: string; flag: string; nsnLength?: number }[] = [
+  { code: "+91", label: "India", flag: "🇮🇳", nsnLength: 10 },
+  { code: "+1", label: "USA/Canada", flag: "🇺🇸", nsnLength: 10 },
+  { code: "+44", label: "UK", flag: "🇬🇧" },
+  { code: "+971", label: "UAE", flag: "🇦🇪" },
+  { code: "+65", label: "Singapore", flag: "🇸🇬" },
+  { code: "+61", label: "Australia", flag: "🇦🇺", nsnLength: 9 },
+  { code: "+49", label: "Germany", flag: "🇩🇪" },
+  { code: "+33", label: "France", flag: "🇫🇷" },
+  { code: "+81", label: "Japan", flag: "🇯🇵" },
+  { code: "+86", label: "China", flag: "🇨🇳", nsnLength: 11 },
+  { code: "+966", label: "Saudi Arabia", flag: "🇸🇦" },
+  { code: "+974", label: "Qatar", flag: "🇶🇦" },
+  { code: "+60", label: "Malaysia", flag: "🇲🇾" },
+  { code: "+94", label: "Sri Lanka", flag: "🇱🇰" },
+  { code: "+977", label: "Nepal", flag: "🇳🇵" },
+];
+
+const E164_MAX_DIGITS = 15;
+
+function findCountryPlan(countryCode: string) {
+  return COUNTRY_CODES.find((c) => c.code === countryCode);
+}
+
+// Max digits allowed in the national number field for the given country —
+// its known exact length, or whatever room is left under the E.164 cap.
+function maxNsnLength(countryCode: string): number {
+  const plan = findCountryPlan(countryCode);
+  if (plan?.nsnLength) return plan.nsnLength;
+  const countryDigits = countryCode.replace(/\D/g, "").length;
+  return Math.max(1, E164_MAX_DIGITS - countryDigits);
+}
+
+interface PhoneValidationResult {
+  valid: boolean;
+  normalized?: string;
+  error?: string;
+}
+
+// Validates a national number against E.164 + the selected country's
+// numbering plan (rules: E.164 format, 1-15 total digits, per-country
+// numbering plan when known, never reject solely for not being 10 digits).
+function validatePhoneNumber(countryCode: string, rawNumber: string): PhoneValidationResult {
+  const cleaned = rawNumber.replace(/[\s\-()]/g, "");
+
+  if (!cleaned) {
+    return { valid: false, error: "Please enter a mobile number." };
+  }
+  if (!/^\d+$/.test(cleaned)) {
+    return { valid: false, error: "Phone number must contain only digits." };
+  }
+
+  const countryDigits = countryCode.replace(/\D/g, "");
+  const totalDigits = countryDigits.length + cleaned.length;
+
+  if (totalDigits > E164_MAX_DIGITS || totalDigits < 1) {
+    return {
+      valid: false,
+      error: `Phone number must be 1–${E164_MAX_DIGITS} digits total (including country code) per the E.164 standard — you entered ${totalDigits}.`,
+    };
+  }
+
+  const plan = findCountryPlan(countryCode);
+  if (plan?.nsnLength && cleaned.length !== plan.nsnLength) {
+    return {
+      valid: false,
+      error: `${plan.label} (${plan.code}) numbers must be exactly ${plan.nsnLength} digits — you entered ${cleaned.length}.`,
+    };
+  }
+
+  return { valid: true, normalized: `${countryCode}${cleaned}` };
+}
 
 export default function ContactSection() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [countryCode, setCountryCode] = useState("+91");
   const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const messageRef = useRef<HTMLTextAreaElement>(null);
+
+  const selectedPlan = findCountryPlan(countryCode);
+  const phonePlaceholder = selectedPlan?.nsnLength
+    ? `${selectedPlan.nsnLength}-digit mobile number`
+    : "Mobile number";
+
+  const handleCountryChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const newCode = e.target.value;
+    setCountryCode(newCode);
+    setPhone((prev) => prev.slice(0, maxNsnLength(newCode)));
+    setPhoneError(null);
+  };
+
+  const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const digits = e.target.value.replace(/\D/g, "").slice(0, maxNsnLength(countryCode));
+    setPhone(digits);
+    setPhoneError(null);
+    // Only auto-advance when this country's exact length is known and reached —
+    // never assume every country uses a 10-digit national number.
+    if (selectedPlan?.nsnLength && digits.length === selectedPlan.nsnLength) {
+      messageRef.current?.focus();
+    }
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) return;
 
+    let normalizedPhone = "Not provided";
+    if (phone.trim()) {
+      const result = validatePhoneNumber(countryCode, phone);
+      if (!result.valid) {
+        setPhoneError(result.error ?? "Invalid phone number.");
+        return;
+      }
+      normalizedPhone = result.normalized!;
+    }
+    setPhoneError(null);
+
+    const waMessage = `New Concierge Inquiry — Brown Tree Resorts\n\n*Full Name:* ${name}\n*Email:* ${email}\n*Telephone:* ${normalizedPhone}\n\n*Special Inquiry & Requests:*\n${message}`;
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+
+    // Open synchronously (same user gesture) so browsers don't block the popup
+    window.open(waUrl, "_blank", "noopener,noreferrer");
+
     setLoading(true);
-    // Simulate premium API call
     setTimeout(() => {
       setLoading(false);
       setIsSubmitted(true);
       // Reset
       setName("");
       setEmail("");
+      setCountryCode("+91");
       setPhone("");
       setMessage("");
-    }, 1200);
+    }, 900);
   };
 
   return (
@@ -106,9 +228,9 @@ export default function ContactSection() {
                 </div>
               </div>
               <div className="space-y-2">
-                <h3 className="font-display text-2xl font-semibold text-brand-primary">Inquiry Safely Received</h3>
+                <h3 className="font-display text-2xl font-semibold text-brand-primary">Inquiry Sent via WhatsApp</h3>
                 <p className="font-sans text-sm text-brand-primary/70 max-w-md mx-auto font-light leading-relaxed">
-                  Thank you for contacting Luxe Sanctuary. Our bespoke concierge team has received your details and will reach out to you within the next two hours with a customized proposal.
+                  Thank you for contacting Brown Tree Resorts. Your inquiry details have been shared with our concierge team on WhatsApp, and they will reach out to you shortly with a customized proposal.
                 </p>
               </div>
               <div className="pt-4 flex items-center justify-center space-x-2 text-xs font-semibold text-brand-secondary">
@@ -170,13 +292,36 @@ export default function ContactSection() {
                 <label className="text-[10px] font-bold text-brand-primary/60 tracking-wider uppercase mb-1">
                   Telephone (Optional)
                 </label>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="e.g. +1 (555) 019-2834"
-                  className="py-3 border-b border-brand-primary/15 focus:border-brand-secondary focus:outline-none text-sm text-brand-primary font-medium transition-colors bg-transparent placeholder-brand-primary/25"
-                />
+                <div className="flex items-stretch gap-3">
+                  <select
+                    value={countryCode}
+                    onChange={handleCountryChange}
+                    aria-label="Country code"
+                    className="py-3 border-b border-brand-primary/15 focus:border-brand-secondary focus:outline-none text-sm text-brand-primary font-medium transition-colors bg-transparent cursor-pointer shrink-0"
+                  >
+                    {COUNTRY_CODES.map((c) => (
+                      <option key={c.code} value={c.code}>
+                        {c.flag} {c.code} {c.label}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="tel"
+                    inputMode="numeric"
+                    autoComplete="tel-national"
+                    value={phone}
+                    onChange={handlePhoneChange}
+                    maxLength={maxNsnLength(countryCode)}
+                    placeholder={phonePlaceholder}
+                    aria-invalid={!!phoneError}
+                    className={`flex-1 py-3 border-b focus:outline-none text-sm text-brand-primary font-medium transition-colors bg-transparent placeholder-brand-primary/25 ${
+                      phoneError ? "border-red-400 focus:border-red-500" : "border-brand-primary/15 focus:border-brand-secondary"
+                    }`}
+                  />
+                </div>
+                {phoneError && (
+                  <p className="text-[11px] text-red-600 font-medium mt-1.5">{phoneError}</p>
+                )}
               </div>
 
               {/* Special Request Text Area */}
@@ -185,6 +330,7 @@ export default function ContactSection() {
                   Special Inquiry & Requests *
                 </label>
                 <textarea
+                  ref={messageRef}
                   required
                   rows={4}
                   value={message}
