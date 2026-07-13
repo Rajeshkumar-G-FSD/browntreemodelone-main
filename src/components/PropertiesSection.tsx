@@ -267,13 +267,13 @@ export default function PropertiesSection({
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between pt-4 border-t border-brand-primary/5">
+                    <div className="flex flex-col items-center text-center gap-3 pt-4 border-t border-brand-primary/15">
                       <div>
                         <span className="block text-[8px] font-bold text-brand-primary/40 tracking-[0.2em] uppercase">
                           STARTING AT
                         </span>
-                        <div className="flex items-baseline space-x-1">
-                          <span className="font-display text-2xl font-semibold text-brand-primary">₹{property.price}</span>
+                        <div className="flex items-baseline justify-center space-x-1">
+                          <span className="font-display text-2xl font-semibold text-brand-primary line-through decoration-2">₹{property.price}</span>
                           <span className="text-[11px] text-brand-primary/50">/nt</span>
                         </div>
                       </div>

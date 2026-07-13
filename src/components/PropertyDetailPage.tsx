@@ -225,7 +225,7 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
               </div>
               <div className="flex items-baseline space-x-1 text-white">
                 <span className="text-[10px] text-white/60 font-light">From</span>
-                <span className="font-display text-lg md:text-2xl font-semibold">
+                <span className="font-display text-lg md:text-2xl font-semibold line-through decoration-2">
                   ₹{property.price.toLocaleString()}
                 </span>
                 <span className="text-[10px] text-white/60">/night</span>
@@ -301,12 +301,16 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
                     <span className="text-xs font-semibold text-brand-primary">{property.type} · {property.region}</span>
                   </div>
                 </div>
-                <div className="pt-2">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-[10px] text-brand-primary/50">From</span>
-                    <span className="font-display text-2xl font-bold text-brand-primary">₹{property.price.toLocaleString()}</span>
-                    <span className="text-xs text-brand-primary/50">/night</span>
-                  </div>
+                <div>
+                  <button
+                    onClick={() => onBookSuite(property, property.suites[0])}
+                    className="w-full flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-secondary rounded-xl px-4 py-3.5 transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg"
+                  >
+                    <span className="flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase text-brand-gold-light">
+                      Book Now
+                      <ChevronRight size={14} />
+                    </span>
+                  </button>
                 </div>
               </div>
             </FadeUp>
