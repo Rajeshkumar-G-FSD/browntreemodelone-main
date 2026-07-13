@@ -368,19 +368,6 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
         {/* ── LUXURY BOOKING WIDGET ── */}
         <div className="relative z-20 w-full max-w-5xl mx-auto mt-10 md:mt-16 px-2">
 
-          {/* Widget heading */}
-          <div className="text-center mb-5">
-            <h2
-              className="font-display text-xl sm:text-2xl md:text-3xl font-semibold tracking-wide"
-              style={{ color: "#F8F5EF", textShadow: "0 2px 12px rgba(0,0,0,0.35)" }}
-            >
-              Find Your Perfect Stay
-            </h2>
-            <p className="font-sans text-[11px] sm:text-xs tracking-[0.2em] uppercase mt-1.5 font-medium" style={{ color: "#D4AF37" }}>
-              Luxury Resorts &nbsp;•&nbsp; Heritage Hotels &nbsp;•&nbsp; Nature Homestays
-            </p>
-          </div>
-
           {/* Booking Card */}
           <div
             ref={wrapperRef}
