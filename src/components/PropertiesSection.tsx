@@ -102,7 +102,7 @@ export default function PropertiesSection({
             className="inline-flex items-center space-x-2 text-xs font-bold tracking-[0.25em] text-brand-secondary uppercase"
           >
             <Compass size={14} />
-            <span>Curated Collection</span>
+            <span>Brown Tree Collection</span>
           </motion.div>
           <div className="w-full">
             <SplitText
