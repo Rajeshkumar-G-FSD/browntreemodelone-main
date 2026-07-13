@@ -253,7 +253,7 @@ export default function PropertiesSection({
 
                   {/* Glassmorphic Info Pane Anchored at Bottom */}
                   <div className="p-6 space-y-4 bg-white/95 border-t border-brand-primary/5">
-                    <div className="flex justify-between items-start">
+                    <div className="flex justify-between items-start gap-3">
                       <div>
                         <span className="block text-[10px] font-bold tracking-[0.15em] text-brand-secondary uppercase">
                           {property.type}
@@ -265,14 +265,27 @@ export default function PropertiesSection({
                           {property.location}
                         </span>
                       </div>
+
+                      {/* Explore — same click action as the card, with a themed hover reveal */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onSelectProperty(property);
+                        }}
+                        className="flex items-center gap-1 text-[10px] font-bold tracking-widest uppercase text-brand-secondary/70 group-hover:text-brand-secondary transition-colors duration-300 shrink-0 cursor-pointer pt-1"
+                      >
+                        <span>Explore</span>
+                        <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
+                      </button>
                     </div>
 
-                    <div className="flex flex-col items-center text-center gap-3 pt-4 border-t border-brand-primary/15">
+                    <div className="flex items-center justify-between gap-3 pt-4 border-t border-brand-primary/15">
                       <div>
                         <span className="block text-[8px] font-bold text-brand-primary/40 tracking-[0.2em] uppercase">
                           STARTING AT
                         </span>
-                        <div className="flex items-baseline justify-center space-x-1">
+                        <div className="flex items-baseline space-x-1">
                           <span className="font-display text-2xl font-semibold text-brand-primary line-through decoration-2">₹{property.price}</span>
                           <span className="text-[11px] text-brand-primary/50">/nt</span>
                         </div>
