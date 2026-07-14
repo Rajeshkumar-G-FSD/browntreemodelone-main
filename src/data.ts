@@ -35,6 +35,7 @@ import hummingBirdSinglebed from "./assets/images/HummingBird_singlebed.jpeg";
 import hummingBirdSinglebedA from "./assets/images/HummingBird_Singlebed_.jpeg";
 import hummingBirdParking from "./assets/images/HummingBird_parking.jpeg";
 import hummingBirdDining from "./assets/images/HummingBird_dining.jpeg";
+import hummingBirdBrowntree from "./assets/images/hummingbird_browntre.jpeg";
 import solarMain from "./assets/images/solar.png";
 import solarSinglebed from "./assets/images/solar_singlebed.jpeg";
 import solarSinglebedA from "./assets/images/solar_singlebed_.jpeg.jpeg";
@@ -748,15 +749,16 @@ export const PROPERTIES: Property[] = [
     price: 5000,
     rating: 4.6,
     reviewCount: 36,
-    image: hummingBirdMain,
+    image: hummingBirdBrowntree,
     gallery: [
-      hummingBirdMain,
+      hummingBirdBrowntree,
       hummingBirdNightview,
       hummingBirdDoublebed,
       hummingBirdSinglebed,
       hummingBirdSinglebedA,
       hummingBirdParking,
       hummingBirdDining,
+      hummingBirdMain,
     ],
     description: "Nestled amidst the tranquil hills of Kothagiri, Humming Bird by Brown Tree Resorts offers a serene villa experience designed for families, couples, and small groups looking to escape the rush of city life.\n\nSurrounded by lush greenery and refreshing mountain air, the property combines modern comforts with warm interiors to create a relaxing home-away-from-home. Spacious accommodations, beautiful outdoor spaces, and personalized hospitality make every stay memorable.\n\nWhether you're planning a family vacation, a romantic getaway, or a weekend retreat with friends, Humming Bird offers the perfect setting to relax, reconnect, and rejuvenate.",
     highlights: [

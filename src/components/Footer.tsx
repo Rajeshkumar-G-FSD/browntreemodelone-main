@@ -80,13 +80,13 @@ export default function Footer({ onNavigate }: FooterProps) {
           </div>
 
           {/* Links Columns */}
-          <div className="md:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
+          <div className="md:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-6">
             {/* Column 1: Explore */}
-            <div className="space-y-4">
+            <div className="space-y-5">
               <h4 className="font-sans text-xs font-bold tracking-[0.25em] text-brand-gold-light uppercase">
                 Explore
               </h4>
-              <ul className="space-y-2 text-xs font-medium text-brand-background/75">
+              <ul className="space-y-3 text-xs font-medium text-brand-background/75">
                 <li>
                   <button onClick={() => handleLinkClick("properties")} className="hover:text-brand-gold-light transition duration-300 cursor-pointer text-left">
                     Properties
@@ -106,11 +106,11 @@ export default function Footer({ onNavigate }: FooterProps) {
             </div>
 
             {/* Column 2: Company */}
-            <div className="space-y-4">
+            <div className="space-y-5 sm:border-l sm:border-brand-background/10 sm:pl-6">
               <h4 className="font-sans text-xs font-bold tracking-[0.25em] text-brand-gold-light uppercase">
                 Company
               </h4>
-              <ul className="space-y-2 text-xs font-medium text-brand-background/75">
+              <ul className="space-y-3 text-xs font-medium text-brand-background/75">
                 <li>
                   <a href="#" className="hover:text-brand-gold-light transition duration-300">
                     About Us
@@ -126,20 +126,15 @@ export default function Footer({ onNavigate }: FooterProps) {
                     Careers
                   </a>
                 </li>
-                <li>
-                  <a href="#" className="hover:text-brand-gold-light transition duration-300">
-                    Press
-                  </a>
-                </li>
               </ul>
             </div>
 
             {/* Column 3: Legal */}
-            <div className="space-y-4 col-span-2 sm:col-span-1">
+            <div className="space-y-5 col-span-2 sm:col-span-1 sm:border-l sm:border-brand-background/10 sm:pl-6">
               <h4 className="font-sans text-xs font-bold tracking-[0.25em] text-brand-gold-light uppercase">
                 Legal
               </h4>
-              <ul className="space-y-2 text-xs font-medium text-brand-background/75">
+              <ul className="space-y-3 text-xs font-medium text-brand-background/75">
                 <li>
                   <a href="#" className="hover:text-brand-gold-light transition duration-300">
                     Privacy Policy
@@ -148,11 +143,6 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <li>
                   <a href="#" className="hover:text-brand-gold-light transition duration-300">
                     Terms of Service
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-brand-gold-light transition duration-300">
-                    Cookie Policy
                   </a>
                 </li>
               </ul>
