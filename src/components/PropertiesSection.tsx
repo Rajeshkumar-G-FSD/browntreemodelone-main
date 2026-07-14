@@ -281,15 +281,21 @@ export default function PropertiesSection({
                     </div>
 
                     <div className="flex items-center justify-between gap-3 pt-4 border-t border-brand-primary/15">
-                      <div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onBookProperty(property);
+                        }}
+                        className="text-left cursor-pointer group/price"
+                      >
                         <span className="block text-[8px] font-bold text-brand-primary/40 tracking-[0.2em] uppercase">
-                          STARTING AT
+                          Rates Vary by Date
                         </span>
-                        <div className="flex items-baseline space-x-1">
-                          <span className="font-display text-2xl font-semibold text-brand-primary line-through decoration-2">₹{property.price}</span>
-                          <span className="text-[11px] text-brand-primary/50">/nt</span>
-                        </div>
-                      </div>
+                        <span className="flex items-baseline gap-1 font-display text-base font-semibold text-brand-secondary group-hover/price:text-brand-primary transition-colors">
+                          Check Price
+                        </span>
+                      </button>
 
                       {/* Direct Book Now Button */}
                       <button

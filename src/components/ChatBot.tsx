@@ -13,6 +13,85 @@ interface ChatBotProps {
   onBookNow?: (location: ChatLocation | null, propertyName: string) => void;
 }
 
+function getTimeGreeting(): string {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good morning";
+  if (hour < 17) return "Good afternoon";
+  return "Good evening";
+}
+
+// Answers common questions locally so the concierge still responds
+// instantly and helpfully even without a Gemini API key configured.
+function getLocalReply(text: string): string | null {
+  const t = text.toLowerCase().trim();
+
+  if (/^(hi+|hii+|hello+|hey+|yo|greetings|good\s?morning|good\s?afternoon|good\s?evening)\b/.test(t)) {
+    return `${getTimeGreeting()}! I'm **Brown tree**, your Brown Tree Resorts concierge. How may I assist you today?\n\nI can help with:\n\n- **Browsing Properties** in Ooty, Kothagiri & Kodaikanal\n- **Pricing & Availability**\n- **Amenities & Facilities**\n- **Booking Assistance**\n- **Contact Details**\n\nJust let me know what you'd like to explore!`;
+  }
+
+  if (/\b(thank you|thanks|thankyou|thx)\b/.test(t)) {
+    return "You're most welcome! Is there anything else I can help you with?";
+  }
+
+  if (/\b(bye|goodbye|see you|good night)\b/.test(t)) {
+    return "Thank you for chatting with Brown Tree Resorts. Have a wonderful day, and we hope to welcome you soon! 🌿";
+  }
+
+  if (/\b(price|pricing|cost|rate|rates|charges|how much)\b/.test(t)) {
+    return "Our stays start from **₹3,000/night** and vary by property and season. Which destination would you like pricing for — **Ooty**, **Kothagiri**, or **Kodaikanal**?";
+  }
+
+  if (/\b(location|where|address|situated|located)\b/.test(t)) {
+    return "Brown Tree Resorts has properties across three beautiful hill stations:\n\n- **Ooty** — Nilgiri Hills\n- **Kothagiri** — Nilgiri Hills\n- **Kodaikanal** — Palani Hills\n\nWhich one would you like to know more about?";
+  }
+
+  if (/check.?in|check.?out/.test(t)) {
+    return "Standard **check-in is from 2:00 PM** and **check-out is by 11:00 AM**. Early check-in or late check-out can be arranged on request, subject to availability.";
+  }
+
+  if (/\b(amenities|facilities|wifi|wi-fi|parking|pool|restaurant|food|dining)\b/.test(t)) {
+    return "Most of our properties offer free Wi-Fi, parking, housekeeping, multi-cuisine dining, and 24×7 support — with select properties adding wellness, bonfire, and banquet facilities. Would you like the full amenities list for a specific property?";
+  }
+
+  if (/\b(book|booking|reserve|reservation)\b/.test(t)) {
+    return "I'd be happy to help you book! Just tell me your preferred destination — **Ooty**, **Kothagiri**, or **Kodaikanal** — and I'll show you the available properties.";
+  }
+
+  if (/\b(cancel|cancellation|refund)\b/.test(t)) {
+    return "For cancellations or refunds, please reach out to our concierge team directly at **+91 98765 43210** or **+91 90954 87848**, and we'll personally assist you.";
+  }
+
+  if (/\b(contact|phone|call|number|email|reach)\b/.test(t)) {
+    return "You can reach us directly:\n\n- 📞 **+91 98765 43210**\n- 📞 **+91 90954 87848**\n- 📞 **+91 93630 36766**\n- ✉️ **browntreeresort@gmail.com**\n\nWe're available 24×7!";
+  }
+
+  return null;
+}
+
+// Recognizes a destination typed as free text (e.g. "ooty") so it can be
+// routed through the same interactive flow as clicking the location button.
+function matchLocation(text: string): ChatLocation | null {
+  if (text.includes("ooty")) return "OOTY";
+  if (text.includes("kothagiri")) return "KOTHAGIRI";
+  if (text.includes("kodaikanal") || text.includes("kodai")) return "KODAIKANAL";
+  return null;
+}
+
+const PROPERTY_MATCHERS: { keywords: string[]; name: string; location: ChatLocation }[] = [
+  { keywords: ["abode"], name: "THE ABODE BY BROWN TREE", location: "OOTY" },
+  { keywords: ["earthy nest", "earthy"], name: "The Earthy Nest by Brown Tree", location: "OOTY" },
+  { keywords: ["tea leaf"], name: "Tea Leaf Stays by Brown Tree Resorts", location: "OOTY" },
+  { keywords: ["sholas"], name: "Sholas Residency by Brown Tree", location: "OOTY" },
+  { keywords: ["humming bird", "hummingbird"], name: "Humming Bird by Brown Tree Resorts", location: "KOTHAGIRI" },
+  { keywords: ["vetrivel"], name: "Hotel Vetrivel International by Brown Tree Resorts", location: "KODAIKANAL" },
+];
+
+// Recognizes a property typed as free text (e.g. "tea leaf") so it can be
+// routed through the same interactive flow as clicking the property button.
+function matchProperty(text: string) {
+  return PROPERTY_MATCHERS.find((p) => p.keywords.some((k) => text.includes(k))) ?? null;
+}
+
 export default function ChatBot({ onBookNow }: ChatBotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -60,10 +139,39 @@ export default function ChatBot({ onBookNow }: ChatBotProps) {
     const trimmed = textToSend.trim();
     if (!trimmed) return;
 
+    const lower = trimmed.toLowerCase();
+
+    // Free-text property or destination name — reuse the same interactive
+    // flow as clicking the corresponding button (no AI backend needed).
+    const propertyMatch = matchProperty(lower);
+    if (propertyMatch) {
+      setInput("");
+      handleSelectProperty(propertyMatch.name, propertyMatch.location);
+      return;
+    }
+    const locationMatch = matchLocation(lower);
+    if (locationMatch) {
+      setInput("");
+      handleSelectLocation(locationMatch);
+      return;
+    }
+
     setError(null);
     const newMessages = [...messages, { sender: "user", text: trimmed } as Message];
     setMessages(newMessages);
     setInput("");
+
+    // Answer common questions instantly, without needing the AI backend
+    const localReply = getLocalReply(trimmed);
+    if (localReply) {
+      setIsLoading(true);
+      setTimeout(() => {
+        setMessages((prev) => [...prev, { sender: "bot", text: localReply }]);
+        setIsLoading(false);
+      }, 500);
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -109,8 +217,8 @@ export default function ChatBot({ onBookNow }: ChatBotProps) {
     setMessages((prev) => [...prev, userMsg, botMsg]);
   };
 
-  const handleSelectProperty = (propertyName: string) => {
-    setBookingLocation(selectedLocation);
+  const handleSelectProperty = (propertyName: string, locationOverride?: ChatLocation) => {
+    setBookingLocation(locationOverride ?? selectedLocation);
     setSelectedLocation(null);
     setBookingProperty(propertyName);
     const userMsg: Message = { sender: "user", text: `I prefer ${propertyName}` };

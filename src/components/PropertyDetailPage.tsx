@@ -223,12 +223,11 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
                 <MapPin size={12} />
                 <span className="text-xs font-light">{property.location}</span>
               </div>
-              <div className="flex items-baseline space-x-1 text-white">
-                <span className="text-[10px] text-white/60 font-light">From</span>
-                <span className="font-display text-lg md:text-2xl font-semibold line-through decoration-2">
-                  ₹{property.price.toLocaleString()}
+              <div className="flex items-baseline gap-1.5 text-white">
+                <span className="text-[10px] text-white/60 font-light">Rates vary by date —</span>
+                <span className="font-display text-sm md:text-base font-semibold text-brand-gold-light">
+                  Check Price
                 </span>
-                <span className="text-[10px] text-white/60">/night</span>
               </div>
             </div>
           </motion.div>
