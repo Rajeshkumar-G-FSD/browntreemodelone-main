@@ -188,6 +188,7 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
   // Auto-advance after location selected
   const handleSelectLocation = (loc: string) => {
     setLocation(loc);
+    setProperty("");   // changing location always clears any previously selected property
     const props = PROPERTIES[loc] || [];
     if (props.length === 1) {
       // Single property → auto-select, skip to check-in
@@ -220,6 +221,22 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
 
   const handleCheckoutChange = (val: string) => {
     setCheckOut(val);
+  };
+
+  // Clicking check-in before its prerequisites are filled redirects to
+  // whichever earlier step is still missing, instead of opening its calendar.
+  const handleCheckinClick = () => {
+    if (!location) {
+      toast({ variant: "destructive", title: "Location Required", description: "Please select a location first." });
+      open("location");
+      return;
+    }
+    if (!property) {
+      toast({ variant: "destructive", title: "Property Required", description: "Please select a property first." });
+      open("property");
+      return;
+    }
+    open(isActive("checkin") ? null : "checkin");
   };
 
   // Disabled checkout click → show toast
@@ -521,7 +538,7 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
               <div className="relative flex-1">
                 <button
                   type="button"
-                  onClick={() => open(isActive("checkin") ? null : "checkin")}
+                  onClick={handleCheckinClick}
                   className={`w-full h-full flex items-center gap-3 px-5 py-4 transition-all duration-200 focus:outline-none cursor-pointer ${isActive("checkin") ? "field-active-ring" : "hover:bg-[#F8F5EF]/60"}`}
                   aria-expanded={isActive("checkin")}
                 >
