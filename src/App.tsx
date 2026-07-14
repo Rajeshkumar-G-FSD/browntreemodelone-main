@@ -153,19 +153,6 @@ export default function App() {
     }, 80);
   };
 
-  // Book Now from the chatbot — navigate home, prefill hero widget with the
-  // chosen property and open the check-in picker
-  const handleBookFromChatbot = (location: "OOTY" | "KOTHAGIRI" | "KODAIKANAL" | null, propertyName: string) => {
-    const city = location ? location.charAt(0) + location.slice(1).toLowerCase() : "";
-    setHeroPreFill({ location: city, property: propertyName });
-    window.history.pushState({}, "", "/");
-    setCurrentPath("/");
-    setTimeout(() => {
-      const el = document.getElementById("home");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }, 120);
-  };
-
   return (
     <div id="luxe-sanctuary-app" className="min-h-screen bg-brand-background text-brand-charcoal overflow-x-hidden selection:bg-brand-secondary selection:text-white">
       {/* Floating Header – always visible */}
@@ -224,7 +211,7 @@ export default function App() {
         onClose={() => setBookingOpen(false)}
       />
 
-      <ChatBot onBookNow={handleBookFromChatbot} />
+      <ChatBot />
       <Toaster />
     </div>
   );

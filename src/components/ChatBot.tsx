@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { MessageSquare, X, Send, Sparkles, AlertCircle, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { getBookingUrl } from "../bookingUrls";
 
 interface Message {
   sender: "user" | "bot";
@@ -8,10 +9,6 @@ interface Message {
 }
 
 type ChatLocation = "OOTY" | "KOTHAGIRI" | "KODAIKANAL";
-
-interface ChatBotProps {
-  onBookNow?: (location: ChatLocation | null, propertyName: string) => void;
-}
 
 function getTimeGreeting(): string {
   const hour = new Date().getHours();
@@ -92,7 +89,7 @@ function matchProperty(text: string) {
   return PROPERTY_MATCHERS.find((p) => p.keywords.some((k) => text.includes(k))) ?? null;
 }
 
-export default function ChatBot({ onBookNow }: ChatBotProps) {
+export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -108,7 +105,6 @@ export default function ChatBot({ onBookNow }: ChatBotProps) {
 
   // Booking Flow States
   const [bookingProperty, setBookingProperty] = useState<string | null>(null);
-  const [bookingLocation, setBookingLocation] = useState<ChatLocation | null>(null);
   const [checkIn, setCheckIn] = useState<string>("");
   const [checkOut, setCheckOut] = useState<string>("");
 
@@ -146,7 +142,7 @@ export default function ChatBot({ onBookNow }: ChatBotProps) {
     const propertyMatch = matchProperty(lower);
     if (propertyMatch) {
       setInput("");
-      handleSelectProperty(propertyMatch.name, propertyMatch.location);
+      handleSelectProperty(propertyMatch.name);
       return;
     }
     const locationMatch = matchLocation(lower);
@@ -217,8 +213,7 @@ export default function ChatBot({ onBookNow }: ChatBotProps) {
     setMessages((prev) => [...prev, userMsg, botMsg]);
   };
 
-  const handleSelectProperty = (propertyName: string, locationOverride?: ChatLocation) => {
-    setBookingLocation(locationOverride ?? selectedLocation);
+  const handleSelectProperty = (propertyName: string) => {
     setSelectedLocation(null);
     setBookingProperty(propertyName);
     const userMsg: Message = { sender: "user", text: `I prefer ${propertyName}` };
@@ -236,25 +231,27 @@ export default function ChatBot({ onBookNow }: ChatBotProps) {
     }
     setError(null);
 
-    const userMsgText = `Confirm booking for ${bookingProperty} from ${checkIn} to ${checkOut}`;
+    const propertyName = bookingProperty!;
+
+    // Open the real booking-engine search-availability page synchronously,
+    // in the same click gesture, so it isn't blocked as a popup — carrying
+    // over the property and dates already chosen in the chat.
+    const url = getBookingUrl(propertyName, checkIn, checkOut);
+    window.open(url, "_blank", "noopener,noreferrer");
+
+    const userMsgText = `Confirm booking for ${propertyName} from ${checkIn} to ${checkOut}`;
     const userMsg: Message = { sender: "user", text: userMsgText };
 
-    const botMsgText = `Wonderful! Taking you to the booking widget for **${bookingProperty}** — just confirm your check-in date there to complete your reservation. 🌿`;
+    const botMsgText = `Wonderful! I've opened the booking page for **${propertyName}** with your selected dates (${checkIn} → ${checkOut}) — please complete your reservation there. 🌿`;
     const botMsg: Message = { sender: "bot", text: botMsgText };
 
     setMessages((prev) => [...prev, userMsg, botMsg]);
 
-    const propertyName = bookingProperty;
-    const location = bookingLocation;
     setBookingProperty(null);
-    setBookingLocation(null);
     setCheckIn("");
     setCheckOut("");
 
-    setTimeout(() => {
-      setIsOpen(false);
-      if (propertyName) onBookNow?.(location, propertyName);
-    }, 900);
+    setTimeout(() => setIsOpen(false), 900);
   };
 
   // Simple formatter to support basic Markdown like bolding (**) and lists
@@ -548,7 +545,7 @@ export default function ChatBot({ onBookNow }: ChatBotProps) {
                   <div className="flex gap-2 pt-1">
                     <button
                       type="button"
-                      onClick={() => { setBookingProperty(null); setBookingLocation(null); }}
+                      onClick={() => setBookingProperty(null)}
                       className="flex-1 border border-stone-200 hover:bg-stone-100 text-stone-600 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer"
                     >
                       Cancel

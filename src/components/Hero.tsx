@@ -8,6 +8,7 @@ import { MapPin, Home, Calendar, Search, Check, ChevronDown, ChevronLeft, Chevro
 import TextType from "./TextType";
 import browntreeVideo from "../assets/images/broentree_video.mp4";
 import { useToast } from "./useToast";
+import { getBookingUrl } from "../bookingUrls";
 
 const DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -106,15 +107,6 @@ const PROPERTIES: Record<string, string[]> = {
   ],
   Kothagiri: ["Humming Bird by Brown Tree Resorts"],
   Kodaikanal: ["Hotel Vetrivel International by Brown Tree Resorts"],
-};
-
-const PROPERTY_URLS: Record<string, string> = {
-  "THE ABODE BY BROWN TREE":                          "https://bookings.asiatech.in/?page=4160&type=website",
-  "The Earthy Nest by Brown Tree":                    "https://bookings.asiatech.in/?page=11117&type=website",
-  "Tea Leaf Stays by Brown Tree Resorts":             "https://bookings.asiatech.in/?page=5303&type=website",
-  "Sholas Residency by Brown Tree":                   "https://bookings.asiatech.in/?page=10425&type=website",
-  "Humming Bird by Brown Tree Resorts":               "https://bookings.asiatech.in/?page=9542&type=website",
-  "Hotel Vetrivel International by Brown Tree Resorts": "https://bookings.asiatech.in/?page=6541&type=website",
 };
 
 type ActivePanel = "location" | "property" | "checkin" | "checkout" | null;
@@ -281,8 +273,7 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
     // All good — ripple + navigate
     setRippling(true);
     setTimeout(() => setRippling(false), 600);
-    const base = PROPERTY_URLS[property] ?? "https://bookings.asiatech.in/?page=4160&type=website";
-    const url = `${base}&checkin=${checkIn}&checkout=${checkOut}`;
+    const url = getBookingUrl(property, checkIn, checkOut);
     setTimeout(() => window.open(url, "_blank"), 150);
   };
 
