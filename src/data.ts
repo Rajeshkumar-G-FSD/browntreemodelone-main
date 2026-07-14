@@ -35,7 +35,7 @@ import hummingBirdSinglebed from "./assets/images/HummingBird_singlebed.jpeg";
 import hummingBirdSinglebedA from "./assets/images/HummingBird_Singlebed_.jpeg";
 import hummingBirdParking from "./assets/images/HummingBird_parking.jpeg";
 import hummingBirdDining from "./assets/images/HummingBird_dining.jpeg";
-import hummingBirdBrowntree from "./assets/images/hummingbird_browntre.jpeg";
+import hummingBirdBrowntree from "./assets/images/hummingbird_browntre_resorts_kothagiri.png";
 import solarMain from "./assets/images/solar.png";
 import solarSinglebed from "./assets/images/solar_singlebed.jpeg";
 import solarSinglebedA from "./assets/images/solar_singlebed_.jpeg.jpeg";
