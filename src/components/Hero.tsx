@@ -12,7 +12,7 @@ import { useToast } from "./useToast";
 const DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-function MiniCalendar({ value, minDate, onChange }: { value: string; minDate: string; onChange: (v: string) => void }) {
+function MiniCalendar({ value, minDate, onChange, hideDisabled = false }: { value: string; minDate: string; onChange: (v: string) => void; hideDisabled?: boolean }) {
   const today = new Date();
   const init = value ? new Date(value + "T12:00:00") : today;
   const [view, setView] = useState({ year: init.getFullYear(), month: init.getMonth() });
@@ -56,7 +56,7 @@ function MiniCalendar({ value, minDate, onChange }: { value: string; minDate: st
       <div className="grid grid-cols-7 gap-y-0.5">
         {cells.map((d, i) => (
           <div key={i} className="flex items-center justify-center">
-            {d ? (
+            {d && !(hideDisabled && isDisabled(d)) ? (
               <button
                 type="button"
                 disabled={isDisabled(d)}
@@ -208,7 +208,8 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
     setTimeout(() => open("checkin"), 280);
   };
 
-  // Auto-advance after check-in; clears checkout, enables checkout field
+  // Selecting a check-in date closes this calendar and opens check-out —
+  // clears any stale checkout value and unlocks that field.
   const handleCheckinChange = (val: string) => {
     setCheckIn(val);
     setCheckOut("");           // clear stale checkout on every checkin change
@@ -219,7 +220,6 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
 
   const handleCheckoutChange = (val: string) => {
     setCheckOut(val);
-    close();
   };
 
   // Disabled checkout click → show toast
@@ -322,7 +322,7 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
 
       <section
         id="home"
-        className="relative min-h-[92vh] md:min-h-screen flex flex-col justify-center items-center text-white px-4 pt-24 md:pt-16 pb-20 md:pb-32 overflow-hidden"
+        className="relative min-h-[92vh] md:min-h-screen flex flex-col justify-center items-center text-white px-4 pt-24 md:pt-16 pb-20 md:pb-32"
       >
         {/* Background Video */}
         <div className="absolute inset-0 z-0">
@@ -597,7 +597,7 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
                     <p className="text-[9px] font-bold tracking-widest pb-2 mb-3 border-b border-[#E9D9B3]" style={{ color: "#9c8170" }}>
                       CHECK-OUT DATE
                     </p>
-                    <MiniCalendar value={checkOut} minDate={checkIn || todayStr} onChange={handleCheckoutChange} />
+                    <MiniCalendar value={checkOut} minDate={checkIn || todayStr} onChange={handleCheckoutChange} hideDisabled />
                   </div>
                 )}
               </div>
