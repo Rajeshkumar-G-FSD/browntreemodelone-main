@@ -2,6 +2,17 @@
 # Without this, any path other than "/" (e.g. a property page) 404s on Apache
 # instead of falling back to index.html, so it can never be crawled or shared.
 
+# --- 301 redirects: old /properties/<slug> URLs -> current slugs (src/slug.ts) ---
+# Keeps inbound links and prior Google indexing intact after the URL scheme change.
+<IfModule mod_alias.c>
+  Redirect 301 /properties/the-earthy-nest-ooty /ooty-the-earthy-nest-by-brown-tree
+  Redirect 301 /properties/the-abode-ooty /ooty-the-abode-by-brown-tree
+  Redirect 301 /properties/tea-leaf-stays-ooty /ooty-tea-leaf-stays-by-brown-tree-resorts
+  Redirect 301 /properties/humming-bird-kotagiri /kothagiri-humming-bird-by-brown-tree-resorts
+  Redirect 301 /properties/sholas-residency-ooty /ooty-sholas-residency-by-brown-tree-resorts
+  Redirect 301 /properties/hotel-vetrivel-kodaikanal /kodaikanal-hotel-vetrivel-international-by-brown-tree-resorts
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /

@@ -122,6 +122,20 @@ async function startServer() {
     }
   });
 
+  // 301 redirects: old /properties/<slug> URLs -> current slugs (src/slug.ts)
+  // Keeps inbound links and prior Google indexing intact after the URL scheme change.
+  const legacyPropertyRedirects: Record<string, string> = {
+    "/properties/the-earthy-nest-ooty": "/ooty-the-earthy-nest-by-brown-tree",
+    "/properties/the-abode-ooty": "/ooty-the-abode-by-brown-tree",
+    "/properties/tea-leaf-stays-ooty": "/ooty-tea-leaf-stays-by-brown-tree-resorts",
+    "/properties/humming-bird-kotagiri": "/kothagiri-humming-bird-by-brown-tree-resorts",
+    "/properties/sholas-residency-ooty": "/ooty-sholas-residency-by-brown-tree-resorts",
+    "/properties/hotel-vetrivel-kodaikanal": "/kodaikanal-hotel-vetrivel-international-by-brown-tree-resorts",
+  };
+  app.get(Object.keys(legacyPropertyRedirects), (req, res) => {
+    res.redirect(301, legacyPropertyRedirects[req.path]);
+  });
+
   // Serve static assets and frontend code
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

@@ -131,6 +131,17 @@ async function startServer() {
       res.status(500).json({ error: error.message || "An internal error occurred." });
     }
   });
+  const legacyPropertyRedirects = {
+    "/properties/the-earthy-nest-ooty": "/ooty-the-earthy-nest-by-brown-tree",
+    "/properties/the-abode-ooty": "/ooty-the-abode-by-brown-tree",
+    "/properties/tea-leaf-stays-ooty": "/ooty-tea-leaf-stays-by-brown-tree-resorts",
+    "/properties/humming-bird-kotagiri": "/kothagiri-humming-bird-by-brown-tree-resorts",
+    "/properties/sholas-residency-ooty": "/ooty-sholas-residency-by-brown-tree-resorts",
+    "/properties/hotel-vetrivel-kodaikanal": "/kodaikanal-hotel-vetrivel-international-by-brown-tree-resorts"
+  };
+  app.get(Object.keys(legacyPropertyRedirects), (req, res) => {
+    res.redirect(301, legacyPropertyRedirects[req.path]);
+  });
   if (process.env.NODE_ENV !== "production") {
     const vite = await (0, import_vite.createServer)({
       server: { middlewareMode: true },
