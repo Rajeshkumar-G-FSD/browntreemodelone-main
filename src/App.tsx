@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import PropertiesSection from "./components/PropertiesSection";
@@ -18,17 +18,9 @@ import Toaster from "./components/Toaster";
 
 import { PROPERTIES, REVIEWS, DESTINATIONS } from "./data";
 import { Property, Suite } from "./types";
-
-// Converts a property to a URL slug: /ooty-the-earthy-nest-by-brown-tree
-function toPropertySlug(property: Property): string {
-  const location = property.location.split(",")[0].trim().toLowerCase().replace(/\s+/g, "-");
-  const name = property.name.toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, "-");
-  return `/${location}-${name}`;
-}
-
-function findPropertyBySlug(slug: string): Property | null {
-  return PROPERTIES.find((p) => toPropertySlug(p) === slug) ?? null;
-}
+import { toPropertySlug, findPropertyBySlug } from "./slug";
+import { useSEO } from "./hooks/useSEO";
+import { buildPropertySEO, DEFAULT_SEO } from "./seo";
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -40,7 +32,14 @@ export default function App() {
   const [heroPreFill, setHeroPreFill] = useState<{ location: string; property: string } | null>(null);
 
   // Property shown as full page (null = show home)
-  const propertyOnPage = findPropertyBySlug(currentPath);
+  const propertyOnPage = findPropertyBySlug(PROPERTIES, currentPath);
+
+  // Keep <title>, meta tags, canonical URL and JSON-LD in sync with the active route
+  const seo = useMemo(
+    () => (propertyOnPage ? buildPropertySEO(propertyOnPage) : DEFAULT_SEO),
+    [propertyOnPage]
+  );
+  useSEO(seo);
 
   // Browser back/forward support
   useEffect(() => {

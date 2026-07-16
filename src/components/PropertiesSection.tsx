@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, type MouseEvent } from "react";
 import { Star, ArrowRight, Compass, Filter } from "lucide-react";
 import { motion } from "motion/react";
 import { Property } from "../types";
 import SplitText from "./SplitText";
 import BlurText from "./BlurText";
+import { toPropertySlug } from "../slug";
 
 interface PropertiesSectionProps {
   properties: Property[];
@@ -208,7 +209,15 @@ export default function PropertiesSection({
             {filteredProperties.map((property) => {
               // We can highlight Heritage Palace (or second item) with a slightly different visual size or badge
               const isHighlighted = property.id === "heritage-palace";
-              
+              const propertyHref = toPropertySlug(property);
+
+              // Real navigation for crawlers/new-tab/middle-click; SPA push-state otherwise
+              const handleLinkClick = (e: MouseEvent) => {
+                if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                e.preventDefault();
+                onSelectProperty(property);
+              };
+
               return (
                 <motion.div
                   key={property.id}
@@ -259,25 +268,24 @@ export default function PropertiesSection({
                           {property.type}
                         </span>
                         <h3 className="font-display text-xl font-medium text-brand-primary mt-1 group-hover:text-brand-secondary transition-colors duration-300">
-                          {property.name}
+                          <a href={propertyHref} onClick={handleLinkClick} className="hover:text-brand-secondary transition-colors">
+                            {property.name}
+                          </a>
                         </h3>
                         <span className="text-xs text-brand-primary/55 font-light block mt-0.5">
                           {property.location}
                         </span>
                       </div>
 
-                      {/* Explore — same click action as the card, with a themed hover reveal */}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onSelectProperty(property);
-                        }}
+                      {/* Explore — real link so crawlers can discover the property page, SPA nav on click */}
+                      <a
+                        href={propertyHref}
+                        onClick={handleLinkClick}
                         className="flex items-center gap-1 text-[10px] font-bold tracking-widest uppercase text-brand-secondary/70 group-hover:text-brand-secondary transition-colors duration-300 shrink-0 cursor-pointer pt-1"
                       >
                         <span>Explore</span>
                         <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
-                      </button>
+                      </a>
                     </div>
 
                     <div className="flex items-center justify-between gap-3 pt-4 border-t border-brand-primary/15">
