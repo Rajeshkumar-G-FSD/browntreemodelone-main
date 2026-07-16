@@ -37,22 +37,42 @@ function toAbsoluteUrl(path: string): string {
   return path.startsWith("http") ? path : `${SITE_URL}${path}`;
 }
 
+/** Closest named landmark from whichever shape this property's data uses, for a real (non-fabricated) proximity claim. */
+function getNearestLandmark(property: Property): { name: string; distance: string } | null {
+  if (property.nearbyLandmarks && property.nearbyLandmarks.length > 0) {
+    return property.nearbyLandmarks[0];
+  }
+  const first = property.nearbyAttractions?.[0];
+  if (first?.includes(" – ")) {
+    const [name, distance] = first.split(" – ");
+    return { name: name.trim(), distance: distance.trim() };
+  }
+  return null;
+}
+
 export function buildPropertySEO(property: Property): SEOData {
   const slug = toPropertySlug(property);
   const city = property.location.split(",")[0].trim();
   const canonical = `${SITE_URL}${slug}`;
   const firstParagraph = property.description.split("\n\n")[0];
-  const description = truncate(
-    `${firstParagraph} Book directly with Brown Tree Resorts for the best rates in ${city}.`,
-    160
-  );
+
+  const landmark = getNearestLandmark(property);
+  const descriptionTail = landmark
+    ? ` Just ${landmark.distance} from ${landmark.name} — book direct for the best rates.`
+    : ` Book direct with Brown Tree Resorts for the best rates in ${city}.`;
+  const description = `${truncate(firstParagraph, Math.max(158 - descriptionTail.length, 60))}${descriptionTail}`;
+
   // `property.type` doubles as a filter category on the homepage — for most
   // properties it's just the city name, not an accommodation type, so only
   // surface it in the title when it adds information (e.g. "Private Villa").
+  // Most property names already contain "Brown Tree" — skip the redundant
+  // brand suffix in that case to keep titles under ~70 characters.
   const isLocationLabel = ["ooty", "kothagiri", "kodaikanal"].includes(property.type.toLowerCase());
-  const title = isLocationLabel
-    ? `${property.name} | ${city} Stay – Brown Tree Resorts`
-    : `${property.name} – ${property.type} in ${city} | Brown Tree Resorts`;
+  const nameHasBrand = /brown tree/i.test(property.name);
+  const contextClause = isLocationLabel ? `${city} Stay` : `${property.type} in ${city}`;
+  const title = nameHasBrand
+    ? `${property.name} – ${contextClause}`
+    : `${property.name} – ${contextClause} | Brown Tree Resorts`;
   const image = toAbsoluteUrl(property.image);
 
   const lodgingBusiness = {
