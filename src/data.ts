@@ -743,7 +743,7 @@ export const PROPERTIES: Property[] = [
   {
     id: "misty-peaks",
     name: "Humming Bird by Brown Tree Resorts",
-    type: "Private Villa",
+    type: "Kothagiri",
     location: "Kothagiri, India",
     region: "Nilgiri Hills",
     price: 5000,

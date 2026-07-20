@@ -40,13 +40,27 @@ const itemVariants = {
   },
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
+const cardVariantsLeft = {
+  hidden: { opacity: 0, x: -90, y: 20 },
   visible: {
     opacity: 1,
+    x: 0,
     y: 0,
     transition: {
-      duration: 0.85,
+      duration: 0.9,
+      ease: [0.215, 0.61, 0.355, 1], // easeOutCubic
+    },
+  },
+};
+
+const cardVariantsRight = {
+  hidden: { opacity: 0, x: 90, y: 20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    transition: {
+      duration: 0.9,
       ease: [0.215, 0.61, 0.355, 1], // easeOutCubic
     },
   },
@@ -206,7 +220,7 @@ export default function PropertiesSection({
             viewport={{ once: true, margin: "-100px" }}
             variants={containerVariants}
           >
-            {filteredProperties.map((property) => {
+            {filteredProperties.map((property, index) => {
               // We can highlight Heritage Palace (or second item) with a slightly different visual size or badge
               const isHighlighted = property.id === "heritage-palace";
               const propertyHref = toPropertySlug(property);
@@ -223,7 +237,10 @@ export default function PropertiesSection({
                   key={property.id}
                   id={`property-card-${property.id}`}
                   onClick={() => onSelectProperty(property)}
-                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={index % 2 === 0 ? cardVariantsLeft : cardVariantsRight}
                   whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
                   className={`group relative rounded-[28px] overflow-hidden bg-white shadow-2xl cursor-pointer select-none ${
                     isHighlighted 
@@ -258,12 +275,32 @@ export default function PropertiesSection({
                   <div className="p-6 space-y-4 bg-white/95 border-t border-brand-primary/5">
                     <div className="flex justify-between items-start gap-3">
                       <div>
-                        <span className="block text-[10px] font-bold tracking-[0.15em] text-brand-secondary uppercase">
-                          {property.type}
-                        </span>
+                        <SplitText
+                          text={property.type}
+                          tag="span"
+                          className="block text-[10px] font-bold tracking-[0.15em] text-brand-secondary uppercase"
+                          delay={30}
+                          duration={0.6}
+                          ease="power3.out"
+                          splitType="chars"
+                          from={{ opacity: 0, y: 10 }}
+                          to={{ opacity: 1, y: 0 }}
+                          threshold={0.2}
+                          rootMargin="-50px"
+                          textAlign="left"
+                        />
                         <h3 className="font-display text-xl font-medium text-brand-primary mt-1 group-hover:text-brand-secondary transition-colors duration-300">
                           <a href={propertyHref} onClick={handleLinkClick} className="hover:text-brand-secondary transition-colors">
-                            {property.name}
+                            <BlurText
+                              text={property.name}
+                              tag="span"
+                              className="!justify-start !text-left"
+                              delay={15}
+                              animateBy="words"
+                              direction="top"
+                              threshold={0.2}
+                              rootMargin="-50px"
+                            />
                           </a>
                         </h3>
                         <span className="text-xs text-brand-primary/55 font-light block mt-0.5">

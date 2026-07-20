@@ -24,6 +24,7 @@ interface BlurTextProps {
   easing?: (t: number) => number | string;
   onAnimationComplete?: () => void;
   stepDuration?: number;
+  tag?: 'p' | 'span' | 'div';
 }
 
 export default function BlurText({
@@ -38,11 +39,13 @@ export default function BlurText({
   animationTo,
   easing = (t: number) => t,
   onAnimationComplete,
-  stepDuration = 0.35
+  stepDuration = 0.35,
+  tag = 'p'
 }: BlurTextProps) {
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
-  const ref = useRef<HTMLParagraphElement>(null);
+  const ref = useRef<HTMLElement>(null);
+  const Wrapper = tag as any;
 
   useEffect(() => {
     if (!ref.current) return;
@@ -85,7 +88,7 @@ export default function BlurText({
   const times = Array.from({ length: stepCount }, (_, i) => (stepCount === 1 ? 0 : i / (stepCount - 1)));
 
   return (
-    <p ref={ref} className={`blur-text ${className} flex flex-wrap justify-center`}>
+    <Wrapper ref={ref} className={`blur-text ${className} flex flex-wrap justify-center`}>
       {elements.map((segment, index) => {
         const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
 
@@ -110,6 +113,6 @@ export default function BlurText({
           </motion.span>
         );
       })}
-    </p>
+    </Wrapper>
   );
 }
