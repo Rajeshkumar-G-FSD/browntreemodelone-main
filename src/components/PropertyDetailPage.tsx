@@ -11,7 +11,7 @@ import {
   Tv, Plug, Wind, Flame, Phone, Mail, Clock, Key, Sparkles,
   Smile, Sun, Cigarette, ChevronRight, Flower2, Landmark,
   ParkingCircle, ShieldCheck, Bed, Leaf, Utensils, Bus,
-  ThumbsUp, Award, Camera, MapPinned, ShoppingBag
+  ThumbsUp, Camera, MapPinned, ShoppingBag
 } from "lucide-react";
 import { motion } from "motion/react";
 import { Property, Suite } from "../types";
@@ -130,9 +130,10 @@ interface PropertyDetailPageProps {
   property: Property;
   onBack: () => void;
   onBookSuite: (property: Property, suite: Suite) => void;
+  onInquire: (property: Property) => void;
 }
 
-export default function PropertyDetailPage({ property, onBack, onBookSuite }: PropertyDetailPageProps) {
+export default function PropertyDetailPage({ property, onBack, onBookSuite, onInquire }: PropertyDetailPageProps) {
   const gallery = property.gallery.length > 0 ? property.gallery : [property.image];
   const [activeImage, setActiveImage] = useState(gallery[0]);
   const [nearbyTab, setNearbyTab] = useState<"landmarks" | "food-shopping" | "transport">("landmarks");
@@ -183,12 +184,6 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
             <ArrowLeft size={15} className="group-hover:-translate-x-0.5 transition-transform" />
             <span className="text-[11px] font-bold tracking-widest uppercase">Back to Properties</span>
           </button>
-          <div className="flex items-center space-x-1.5">
-            <Star size={12} className="fill-brand-gold-light text-brand-gold-light" />
-            <span className="text-[11px] font-semibold text-brand-primary tracking-wider">
-              {property.rating} · {property.reviewCount} reviews
-            </span>
-          </div>
         </div>
       </div>
 
@@ -279,13 +274,6 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
             {/* Quick stats card */}
             <FadeUp delay={160} className="lg:col-span-2">
               <div className="bg-brand-background rounded-2xl p-6 md:p-8 border border-brand-primary/8 shadow-sm space-y-4">
-                <div className="flex items-center gap-3 pb-4 border-b border-brand-primary/8">
-                  <Star size={16} className="fill-brand-gold-light text-brand-gold-light shrink-0" />
-                  <div>
-                    <span className="text-sm font-bold text-brand-primary">{property.rating} · Exceptional</span>
-                    <span className="text-xs text-brand-primary/50 block">{property.reviewCount} verified reviews</span>
-                  </div>
-                </div>
                 <div className="flex items-center gap-3">
                   <MapPin size={15} className="text-brand-secondary shrink-0" />
                   <div>
@@ -684,61 +672,21 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
             <FadeUp>
               <SectionHeading eyebrow="Guest Stories" title="What Guests Love" />
             </FadeUp>
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
-              {/* Highlights list */}
-              <FadeUp delay={80} className="lg:col-span-3">
-                <div className="bg-brand-background border border-brand-primary/8 rounded-2xl p-7 md:p-10 shadow-sm">
-                  <ul className="space-y-4">
-                    {property.guestHighlights.map((item, idx) => (
-                      <li key={idx} className="flex items-center gap-4">
-                        <span className="w-8 h-8 rounded-xl bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0">
-                          <ThumbsUp size={15} />
-                        </span>
-                        <span className="text-sm font-semibold text-brand-primary/80">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </FadeUp>
-
-              {/* Rating badge */}
-              <FadeUp delay={160} className="lg:col-span-2">
-                <div className="bg-brand-primary rounded-2xl p-7 md:p-10 shadow-lg text-center relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-                  <div className="absolute bottom-0 left-0 w-28 h-28 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4 pointer-events-none" />
-                  <div className="relative z-10">
-                    <span className="w-14 h-14 rounded-2xl bg-brand-gold-light/20 flex items-center justify-center mx-auto mb-5">
-                      <Award size={28} className="text-brand-gold-light" />
-                    </span>
-                    <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em] mb-2">Amenities Rating</p>
-                    <div className="flex items-baseline justify-center gap-1 mb-3">
-                      <span className="font-display text-5xl font-bold text-white">
-                        {property.amenitiesRating?.toFixed(1) ?? property.rating.toFixed(1)}
+            {/* Highlights list */}
+            <FadeUp delay={80}>
+              <div className="bg-brand-background border border-brand-primary/8 rounded-2xl p-7 md:p-10 shadow-sm">
+                <ul className="space-y-4">
+                  {property.guestHighlights.map((item, idx) => (
+                    <li key={idx} className="flex items-center gap-4">
+                      <span className="w-8 h-8 rounded-xl bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0">
+                        <ThumbsUp size={15} />
                       </span>
-                      <span className="text-white/50 text-lg">/5</span>
-                    </div>
-                    <div className="flex justify-center gap-1 mb-4">
-                      {[1, 2, 3, 4, 5].map((star) => {
-                        const rating = property.amenitiesRating ?? property.rating;
-                        return (
-                          <Star
-                            key={star}
-                            size={16}
-                            className={star <= Math.round(rating)
-                              ? "fill-brand-gold-light text-brand-gold-light"
-                              : "text-white/20"
-                            }
-                          />
-                        );
-                      })}
-                    </div>
-                    <p className="text-xs text-white/60 font-light leading-relaxed">
-                      Rated by guests for amenities,<br />comfort & hospitality
-                    </p>
-                  </div>
-                </div>
-              </FadeUp>
-            </div>
+                      <span className="text-sm font-semibold text-brand-primary/80">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </FadeUp>
           </div>
         </section>
       )}
@@ -768,12 +716,19 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite }: Pr
                 <span>Book Now</span>
                 <ChevronRight size={16} />
               </button>
-              <a
-                href="tel:+919876543210"
+              <button
+                id="inquire-now-btn"
+                onClick={() => onInquire(property)}
                 className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold text-sm tracking-wider px-8 py-4 rounded-xl transition-all duration-300 cursor-pointer"
               >
                 <Phone size={15} />
-                <span>Contact Us</span>
+                <span>Inquire Now</span>
+              </button>
+              <a
+                href="tel:+919876543210"
+                className="flex items-center gap-2 text-white/70 hover:text-white font-semibold text-sm tracking-wider px-4 py-4 transition-all duration-300 cursor-pointer"
+              >
+                <span>or call +91 98765 43210</span>
               </a>
             </div>
           </FadeUp>

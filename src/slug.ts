@@ -15,3 +15,12 @@ export function toPropertySlug(property: Property): string {
 export function findPropertyBySlug(properties: Property[], slug: string): Property | null {
   return properties.find((p) => toPropertySlug(p) === slug) ?? null;
 }
+
+// Per-property Google Ads conversion landing page: /ooty-the-earthy-nest-by-brown-tree/thank-you
+export function toThankYouSlug(property: Property): string {
+  return `${toPropertySlug(property)}/thank-you`;
+}
+
+export function findPropertyByThankYouSlug(properties: Property[], path: string): Property | null {
+  return properties.find((p) => toThankYouSlug(p) === path) ?? null;
+}

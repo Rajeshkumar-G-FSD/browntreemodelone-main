@@ -4,7 +4,7 @@
  */
 
 import { useEffect } from "react";
-import { SEOData, SITE_URL } from "../seo";
+import { SEOData, SITE_URL, DEFAULT_ROBOTS } from "../seo";
 
 const DYNAMIC_JSONLD_ATTR = "data-dynamic-seo";
 
@@ -29,6 +29,12 @@ export function useSEO(seo: SEOData) {
       m.setAttribute("name", "description");
       return m;
     }, seo.description);
+
+    upsertMeta('meta[name="robots"]', () => {
+      const m = document.createElement("meta");
+      m.setAttribute("name", "robots");
+      return m;
+    }, seo.robots ?? DEFAULT_ROBOTS);
 
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {

@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect, type MouseEvent } from "react";
-import { Star, ArrowRight, Compass, Filter } from "lucide-react";
+import { ArrowRight, Compass, Filter } from "lucide-react";
 import { motion } from "motion/react";
 import { Property } from "../types";
 import SplitText from "./SplitText";
@@ -245,12 +245,6 @@ export default function PropertiesSection({
                     
                     {/* Linear Gradient Shader over image */}
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/60 via-brand-primary/5 to-transparent opacity-80" />
-
-                    {/* Star Rating Overlay top-right */}
-                    <div className="absolute top-5 right-5 z-10 flex items-center space-x-1 py-1 px-3 bg-brand-primary/85 backdrop-blur-md rounded-full text-brand-gold-light border border-white/10">
-                      <Star size={12} className="fill-brand-gold-light" />
-                      <span className="text-[10px] font-bold tracking-wider">{property.rating}</span>
-                    </div>
 
                     {/* Premium Highlight Badge if applicable */}
                     {isHighlighted && (

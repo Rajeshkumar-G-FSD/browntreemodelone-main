@@ -11,6 +11,7 @@ import DestinationsSection from "./components/DestinationsSection";
 import ReviewsSection from "./components/ReviewsSection";
 import ContactSection from "./components/ContactSection";
 import PropertyDetailPage from "./components/PropertyDetailPage";
+import ThankYouPage from "./components/ThankYouPage";
 import BookingDrawer from "./components/BookingDrawer";
 import Footer from "./components/Footer";
 import ChatBot from "./components/ChatBot";
@@ -18,9 +19,10 @@ import Toaster from "./components/Toaster";
 
 import { PROPERTIES, REVIEWS, DESTINATIONS } from "./data";
 import { Property, Suite } from "./types";
-import { toPropertySlug, findPropertyBySlug } from "./slug";
+import { toPropertySlug, findPropertyBySlug, toThankYouSlug, findPropertyByThankYouSlug } from "./slug";
 import { useSEO } from "./hooks/useSEO";
-import { buildPropertySEO, DEFAULT_SEO } from "./seo";
+import { buildPropertySEO, buildThankYouSEO, DEFAULT_SEO } from "./seo";
+import { buildPropertyInquiryMessage, buildWhatsAppUrl } from "./lib/whatsapp";
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -33,12 +35,16 @@ export default function App() {
 
   // Property shown as full page (null = show home)
   const propertyOnPage = findPropertyBySlug(PROPERTIES, currentPath);
+  // Per-property Google Ads conversion landing page (/<slug>/thank-you)
+  const thankYouProperty = findPropertyByThankYouSlug(PROPERTIES, currentPath);
+  const onSubPage = !!(propertyOnPage || thankYouProperty);
 
   // Keep <title>, meta tags, canonical URL and JSON-LD in sync with the active route
-  const seo = useMemo(
-    () => (propertyOnPage ? buildPropertySEO(propertyOnPage) : DEFAULT_SEO),
-    [propertyOnPage]
-  );
+  const seo = useMemo(() => {
+    if (thankYouProperty) return buildThankYouSEO(thankYouProperty);
+    if (propertyOnPage) return buildPropertySEO(propertyOnPage);
+    return DEFAULT_SEO;
+  }, [propertyOnPage, thankYouProperty]);
   useSEO(seo);
 
   // Browser back/forward support
@@ -48,14 +54,14 @@ export default function App() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  // Scroll to top when entering a property page
+  // Scroll to top when entering a property or thank-you page
   useEffect(() => {
-    if (propertyOnPage) window.scrollTo({ top: 0, behavior: "smooth" });
+    if (onSubPage) window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPath]);
 
   // Track active section while scrolling on home page
   useEffect(() => {
-    if (propertyOnPage) return;
+    if (onSubPage) return;
     const handleScroll = () => {
       const sections = ["home", "properties", "destinations", "experiences", "reviews", "contact"];
       const scrollPosition = window.scrollY + 200;
@@ -77,7 +83,7 @@ export default function App() {
 
   // Navigate to a section — works from both home and property pages
   const handleNavigate = (sectionId: string) => {
-    if (propertyOnPage) {
+    if (onSubPage) {
       window.history.pushState({}, "", "/");
       setCurrentPath("/");
       setTimeout(() => {
@@ -105,6 +111,15 @@ export default function App() {
   const handleBackToHome = () => {
     window.history.pushState({}, "", "/");
     setCurrentPath("/");
+  };
+
+  // Send a property-specific WhatsApp inquiry, then land on that property's
+  // Google Ads conversion page (/<slug>/thank-you).
+  const handleInquireProperty = (property: Property) => {
+    window.open(buildWhatsAppUrl(buildPropertyInquiryMessage(property)), "_blank", "noopener,noreferrer");
+    const slug = toThankYouSlug(property);
+    window.history.pushState({}, "", slug);
+    setCurrentPath(slug);
   };
 
   // Hero search
@@ -161,12 +176,20 @@ export default function App() {
         onOpenBooking={handleOpenBooking}
       />
 
-      {propertyOnPage ? (
+      {thankYouProperty ? (
+        /* ── Per-property Google Ads conversion page ── */
+        <ThankYouPage
+          property={thankYouProperty}
+          onBack={handleBackToHome}
+          onViewProperty={() => handleOpenPropertyDetail(thankYouProperty)}
+        />
+      ) : propertyOnPage ? (
         /* ── Property detail full page ── */
         <PropertyDetailPage
           property={propertyOnPage}
           onBack={handleBackToHome}
           onBookSuite={handleBookSuiteFromPage}
+          onInquire={handleInquireProperty}
         />
       ) : (
         /* ── Home page ── */

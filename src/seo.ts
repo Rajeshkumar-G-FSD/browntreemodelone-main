@@ -4,9 +4,12 @@
  */
 
 import { Property } from "./types";
-import { toPropertySlug } from "./slug";
+import { toPropertySlug, toThankYouSlug } from "./slug";
 
 export const SITE_URL = "https://browntreeresorts.com";
+
+// Matches the static <meta name="robots"> in index.html — the default for any indexable page.
+export const DEFAULT_ROBOTS = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 
 export interface SEOData {
   title: string;
@@ -14,6 +17,8 @@ export interface SEOData {
   path: string; // e.g. "/" or "/ooty-the-earthy-nest-by-brown-tree"
   image: string; // absolute URL
   imageAlt: string;
+  /** Defaults to DEFAULT_ROBOTS when omitted. Set to "noindex, nofollow" for conversion-only pages (e.g. thank-you). */
+  robots?: string;
   /** JSON-LD objects injected only while this route is active; home relies on the static tags in index.html */
   jsonLd?: object[];
 }
@@ -99,16 +104,6 @@ export function buildPropertySEO(property: Property): SEOData {
       name,
       value: true,
     })),
-    ...(property.reviewCount > 0
-      ? {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: property.rating,
-            reviewCount: property.reviewCount,
-            bestRating: 5,
-          },
-        }
-      : {}),
   };
 
   const breadcrumb = {
@@ -128,5 +123,18 @@ export function buildPropertySEO(property: Property): SEOData {
     image,
     imageAlt: `${property.name} – ${property.type} accommodation in ${property.location}`,
     jsonLd: [lodgingBusiness, breadcrumb],
+  };
+}
+
+/** Per-property Google Ads conversion landing page — noindexed, not part of the sitemap. */
+export function buildThankYouSEO(property: Property): SEOData {
+  const city = property.location.split(",")[0].trim();
+  return {
+    title: `Thank You – ${property.name} | Brown Tree Resorts`,
+    description: `Thank you for your inquiry about ${property.name} in ${city}. Our concierge team will reach out shortly to help plan your stay.`,
+    path: toThankYouSlug(property),
+    image: toAbsoluteUrl(property.image),
+    imageAlt: `${property.name} – Brown Tree Resorts`,
+    robots: "noindex, nofollow",
   };
 }

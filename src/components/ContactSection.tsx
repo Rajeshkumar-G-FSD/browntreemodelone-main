@@ -5,8 +5,7 @@
 
 import { useState, useRef, FormEvent, ChangeEvent } from "react";
 import { Mail, Phone, Clock, Send, CheckCircle2, Sparkles } from "lucide-react";
-
-const WHATSAPP_NUMBER = "919095487848"; // +91 90954 87848
+import { WHATSAPP_NUMBER } from "../lib/whatsapp";
 
 // nsnLength = exact National Significant Number length for that country's
 // numbering plan, when known. Omit it for countries with variable-length
@@ -214,7 +213,7 @@ export default function ContactSection() {
         </div>
 
         {/* Right Column: Inquiry Form Panel */}
-        <div 
+        <div
           id="contact-form-panel"
           className="lg:col-span-7 bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-brand-primary/5 relative"
           style={{
