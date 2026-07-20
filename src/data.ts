@@ -5,7 +5,7 @@
 
 import { Property, Experience, Review, Destination } from "./types";
 import ootyDestImage from "./assets/images/ooty.png";
-import kothagiriDestImage from "./assets/images/kothagiri.jpg";
+import kothagiriDestImage from "./assets/images/kothagiri.jpeg";
 import kodaikanaldestImage from "./assets/images/kodaikanal.jpg";
 import theAbodeMain from "./assets/images/theabodebybrowntree.png";
 import theAbodeGarden from "./assets/images/theabodebybrowntree_gareden.jpg";

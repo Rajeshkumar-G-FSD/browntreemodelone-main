@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useCallback, useEffect, useRef, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 
 export interface SliderItemData {
   title: string;
@@ -27,18 +27,23 @@ interface SliderItemProps {
 }
 
 function SliderItem({ item, setRef, onClick }: SliderItemProps) {
+  // Sensible portrait fallback until the real photo dimensions are known, then the
+  // card resizes to the image's own aspect ratio so the photo fills it exactly —
+  // no cropping and no letterboxed backdrop needed on the sides.
+  const [aspect, setAspect] = useState(0.8);
+
   return (
     <div
       ref={setRef}
       className="absolute top-1/2 left-1/2 cursor-pointer select-none rounded-[24px]
-        shadow-2xl bg-black origin-[0%_100%] pointer-events-auto
+        shadow-2xl bg-brand-background origin-[0%_100%] pointer-events-auto
         w-[var(--width)] h-[var(--height)]
         -mt-[calc(var(--height)/2)] -ml-[calc(var(--width)/2)]
         overflow-hidden will-change-transform"
       style={
         {
-          "--width": "clamp(260px, 40vw, 560px)",
           "--height": "clamp(340px, 50vw, 640px)",
+          "--width": `calc(var(--height) * ${aspect})`,
           transition: "none",
         } as CSSProperties & Record<string, string>
       }
@@ -48,7 +53,19 @@ function SliderItem({ item, setRef, onClick }: SliderItemProps) {
         className="slider-item-content absolute inset-0 z-10 transition-opacity duration-300 ease-out will-change-[opacity]"
         style={{ opacity: 1 }}
       >
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/30 via-transparent via-50% to-black/60" />
+        <img
+          src={item.imageUrl}
+          alt={item.title}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          loading="lazy"
+          decoding="async"
+          onLoad={(e) => {
+            const { naturalWidth, naturalHeight } = e.currentTarget;
+            if (naturalWidth && naturalHeight) setAspect(naturalWidth / naturalHeight);
+          }}
+        />
+
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/25 via-transparent via-50% to-black/65" />
 
         <div className="absolute z-10 text-white bottom-5 left-5 right-5 text-[clamp(18px,2.4vw,28px)] font-display drop-shadow-md">
           {item.title}
@@ -57,14 +74,6 @@ function SliderItem({ item, setRef, onClick }: SliderItemProps) {
         <div className="absolute z-10 text-white/30 top-2.5 left-5 font-display text-[clamp(20px,8vw,64px)] leading-none">
           {item.num}
         </div>
-
-        <img
-          src={item.imageUrl}
-          alt={item.title}
-          className="w-full h-full object-cover pointer-events-none"
-          loading="lazy"
-          decoding="async"
-        />
       </div>
     </div>
   );
