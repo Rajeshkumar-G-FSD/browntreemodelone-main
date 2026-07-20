@@ -86,15 +86,23 @@ export default function ThreeDSlider({
   containerStyle = {},
   onItemClick,
 }: ThreeDSliderProps) {
-  const progressRef = useRef(50);
-  const targetProgressRef = useRef(50);
+  // Start centered on the first item (Ooty) so its full image is what greets the
+  // page — scrolling/dragging is what reveals Kothagiri and Kodaikanal from there.
+  const progressRef = useRef(0);
+  const targetProgressRef = useRef(0);
   const isDownRef = useRef(false);
   const draggedRef = useRef(false);
+  const directionRef = useRef<"none" | "x" | "y">("none");
   const startXRef = useRef(0);
+  const startYRef = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const cacheRef = useRef<Record<number, { transform: string; zIndex: string; opacity: string }>>({});
+  // Wheel-driven card switching only kicks in once the slider is actually visible on
+  // screen — otherwise hovering a sliver of it at the edge of the viewport would
+  // hijack the page's normal scroll before the destinations are even in view.
+  const isVisibleRef = useRef(false);
 
   const numItems = items.length;
 
@@ -160,6 +168,7 @@ export default function ThreeDSlider({
 
   const handleWheel = useCallback(
     (e: WheelEvent) => {
+      if (!isVisibleRef.current) return; // not in view yet — let the page scroll normally
       const next = targetProgressRef.current + e.deltaY * speedWheel;
       if ((next < 0 && e.deltaY < 0) || (next > 100 && e.deltaY > 0)) return;
       e.preventDefault();
@@ -169,17 +178,39 @@ export default function ThreeDSlider({
   );
 
   const getClientX = (e: MouseEvent | TouchEvent) => ("touches" in e ? e.touches[0].clientX : e.clientX);
+  const getClientY = (e: MouseEvent | TouchEvent) => ("touches" in e ? e.touches[0].clientY : e.clientY);
 
   const handlePointerDown = useCallback((e: MouseEvent | TouchEvent) => {
     isDownRef.current = true;
     draggedRef.current = false;
+    // Mouse drags are always horizontal; touch gestures wait to see which way the
+    // finger actually moves before deciding whether this is a slide or a page scroll.
+    directionRef.current = "touches" in e ? "none" : "x";
     startXRef.current = getClientX(e);
+    startYRef.current = getClientY(e);
   }, []);
 
   const handlePointerMove = useCallback(
     (e: MouseEvent | TouchEvent) => {
       if (!isDownRef.current) return;
+      const isTouch = "touches" in e;
       const x = getClientX(e);
+
+      if (isTouch && directionRef.current === "none") {
+        const y = getClientY(e);
+        const dx = Math.abs(x - startXRef.current);
+        const dy = Math.abs(y - startYRef.current);
+        if (dx < 6 && dy < 6) return; // too small a movement yet to know the intent
+        directionRef.current = dx > dy ? "x" : "y";
+        if (directionRef.current === "y") {
+          isDownRef.current = false; // hand the gesture back to native vertical scrolling
+          return;
+        }
+      }
+
+      if (isTouch && directionRef.current === "y") return;
+      if (isTouch && directionRef.current === "x") e.preventDefault(); // stop vertical scroll fighting the drag
+
       const diff = (x - startXRef.current) * speedDrag;
       if (Math.abs(diff) > 0.3) draggedRef.current = true;
       targetProgressRef.current = Math.max(0, Math.min(100, targetProgressRef.current + diff));
@@ -190,6 +221,7 @@ export default function ThreeDSlider({
 
   const handlePointerUp = useCallback(() => {
     isDownRef.current = false;
+    directionRef.current = "none";
   }, []);
 
   const handleItemClick = useCallback(
@@ -208,13 +240,28 @@ export default function ThreeDSlider({
     const container = containerRef.current;
     if (!container) return;
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(container);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
     container.addEventListener("wheel", handleWheel as EventListener, { passive: false });
     container.addEventListener("mousedown", handlePointerDown as EventListener);
     container.addEventListener("touchstart", handlePointerDown as EventListener, { passive: true });
 
     window.addEventListener("mousemove", handlePointerMove as EventListener);
     window.addEventListener("mouseup", handlePointerUp);
-    window.addEventListener("touchmove", handlePointerMove as EventListener, { passive: true });
+    window.addEventListener("touchmove", handlePointerMove as EventListener, { passive: false });
     window.addEventListener("touchend", handlePointerUp);
 
     return () => {

@@ -40,11 +40,14 @@ const itemVariants = {
   },
 };
 
+// x is a % of the card's own width, so the slide-in reads clearly at every
+// breakpoint — a full-width mobile card and a narrow lg:grid-cols-3 card both
+// travel a proportional, clearly visible distance instead of a fixed px amount.
 const cardVariantsLeft = {
-  hidden: { opacity: 0, x: -90, y: 20 },
+  hidden: { opacity: 0, x: "-70%", y: 20 },
   visible: {
     opacity: 1,
-    x: 0,
+    x: "0%",
     y: 0,
     transition: {
       duration: 0.9,
@@ -54,10 +57,10 @@ const cardVariantsLeft = {
 };
 
 const cardVariantsRight = {
-  hidden: { opacity: 0, x: 90, y: 20 },
+  hidden: { opacity: 0, x: "70%", y: 20 },
   visible: {
     opacity: 1,
-    x: 0,
+    x: "0%",
     y: 0,
     transition: {
       duration: 0.9,
@@ -239,7 +242,7 @@ export default function PropertiesSection({
                   onClick={() => onSelectProperty(property)}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true, margin: "-100px" }}
+                  viewport={{ once: false, margin: "-100px" }}
                   variants={index % 2 === 0 ? cardVariantsLeft : cardVariantsRight}
                   whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
                   className={`group relative rounded-[28px] overflow-hidden bg-white shadow-2xl cursor-pointer select-none ${
