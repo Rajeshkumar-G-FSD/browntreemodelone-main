@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 import { Property, Suite } from "../types";
+import SplitText from "./SplitText";
+import BlurText from "./BlurText";
 
 // ─── Animated section wrapper (motion whileInView) ────────────────────────────
 function FadeUp({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
@@ -203,10 +205,33 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="inline-block text-[9px] font-bold tracking-[0.2em] text-white/80 bg-white/10 border border-white/20 py-1 px-2.5 rounded-full uppercase mb-2">
-              {property.type} · {property.region}
+              <SplitText
+                key={`${property.id}-badge`}
+                text={`${property.type} · ${property.region}`}
+                tag="span"
+                delay={20}
+                duration={0.5}
+                ease="power3.out"
+                splitType="chars"
+                from={{ opacity: 0, y: 8 }}
+                to={{ opacity: 1, y: 0 }}
+                threshold={0.1}
+                rootMargin="0px"
+                textAlign="left"
+              />
             </span>
             <h1 className="font-display text-xl sm:text-2xl md:text-4xl font-medium text-white tracking-tight leading-tight mb-2">
-              {property.name}
+              <BlurText
+                key={`${property.id}-name`}
+                text={property.name}
+                tag="span"
+                className="!justify-start !text-left"
+                delay={30}
+                animateBy="words"
+                direction="top"
+                threshold={0.1}
+                rootMargin="0px"
+              />
             </h1>
             {property.heroSubtitle && (
               <p className="text-xs sm:text-sm text-white/75 font-light leading-relaxed max-w-2xl mb-3">

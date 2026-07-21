@@ -4,6 +4,7 @@
  */
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import BlurText from "./BlurText";
 
 export interface SliderItemData {
   title: string;
@@ -70,7 +71,16 @@ function SliderItem({ item, setRef, onClick }: SliderItemProps) {
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/25 via-transparent via-50% to-black/65" />
 
         <div className="absolute z-10 text-white bottom-5 left-5 right-5 text-[clamp(18px,2.4vw,28px)] font-display drop-shadow-md">
-          {item.title}
+          <BlurText
+            text={item.title}
+            tag="span"
+            className="!justify-start !text-left"
+            delay={40}
+            animateBy="words"
+            direction="top"
+            threshold={0.4}
+            rootMargin="0px"
+          />
         </div>
       </div>
     </div>

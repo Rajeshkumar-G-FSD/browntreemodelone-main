@@ -6,6 +6,8 @@
 import { useState } from "react";
 import { X, Star, Check, Sparkles, MapPin, DollarSign, BedDouble, Expand, ShieldCheck } from "lucide-react";
 import { Property, Suite } from "../types";
+import SplitText from "./SplitText";
+import BlurText from "./BlurText";
 
 interface PropertyDetailModalProps {
   property: Property;
@@ -31,7 +33,20 @@ export default function PropertyDetailModal({ property, onClose, onBookSuite }: 
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
               <span className="text-[10px] font-bold tracking-[0.2em] text-brand-secondary bg-brand-secondary/10 py-0.5 px-2.5 rounded-full uppercase">
-                {property.type}
+                <SplitText
+                  key={`${property.id}-badge`}
+                  text={property.type}
+                  tag="span"
+                  delay={20}
+                  duration={0.5}
+                  ease="power3.out"
+                  splitType="chars"
+                  from={{ opacity: 0, y: 8 }}
+                  to={{ opacity: 1, y: 0 }}
+                  threshold={0.1}
+                  rootMargin="0px"
+                  textAlign="left"
+                />
               </span>
               <div className="flex items-center space-x-1 text-brand-gold-light">
                 <Star size={12} className="fill-brand-gold-light" />
@@ -39,7 +54,17 @@ export default function PropertyDetailModal({ property, onClose, onBookSuite }: 
               </div>
             </div>
             <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-brand-primary">
-              {property.name}
+              <BlurText
+                key={`${property.id}-name`}
+                text={property.name}
+                tag="span"
+                className="!justify-start !text-left"
+                delay={30}
+                animateBy="words"
+                direction="top"
+                threshold={0.1}
+                rootMargin="0px"
+              />
             </h2>
           </div>
 
