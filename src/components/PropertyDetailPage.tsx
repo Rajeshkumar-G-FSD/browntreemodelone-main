@@ -226,14 +226,18 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
   const hasAmenityCategories = !!(property.amenityCategories && property.amenityCategories.length > 0);
   const hasRules = !property.hideHouseRules;
   const hasNearby = nearbyAttractions.length > 0 || !!(property.nearbyLandmarks && property.nearbyLandmarks.length > 0);
+  const hasExperiences = !!(property.signatureExperiences && property.signatureExperiences.length > 0);
+  const hasGuestStories = !!(property.guestHighlights && property.guestHighlights.length > 0);
 
   const tabDefs = [
     { id: "highlights", label: "At A Glance", icon: <Sparkles size={13} /> },
+    ...(hasExperiences ? [{ id: "experiences", label: "Signature Experiences", icon: <Star size={13} /> }] : []),
     { id: "facilities", label: "Facilities", icon: <Wifi size={13} /> },
     ...(!hasAmenityCategories ? [{ id: "room", label: "In Your Room", icon: <BedDouble size={13} /> }] : []),
     { id: "whystay", label: "Why Stay", icon: <Heart size={13} /> },
     ...(hasRules ? [{ id: "rules", label: "House Rules", icon: <Clock size={13} /> }] : []),
     ...(hasNearby ? [{ id: "nearby", label: "Nearby", icon: <MapPinned size={13} /> }] : []),
+    ...(hasGuestStories ? [{ id: "guestStories", label: "Guest Stories", icon: <ThumbsUp size={13} /> }] : []),
   ];
   const [activeTab, setActiveTab] = useState(tabDefs[0].id);
 
@@ -394,39 +398,9 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
         </div>
       </section>
 
-      {/* ── 2. Signature Experiences (when data available) ── */}
-      {property.signatureExperiences && property.signatureExperiences.length > 0 && (
-        <section className="py-16 md:py-24 bg-white">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <FadeUp>
-              <SectionHeading eyebrow="Curated Moments" title="Signature Experiences" />
-            </FadeUp>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-              {property.signatureExperiences.map((exp, idx) => (
-                <FadeUp key={idx} delay={idx * 70} className="h-full">
-                  <div className="h-full group relative bg-gradient-to-br from-brand-background to-white border border-brand-primary/10 rounded-2xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-400 overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-brand-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-2xl pointer-events-none" />
-                    <span className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center text-brand-gold-light shrink-0 shadow-md group-hover:scale-110 transition-transform duration-300">
-                      {resolveExperienceIcon(exp.title)}
-                    </span>
-                    <div className="relative z-10">
-                      <h3 className="text-sm font-bold text-brand-primary mb-2 group-hover:text-brand-secondary transition-colors leading-snug">
-                        {exp.title}
-                      </h3>
-                      <p className="text-xs text-brand-primary/60 font-light leading-relaxed">
-                        {exp.description}
-                      </p>
-                    </div>
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── 3. Stay Details — At A Glance / Facilities / Room / Why Stay / Rules / Nearby,
-             all behind one tab bar so only the section a guest actually wants renders ── */}
+      {/* ── 2. Stay Details — At A Glance / Signature Experiences / Facilities / Room /
+             Why Stay / Rules / Nearby / Guest Stories, all behind one tab bar so only
+             the section a guest actually wants renders ── */}
       <section className="py-16 md:py-24 bg-brand-background">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           {/* Sticky tab bar */}
@@ -472,6 +446,30 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
                   ))}
                 </div>
                 <ShowMoreButton {...highlightsExpand} total={highlightCards.length} label="Highlights" />
+              </div>
+            )}
+
+            {/* ── Signature Experiences ── */}
+            {activeTab === "experiences" && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+                {property.signatureExperiences!.map((exp, idx) => (
+                  <FadeUp key={idx} delay={idx * 70} className="h-full">
+                    <div className="h-full group relative bg-white border border-brand-primary/10 rounded-2xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-400 overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-brand-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-2xl pointer-events-none" />
+                      <span className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center text-brand-gold-light shrink-0 shadow-md group-hover:scale-110 transition-transform duration-300">
+                        {resolveExperienceIcon(exp.title)}
+                      </span>
+                      <div className="relative z-10">
+                        <h3 className="text-sm font-bold text-brand-primary mb-2 group-hover:text-brand-secondary transition-colors leading-snug">
+                          {exp.title}
+                        </h3>
+                        <p className="text-xs text-brand-primary/60 font-light leading-relaxed">
+                          {exp.description}
+                        </p>
+                      </div>
+                    </div>
+                  </FadeUp>
+                ))}
               </div>
             )}
 
@@ -762,22 +760,12 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
               </>
             )
             )}
-          </motion.div>
-        </div>
-      </section>
 
-      {/* ── 4. Guest Experience (when guestHighlights available) ── */}
-      {property.guestHighlights && property.guestHighlights.length > 0 && (
-        <section className="py-16 md:py-24 bg-white">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <FadeUp>
-              <SectionHeading eyebrow="Guest Stories" title="What Guests Love" />
-            </FadeUp>
-            {/* Highlights list */}
-            <FadeUp delay={80}>
-              <div className="bg-brand-background border border-brand-primary/8 rounded-2xl p-7 md:p-10 shadow-sm">
+            {/* ── Guest Stories ── */}
+            {activeTab === "guestStories" && (
+              <div className="bg-white border border-brand-primary/8 rounded-2xl p-7 md:p-10 shadow-sm">
                 <ul className="space-y-4">
-                  {property.guestHighlights.map((item, idx) => (
+                  {property.guestHighlights!.map((item, idx) => (
                     <li key={idx} className="flex items-center gap-4">
                       <span className="w-8 h-8 rounded-xl bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0">
                         <ThumbsUp size={15} />
@@ -787,12 +775,12 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
                   ))}
                 </ul>
               </div>
-            </FadeUp>
-          </div>
-        </section>
-      )}
+            )}
+          </motion.div>
+        </div>
+      </section>
 
-      {/* ── 10. Need Assistance CTA ── */}
+      {/* ── 3. Need Assistance CTA ── */}
       <section className="py-16 md:py-24 bg-brand-primary relative overflow-hidden">
         {/* Decorative background circles */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-white/3 rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" />
