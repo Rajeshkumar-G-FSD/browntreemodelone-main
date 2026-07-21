@@ -5,3 +5,9 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Build artifacts — regenerate locally with `npm run build` for cPanel deploy.
+# Kept out of git so client-bundled secrets (e.g. VITE_ env vars baked into
+# the JS) never land in commit history, especially on a public repo.
+dist/
+browntree-cpanel-deploy.zip

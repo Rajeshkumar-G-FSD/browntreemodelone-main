@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { MessageSquare, X, Send, Sparkles, AlertCircle, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { getBookingUrl } from "../bookingUrls";
+import { getChatReply } from "../geminiClient";
 
 interface Message {
   sender: "user" | "bot";
@@ -171,26 +172,11 @@ export default function ChatBot() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "An error occurred while calling the concierge.");
-      }
-
-      const data = await response.json();
-      setMessages((prev) => [...prev, { sender: "bot", text: data.text || "I apologize, but I could not formulate a response at this moment." }]);
+      const text = await getChatReply(newMessages);
+      setMessages((prev) => [...prev, { sender: "bot", text }]);
     } catch (err: any) {
       console.error("ChatBot error:", err);
-      let errMsg = err.message || "An error occurred.";
-      if (errMsg.includes("GEMINI_API_KEY")) {
-        errMsg = "I require a Gemini API Key to function. Please add your GEMINI_API_KEY in the Settings > Secrets panel of your AI Studio workspace to begin chatting.";
-      }
-      setError(errMsg);
+      setError(err?.message || "An error occurred while calling the concierge.");
     } finally {
       setIsLoading(false);
     }
