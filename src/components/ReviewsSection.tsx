@@ -48,16 +48,16 @@ export default function ReviewsSection() {
       {/* Section Header */}
       <div className="text-center space-y-4 max-w-2xl mx-auto px-4 mb-14">
         <div
-          className="inline-flex items-center space-x-2 text-xs font-bold tracking-[0.25em] uppercase"
+          className="inline-flex items-center space-x-2 text-base md:text-lg font-bold tracking-[0.1em] uppercase"
           style={{ color: "#D4AF37" }}
         >
           <MessageSquare size={14} />
           <span>GUEST REVIEWS</span>
         </div>
-        <h2 className="font-display text-4xl md:text-5xl font-medium tracking-tight" style={{ color: "#F8F5EF" }}>
+        <h2 className="font-display text-base md:text-lg font-medium tracking-tight" style={{ color: "#F8F5EF" }}>
           Reflections of Luxury
         </h2>
-        <p className="font-sans text-sm md:text-base font-light leading-relaxed" style={{ color: "rgba(248,245,239,0.6)" }}>
+        <p className="font-sans text-base md:text-lg font-light leading-relaxed" style={{ color: "rgba(248,245,239,0.6)" }}>
           Read notes of admiration from members of our elite travel circles.
         </p>
       </div>
