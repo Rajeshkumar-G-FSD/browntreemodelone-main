@@ -99,10 +99,7 @@ export const PROPERTIES: Property[] = [
     ],
     propertyHighlightCards: [
       "Private Room in a Homestay",
-      "1 Bedroom",
-      "2 Double Beds",
       "Ideal for Couples & Families",
-      "Managed by Caretaker",
       "Daily Housekeeping",
       "Peaceful Nature Location",
       "Scenic Balcony",
