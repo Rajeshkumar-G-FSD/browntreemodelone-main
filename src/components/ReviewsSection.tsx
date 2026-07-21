@@ -3,89 +3,42 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useEffect, useState } from "react";
 import { MessageSquare } from "lucide-react";
-import { AngledSlider } from "./lightswind/angled-slider";
-import { REVIEW_IMAGE_ROWS } from "../reviewImages";
+import {
+  ThreeDScrollTriggerContainer,
+  ThreeDScrollTriggerRow,
+} from "./lightswind/ThreeDScrollTrigger";
+import { ALL_REVIEW_IMAGES } from "../reviewImages";
 
-const ROW_DIRECTION: ("left" | "right")[] = ["left", "right", "left", "right"];
-const ROW_SPEED = [30, 36, 26, 32];
-
-function useResponsiveSliderSize() {
-  const [size, setSize] = useState({ cardWidth: 420, containerHeight: 240, gap: 28 });
-
-  useEffect(() => {
-    const update = () => {
-      const w = window.innerWidth;
-      if (w < 640) {
-        setSize({ cardWidth: 240, containerHeight: 150, gap: 16 });
-      } else if (w < 1024) {
-        setSize({ cardWidth: 340, containerHeight: 200, gap: 24 });
-      } else if (w < 1536) {
-        setSize({ cardWidth: 420, containerHeight: 240, gap: 28 });
-      } else {
-        setSize({ cardWidth: 460, containerHeight: 260, gap: 32 });
-      }
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  return size;
-}
-
-function ReviewSliderRow({
-  property,
-  images,
-  direction,
-  speed,
-  cardWidth,
-  containerHeight,
-  gap,
-}: {
-  property: string;
-  images: string[];
-  direction: "left" | "right";
-  speed: number;
-  cardWidth: number;
-  containerHeight: number;
-  gap: number;
-}) {
-  const items = images.map((url, i) => ({
-    id: `${property}-${i}`,
-    url,
-    alt: `${property} guest review ${i + 1}`,
-    title: property,
-  }));
-
+// Rows scroll continuously and speed up/reverse with page scroll velocity
+// (see ThreeDScrollTrigger.tsx). Cards use a fixed height with natural
+// width (no forced aspect ratio) so these wide review screenshots
+// (~3.6:1 to ~10.2:1) never get cropped — width just varies per image.
+function ReviewCard({ src }: { src: string }) {
   return (
-    <div>
-      <p
-        className="mb-2 px-4 text-center text-xs font-bold uppercase tracking-[0.25em] md:px-6"
-        style={{ color: "rgba(212,175,55,0.85)" }}
-      >
-        {property}
-      </p>
-      <AngledSlider
-        items={items}
-        direction={direction}
-        speed={speed}
-        cardWidth={`${cardWidth}px`}
-        containerHeight={`${containerHeight}px`}
-        gap={`${gap}px`}
-        angle={12}
-        hoverScale={1.03}
-        imageFit="contain"
-        className="bg-transparent"
+    <div className="inline-block shrink-0 mx-2 sm:mx-3 rounded-xl overflow-hidden bg-white shadow-xl h-[110px] sm:h-[150px] md:h-[190px] lg:h-[220px]">
+      <img
+        src={src}
+        alt="Guest reflection"
+        loading="lazy"
+        className="h-full w-auto block"
       />
     </div>
   );
 }
 
-export default function ReviewsSection() {
-  const { cardWidth, containerHeight, gap } = useResponsiveSliderSize();
+// Split the pool into three rows (round-robin) so each row has its own mix
+// rather than every row showing the same sequence.
+function splitRows(images: string[], rowCount: number): string[][] {
+  const rows: string[][] = Array.from({ length: rowCount }, () => []);
+  images.forEach((src, i) => rows[i % rowCount].push(src));
+  return rows;
+}
 
+const ROWS = splitRows(ALL_REVIEW_IMAGES, 3);
+const ROW_DIRECTION: (1 | -1)[] = [1, -1, 1];
+
+export default function ReviewsSection() {
   return (
     <section
       id="reviews"
@@ -109,21 +62,16 @@ export default function ReviewsSection() {
         </p>
       </div>
 
-      {/* Angled 3D Auto-Scroll Sliders */}
-      <div className="space-y-10">
-        {REVIEW_IMAGE_ROWS.map((row, i) => (
-          <ReviewSliderRow
-            key={row.property}
-            property={row.property}
-            images={row.images}
-            direction={ROW_DIRECTION[i % ROW_DIRECTION.length]}
-            speed={ROW_SPEED[i % ROW_SPEED.length]}
-            cardWidth={cardWidth}
-            containerHeight={containerHeight}
-            gap={gap}
-          />
+      {/* Scroll-velocity-reactive marquee rows — no per-property grouping or labels */}
+      <ThreeDScrollTriggerContainer className="space-y-4 sm:space-y-5 md:space-y-6">
+        {ROWS.map((row, i) => (
+          <ThreeDScrollTriggerRow key={i} direction={ROW_DIRECTION[i % ROW_DIRECTION.length]} baseVelocity={3}>
+            {row.map((src, j) => (
+              <ReviewCard key={j} src={src} />
+            ))}
+          </ThreeDScrollTriggerRow>
         ))}
-      </div>
+      </ThreeDScrollTriggerContainer>
 
       {/* Subtle bottom gold rule */}
       <div className="max-w-xs mx-auto mt-10 px-4">

@@ -107,3 +107,18 @@ export const REVIEW_IMAGE_ROWS: ReviewImageRow[] = [
     ],
   },
 ];
+
+// Single unified pool for the "Reflections of Luxury" 3D carousel — round-robin
+// interleaved across properties (rather than one property's images back-to-back)
+// so the rotation reads as one continuous reel of guest reflections, with no
+// per-property grouping or labels.
+export const ALL_REVIEW_IMAGES: string[] = (() => {
+  const maxLen = Math.max(...REVIEW_IMAGE_ROWS.map((row) => row.images.length));
+  const interleaved: string[] = [];
+  for (let i = 0; i < maxLen; i++) {
+    for (const row of REVIEW_IMAGE_ROWS) {
+      if (row.images[i]) interleaved.push(row.images[i]);
+    }
+  }
+  return interleaved;
+})();
