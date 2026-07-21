@@ -148,6 +148,16 @@ export const PROPERTIES: Property[] = [
       "Scenic Mountain Views",
       "Personalized Guest Service"
     ],
+    whyStayCards: [
+      { title: "Peaceful Natural Surroundings", description: "Surrounded by lush greenery and refreshing mountain air, ideal for a true nature retreat." },
+      { title: "Comfortable Spacious Rooms", description: "Thoughtfully designed rooms with cozy interiors, comfortable bedding, and elegant furnishings." },
+      { title: "Family Friendly", description: "A warm and welcoming atmosphere suited for families, couples, and groups alike." },
+      { title: "Ideal for Weekend Getaways", description: "A perfect short escape from city life into calm hillside surroundings." },
+      { title: "Warm Hospitality", description: "A friendly caretaker and staff dedicated to making your stay relaxing and memorable." },
+      { title: "Private Balcony", description: "Unwind on your own balcony with sweeping views of the tea valleys." },
+      { title: "Scenic Mountain Views", description: "Wake up to breathtaking views of the Nilgiri hills every morning." },
+      { title: "Personalized Guest Service", description: "Attentive, individual care ensuring a seamless and comfortable stay." }
+    ],
     houseRules: {
       checkIn: "2:00 PM",
       checkOut: "11:00 AM",
@@ -158,14 +168,75 @@ export const PROPERTIES: Property[] = [
         "Valid Government ID Required"
       ]
     },
-    nearbyAttractions: [
-      "Ooty Lake",
-      "Botanical Garden",
-      "Rose Garden",
-      "Doddabetta Peak",
-      "Tea Museum",
-      "Pykara Lake",
-      "Nilgiri Mountain Railway"
+    signatureExperiences: [
+      { title: "Guided Tea Plantation Walk", description: "Stroll through lush Nilgiri tea estates with a guided walk and learn how the region's famous tea is grown and harvested." },
+      { title: "Tea Tasting Session", description: "Sample freshly brewed Nilgiri tea varieties while soaking in the peaceful garden surroundings." },
+      { title: "Morning Nature Walks", description: "Start your day with a refreshing walk through misty valleys and scenic mountain trails." },
+      { title: "Scenic Balcony Views", description: "Relax on your private balcony overlooking rolling tea valleys and forested hills." },
+      { title: "Personalized Hospitality", description: "Enjoy attentive care from our on-site caretaker, dedicated to making your stay seamless and memorable." }
+    ],
+    amenityCategories: [
+      {
+        category: "Highlighted Amenities",
+        items: ["Parking", "Wi-Fi", "Power Backup"]
+      },
+      {
+        category: "Basic Facilities",
+        items: ["Parking", "Wi-Fi", "Power Backup", "Room Service", "Daily Housekeeping"]
+      },
+      {
+        category: "General Services",
+        items: ["Caretaker Assistance"]
+      },
+      {
+        category: "Room Amenities",
+        items: ["Bathroom", "Comfortable Seating Area", "Private Balcony", "Balcony / Terrace", "Ceiling Fan", "Fireplace", "Closet", "Sofa", "Chair", "LED TV", "Electric Kettle", "Charging Points", "International Plug Adapters", "24-Hour Hot & Cold Water", "Private Bathroom", "Bath Towels", "Shampoo", "Shower Gel", "Premium Toiletries", "Toilet with Grab Rails", "Woollen Blanket"]
+      },
+      {
+        category: "Dining",
+        items: ["In-room Dining"]
+      },
+      {
+        category: "Common Areas",
+        items: ["Balcony / Terrace"]
+      }
+    ],
+    guestHighlights: [
+      "Peaceful and serene natural surroundings",
+      "Comfortable, well-appointed rooms",
+      "Warm and attentive caretaker hospitality",
+      "Great for weekend getaways with family",
+      "Beautiful scenic balcony views"
+    ],
+    amenitiesRating: 4.4,
+    nearbyLandmarks: [
+      { name: "Ooty Lake", distance: "3.2 km" },
+      { name: "Government Botanical Garden", distance: "4.8 km" },
+      { name: "Rose Garden", distance: "5.5 km" },
+      { name: "Tea Museum", distance: "7.4 km" },
+      { name: "Doddabetta Peak", distance: "9.6 km" },
+      { name: "Pykara Lake", distance: "19.5 km" }
+    ],
+    nearbyFoodShopping: [
+      { name: "Charing Cross Market", distance: "4.9 km" },
+      { name: "Main Bazaar", distance: "5.3 km" },
+      { name: "Tibetan Market", distance: "5.6 km" }
+    ],
+    nearbyTransport: [
+      {
+        type: "Bus Terminals",
+        items: [
+          { name: "ATC Bus Stand", distance: "5.1 km" },
+          { name: "Ooty Bus Station", distance: "5.4 km" }
+        ]
+      },
+      {
+        type: "Railway Stations",
+        items: [
+          { name: "Udhagamandalam Railway Station (Nilgiri Mountain Railway)", distance: "5.2 km" },
+          { name: "Ketti Railway Station", distance: "9.8 km" }
+        ]
+      }
     ],
     suites: [
       {
@@ -259,6 +330,15 @@ export const PROPERTIES: Property[] = [
       "Comfortable Spacious Rooms",
       "Pickup & Drop Available"
     ],
+    whyStayCards: [
+      { title: "Peaceful Hillside Atmosphere", description: "A quiet hillside setting surrounded by lush greenery, away from the city bustle." },
+      { title: "French Styled Architecture", description: "Elegant French-inspired design that gives the villa its distinct, charming character." },
+      { title: "Beautiful Mountain Views", description: "Panoramic views of the Nilgiri Mountains visible right from the property." },
+      { title: "Family Friendly Stay", description: "Comfortable and welcoming for families, couples, and groups alike." },
+      { title: "Warm Personalized Hospitality", description: "Dedicated staff ensuring every guest feels cared for throughout their stay." },
+      { title: "Comfortable Spacious Rooms", description: "Well-appointed rooms designed for relaxation and comfort." },
+      { title: "Pickup & Drop Available", description: "Convenient transfer assistance to make your travel seamless." }
+    ],
     houseRules: {
       checkIn: "2:00 PM",
       checkOut: "11:00 AM",
@@ -268,15 +348,77 @@ export const PROPERTIES: Property[] = [
         "Valid Government ID Required"
       ]
     },
-    nearbyAttractions: [
-      "Ooty Lake – 4.8 km",
-      "Government Botanical Garden – 1.9 km",
-      "Elk Hill – 3.6 km",
-      "Tiger Hill – 5 km",
-      "Tibetan Market – 1.7 km",
-      "ATC Bus Stand – 2.9 km",
-      "Udhagamandalam Railway Station – 3.7 km",
-      "Rallia Dam – 17.1 km"
+    signatureExperiences: [
+      { title: "French Styled Architecture Tour", description: "Admire the elegant French-inspired design details throughout the villa's interiors and courtyards." },
+      { title: "Bonfire Evenings", description: "Gather around a warm bonfire while enjoying the cool Nilgiri mountain air." },
+      { title: "Mountain View Mornings", description: "Wake up to sweeping panoramic views of the Nilgiri Mountains from your room." },
+      { title: "Cozy Dining Experience", description: "Savour freshly prepared meals in the resort's warm and inviting dining area." },
+      { title: "Pickup & Drop Assistance", description: "Travel with ease using our convenient pickup and drop service to Ooty's key locations." }
+    ],
+    amenityCategories: [
+      {
+        category: "Highlighted Amenities",
+        items: ["Free Parking", "Power Backup", "CCTV Surveillance"]
+      },
+      {
+        category: "Basic Facilities",
+        items: ["Free Parking", "Power Backup", "Housekeeping", "Refrigerator"]
+      },
+      {
+        category: "Room Amenities",
+        items: ["Attached Bathroom", "LED Television", "Sofa", "Living Area", "Complimentary Toiletries", "Dental Kit", "Fresh Towels", "Hot Water"]
+      },
+      {
+        category: "Dining",
+        items: ["Dining Area"]
+      },
+      {
+        category: "Safety",
+        items: ["CCTV Surveillance"]
+      },
+      {
+        category: "Outdoor Activities",
+        items: ["Bonfire"]
+      },
+      {
+        category: "Common Areas",
+        items: ["Living Area", "Dining Area"]
+      }
+    ],
+    guestHighlights: [
+      "Elegant French-styled architecture",
+      "Stunning panoramic mountain views",
+      "Warm, personalized hospitality",
+      "Peaceful hillside location",
+      "Comfortable and spacious rooms"
+    ],
+    amenitiesRating: 4.7,
+    nearbyLandmarks: [
+      { name: "Government Botanical Garden", distance: "1.9 km" },
+      { name: "Elk Hill", distance: "3.6 km" },
+      { name: "Ooty Lake", distance: "4.8 km" },
+      { name: "Tiger Hill", distance: "5 km" },
+      { name: "Rallia Dam", distance: "17.1 km" }
+    ],
+    nearbyFoodShopping: [
+      { name: "Tibetan Market", distance: "1.7 km" },
+      { name: "Commercial Market", distance: "2.3 km" },
+      { name: "Charing Cross", distance: "2.6 km" }
+    ],
+    nearbyTransport: [
+      {
+        type: "Bus Terminals",
+        items: [
+          { name: "ATC Bus Stand", distance: "2.9 km" },
+          { name: "Ooty Bus Station", distance: "3.1 km" }
+        ]
+      },
+      {
+        type: "Railway Stations",
+        items: [
+          { name: "Udhagamandalam Railway Station", distance: "3.7 km" }
+        ]
+      }
     ],
     suites: [
       {
@@ -483,6 +625,11 @@ export const PROPERTIES: Property[] = [
       { name: "Coonoor Falls", distance: "18.8 km" },
       { name: "John Sullivan Memorial", distance: "19.6 km" }
     ],
+    nearbyFoodShopping: [
+      { name: "Main Bazaar", distance: "12.3 km" },
+      { name: "Charing Cross Market", distance: "12.6 km" },
+      { name: "Tibetan Market", distance: "13 km" }
+    ],
     nearbyTransport: [
       {
         type: "Bus Terminals",
@@ -615,6 +762,12 @@ export const PROPERTIES: Property[] = [
         "Pets on Request"
       ]
     },
+    signatureExperiences: [
+      { title: "City Sightseeing Access", description: "Step out to Ooty's major attractions, shopping streets, and railway station just minutes away." },
+      { title: "Multi-Cuisine Dining", description: "Enjoy a delightful dining experience featuring local and international cuisine." },
+      { title: "High-Speed Connectivity", description: "Stay connected throughout your visit with complimentary high-speed Wi-Fi." },
+      { title: "Warm BrownTree Hospitality", description: "Friendly, dedicated staff providing exceptional service throughout your stay." }
+    ],
     amenityCategories: [
       {
         category: "Highlighted Amenities",
@@ -685,7 +838,7 @@ export const PROPERTIES: Property[] = [
     ],
     nearbyFoodShopping: [
       { name: "Tibetan Market", distance: "1.4 km" },
-      { name: "Municipal Market", distance: "1.7 km" },
+      { name: "Commercial Market", distance: "1.7 km" },
       { name: "Main Bazaar", distance: "2 km" }
     ],
     nearbyTransport: [
@@ -917,7 +1070,17 @@ export const PROPERTIES: Property[] = [
       { name: "John Sullivan Memorial", distance: "8.1 km" },
       { name: "Rallia Dam", distance: "15.1 km" }
     ],
+    nearbyFoodShopping: [
+      { name: "Kothagiri Main Market", distance: "3 km" },
+      { name: "Kothagiri Bazaar", distance: "3.4 km" }
+    ],
     nearbyTransport: [
+      {
+        type: "Bus Terminals",
+        items: [
+          { name: "Kothagiri Bus Stand", distance: "3.2 km" }
+        ]
+      },
       {
         type: "Railway",
         items: [
@@ -1001,7 +1164,15 @@ export const PROPERTIES: Property[] = [
       { title: "Free High-Speed Wi-Fi", description: "Stay connected throughout your visit." },
       { title: "Warm Hospitality", description: "Friendly staff dedicated to providing exceptional guest experiences." }
     ],
-    hideHouseRules: true,
+    houseRules: {
+      checkIn: "2:00 PM",
+      checkOut: "11:00 AM",
+      rules: [
+        "No Smoking Inside Rooms",
+        "Family Friendly",
+        "Valid Government ID Required"
+      ]
+    },
     signatureExperiences: [
       { title: "Morning Yoga", description: "Refresh your body and mind with guided yoga sessions." },
       { title: "Meditation Room", description: "Find peace and relaxation in a quiet wellness space." },
