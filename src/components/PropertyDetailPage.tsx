@@ -9,7 +9,7 @@ import {
   Home, Car, Wifi, Zap, Bell, Users, TreePine, Mountain,
   Heart, Train, Waves, Coffee, Dog, Calendar, Sofa, Bath,
   Tv, Plug, Wind, Flame, Phone, Mail, Clock, Key, Sparkles,
-  Smile, Sun, Cigarette, ChevronRight, Flower2, Landmark,
+  Smile, Sun, Cigarette, ChevronRight, ChevronDown, Flower2, Landmark,
   ParkingCircle, ShieldCheck, Bed, Leaf, Utensils, Bus,
   ThumbsUp, Camera, MapPinned, ShoppingBag
 } from "lucide-react";
@@ -43,6 +43,44 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
       <h2 className="font-display text-2xl md:text-3xl font-medium text-brand-primary leading-snug">
         {title}
       </h2>
+    </div>
+  );
+}
+
+// ─── Mobile "show all" collapse — long lists (room amenities, highlights, etc.)
+//     render every item at md+, but only the first `limit` on phones until the
+//     guest taps to expand, so a single grid section can't blow up scroll length.
+function useExpandable(total: number, limit: number) {
+  const [expanded, setExpanded] = useState(false);
+  const hasMore = total > limit;
+  const itemHiddenClass = (idx: number) => (hasMore && idx >= limit && !expanded ? "hidden md:block" : "");
+  return { expanded, setExpanded, hasMore, itemHiddenClass };
+}
+
+function ShowMoreButton({
+  expanded,
+  setExpanded,
+  hasMore,
+  total,
+  label,
+}: {
+  expanded: boolean;
+  setExpanded: (fn: (v: boolean) => boolean) => void;
+  hasMore: boolean;
+  total: number;
+  label: string;
+}) {
+  if (!hasMore) return null;
+  return (
+    <div className="md:hidden flex justify-center mt-6">
+      <button
+        type="button"
+        onClick={() => setExpanded(v => !v)}
+        className="flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-brand-secondary bg-brand-secondary/8 hover:bg-brand-secondary/14 border border-brand-secondary/20 rounded-full px-5 py-2.5 transition-all duration-200 cursor-pointer"
+      >
+        <span>{expanded ? "Show Less" : `Show All ${total} ${label}`}</span>
+        <ChevronDown size={13} className={`transition-transform duration-300 ${expanded ? "rotate-180" : ""}`} />
+      </button>
     </div>
   );
 }
@@ -172,6 +210,32 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
     rules: ["No Smoking inside Rooms", "Valid Government ID Required", "Family Friendly"]
   };
   const nearbyAttractions = property.nearbyAttractions ?? [];
+  const whyStayItems = property.whyStayCards ?? whyStayFeatures;
+
+  // Mobile "show all" collapse state — one per long-list section (see useExpandable above)
+  const highlightsExpand = useExpandable(highlightCards.length, 6);
+  const roomAmenitiesExpand = useExpandable(roomAmenities.length, 8);
+  const whyStayExpand = useExpandable(whyStayItems.length, 4);
+  const nearbyFallbackExpand = useExpandable(nearbyAttractions.length, 6);
+  const nearbyLandmarksExpand = useExpandable(property.nearbyLandmarks?.length ?? 0, 6);
+  const amenityCategoriesExpand = useExpandable(property.amenityCategories?.length ?? 0, 6);
+
+  // ── Stay-details tabs — At A Glance / Facilities / Room / Why Stay / Rules /
+  //    Nearby used to be six stacked scroll sections; guests only ever look at
+  //    one or two, so they now live behind tabs and only the active one mounts.
+  const hasAmenityCategories = !!(property.amenityCategories && property.amenityCategories.length > 0);
+  const hasRules = !property.hideHouseRules;
+  const hasNearby = nearbyAttractions.length > 0 || !!(property.nearbyLandmarks && property.nearbyLandmarks.length > 0);
+
+  const tabDefs = [
+    { id: "highlights", label: "At A Glance", icon: <Sparkles size={13} /> },
+    { id: "facilities", label: "Facilities", icon: <Wifi size={13} /> },
+    ...(!hasAmenityCategories ? [{ id: "room", label: "In Your Room", icon: <BedDouble size={13} /> }] : []),
+    { id: "whystay", label: "Why Stay", icon: <Heart size={13} /> },
+    ...(hasRules ? [{ id: "rules", label: "House Rules", icon: <Clock size={13} /> }] : []),
+    ...(hasNearby ? [{ id: "nearby", label: "Nearby", icon: <MapPinned size={13} /> }] : []),
+  ];
+  const [activeTab, setActiveTab] = useState(tabDefs[0].id);
 
   return (
     <div className="min-h-screen bg-brand-background pt-20 md:pt-24">
@@ -330,28 +394,7 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
         </div>
       </section>
 
-      {/* ── 2. Property Highlights ── */}
-      <section className="py-16 md:py-24 bg-brand-background">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <FadeUp>
-            <SectionHeading eyebrow="At A Glance" title="Property Highlights" />
-          </FadeUp>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {highlightCards.map((item, idx) => (
-              <FadeUp key={idx} delay={idx * 50} className="h-full">
-                <div className="h-full bg-white border border-brand-primary/8 rounded-2xl p-5 flex flex-col items-center text-center gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                  <span className="w-11 h-11 rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
-                    {resolveHighlightIcon(item)}
-                  </span>
-                  <p className="text-xs font-semibold text-brand-primary leading-snug">{item}</p>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. Signature Experiences (when data available) ── */}
+      {/* ── 2. Signature Experiences (when data available) ── */}
       {property.signatureExperiences && property.signatureExperiences.length > 0 && (
         <section className="py-16 md:py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -382,185 +425,211 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
         </section>
       )}
 
-      {/* ── 4. Amenities ── categorized grid when available, else separate popular/room sections ── */}
-      {property.amenityCategories && property.amenityCategories.length > 0 ? (
-        <section className="py-16 md:py-24 bg-brand-background">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <FadeUp>
-              <SectionHeading eyebrow="Everything Included" title="Amenities & Facilities" />
-            </FadeUp>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {property.amenityCategories.map((cat, idx) => (
-                <FadeUp key={idx} delay={idx * 50} className="h-full">
-                  <div className="h-full bg-white border border-brand-primary/8 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
-                    <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-brand-primary/8">
-                      <span className="w-8 h-8 rounded-lg bg-brand-primary/8 flex items-center justify-center text-brand-secondary shrink-0">
-                        {resolveHighlightIcon(cat.category)}
-                      </span>
-                      <h3 className="text-xs font-bold text-brand-primary uppercase tracking-wider">{cat.category}</h3>
-                    </div>
-                    <ul className="space-y-2">
-                      {cat.items.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2.5">
-                          <span className="w-5 h-5 rounded-md bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0 mt-0.5">
-                            <Check size={11} strokeWidth={3} />
+      {/* ── 3. Stay Details — At A Glance / Facilities / Room / Why Stay / Rules / Nearby,
+             all behind one tab bar so only the section a guest actually wants renders ── */}
+      <section className="py-16 md:py-24 bg-brand-background">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          {/* Sticky tab bar */}
+          <div className="sticky top-20 md:top-24 z-20 -mx-4 md:-mx-8 px-4 md:px-8 bg-brand-background/95 backdrop-blur-md border-b border-brand-primary/8 mb-8 md:mb-10">
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-4">
+              {tabDefs.map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-1.5 shrink-0 px-4 py-2.5 rounded-full text-[11px] font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer whitespace-nowrap ${
+                    activeTab === tab.id
+                      ? "bg-brand-primary text-white shadow-md"
+                      : "bg-white text-brand-primary/55 border border-brand-primary/8 hover:text-brand-primary hover:border-brand-secondary/30"
+                  }`}
+                >
+                  {tab.icon}
+                  <span>{tab.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* ── At A Glance ── */}
+            {activeTab === "highlights" && (
+              <div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+                  {highlightCards.map((item, idx) => (
+                    <FadeUp key={idx} delay={Math.min(idx, 8) * 50} className={`h-full ${highlightsExpand.itemHiddenClass(idx)}`}>
+                      <div className="h-full bg-white border border-brand-primary/8 rounded-2xl p-3.5 md:p-5 flex flex-col items-center text-center gap-2.5 md:gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                        <span className="w-9 h-9 md:w-11 md:h-11 rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
+                          {resolveHighlightIcon(item)}
+                        </span>
+                        <p className="text-[11px] md:text-xs font-semibold text-brand-primary leading-snug">{item}</p>
+                      </div>
+                    </FadeUp>
+                  ))}
+                </div>
+                <ShowMoreButton {...highlightsExpand} total={highlightCards.length} label="Highlights" />
+              </div>
+            )}
+
+            {/* ── Facilities — categorized grid when available, else popular amenities ── */}
+            {activeTab === "facilities" && (
+              hasAmenityCategories ? (
+                <div>
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
+                    {property.amenityCategories!.map((cat, idx) => (
+                      <FadeUp key={idx} delay={Math.min(idx, 6) * 50} className={`h-full ${amenityCategoriesExpand.itemHiddenClass(idx)}`}>
+                        <div className="h-full bg-white border border-brand-primary/8 rounded-xl md:rounded-2xl p-3 md:p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+                          <div className="flex items-center gap-2 md:gap-2.5 mb-2.5 md:mb-4 pb-2 md:pb-3 border-b border-brand-primary/8">
+                            <span className="w-6 h-6 md:w-8 md:h-8 rounded-md md:rounded-lg bg-brand-primary/8 flex items-center justify-center text-brand-secondary shrink-0">
+                              {resolveHighlightIcon(cat.category)}
+                            </span>
+                            <h3 className="text-[10px] md:text-xs font-bold text-brand-primary uppercase tracking-wider leading-snug">{cat.category}</h3>
+                          </div>
+                          <ul className="space-y-1.5 md:space-y-2">
+                            {cat.items.map((item, i) => (
+                              <li key={i} className="flex items-start gap-2 md:gap-2.5">
+                                <span className="w-4 h-4 md:w-5 md:h-5 rounded-md bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0 mt-0.5">
+                                  <Check size={10} strokeWidth={3} />
+                                </span>
+                                <span className="text-[11px] md:text-xs text-brand-primary/70 font-light leading-snug">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </FadeUp>
+                    ))}
+                  </div>
+                  <ShowMoreButton {...amenityCategoriesExpand} total={property.amenityCategories!.length} label="Categories" />
+                </div>
+              ) : (
+                <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2.5 md:gap-4">
+                  {popularAmenities.map((amenity, idx) => (
+                    <FadeUp key={idx} delay={idx * 60}>
+                      <div className="flex flex-col items-center text-center gap-2 md:gap-3 p-3 md:p-5 bg-white border border-brand-primary/8 rounded-2xl hover:border-brand-secondary/30 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                        <span className="w-9 h-9 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-brand-primary flex items-center justify-center text-brand-gold-light shrink-0">
+                          {resolveHighlightIcon(amenity)}
+                        </span>
+                        <p className="text-[10px] md:text-xs font-semibold text-brand-primary leading-snug">{amenity}</p>
+                      </div>
+                    </FadeUp>
+                  ))}
+                </div>
+              )
+            )}
+
+            {/* ── In Your Room (only when facilities aren't already categorized) ── */}
+            {activeTab === "room" && (
+              <div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
+                  {roomAmenities.map((amenity, idx) => (
+                    <FadeUp key={idx} delay={Math.min(idx, 10) * 30} className={roomAmenitiesExpand.itemHiddenClass(idx)}>
+                      <div className="flex items-center gap-2 md:gap-2.5 bg-white border border-brand-primary/8 rounded-lg md:rounded-xl px-2.5 py-2 md:p-4 shadow-sm hover:shadow-md hover:border-brand-secondary/20 transition-all duration-300 h-full">
+                        <span className="w-7 h-7 md:w-9 md:h-9 rounded-md md:rounded-lg bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
+                          {resolveHighlightIcon(amenity)}
+                        </span>
+                        <span className="text-[11px] md:text-xs font-semibold text-brand-primary/80 leading-snug">{amenity}</span>
+                      </div>
+                    </FadeUp>
+                  ))}
+                </div>
+                <ShowMoreButton {...roomAmenitiesExpand} total={roomAmenities.length} label="Room Amenities" />
+              </div>
+            )}
+
+            {/* ── Why Stay — rich cards if whyStayCards, else simple list ── */}
+            {activeTab === "whystay" && (
+              property.whyStayCards && property.whyStayCards.length > 0 ? (
+                <div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+                    {property.whyStayCards.map((card, idx) => (
+                      <FadeUp key={idx} delay={Math.min(idx, 4) * 60} className={`h-full ${whyStayExpand.itemHiddenClass(idx)}`}>
+                        <div className="h-full bg-white border border-brand-primary/8 rounded-2xl p-4 md:p-6 flex flex-col gap-2.5 md:gap-3 shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 group">
+                          <span className="w-9 h-9 md:w-11 md:h-11 rounded-xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center text-white shrink-0">
+                            {resolveHighlightIcon(card.title)}
                           </span>
-                          <span className="text-xs text-brand-primary/70 font-light leading-snug">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                          <h3 className="text-xs md:text-sm font-bold text-brand-primary leading-snug group-hover:text-brand-secondary transition-colors">
+                            {card.title}
+                          </h3>
+                          <p className="text-[11px] md:text-xs text-brand-primary/55 font-light leading-relaxed">
+                            {card.description}
+                          </p>
+                        </div>
+                      </FadeUp>
+                    ))}
+                  </div>
+                  <ShowMoreButton {...whyStayExpand} total={property.whyStayCards.length} label="Reasons" />
+                </div>
+              ) : (
+                <div>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
+                    {whyStayFeatures.map((feature, idx) => (
+                      <FadeUp key={idx} delay={Math.min(idx, 4) * 60} className={whyStayExpand.itemHiddenClass(idx)}>
+                        <div className="bg-white border border-brand-primary/8 rounded-2xl p-3.5 md:p-6 flex flex-col gap-2.5 md:gap-4 shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 group h-full">
+                          <span className="w-9 h-9 md:w-11 md:h-11 rounded-xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center text-white shrink-0">
+                            {resolveHighlightIcon(feature)}
+                          </span>
+                          <p className="text-xs md:text-sm font-semibold text-brand-primary leading-snug group-hover:text-brand-secondary transition-colors">
+                            {feature}
+                          </p>
+                        </div>
+                      </FadeUp>
+                    ))}
+                  </div>
+                  <ShowMoreButton {...whyStayExpand} total={whyStayFeatures.length} label="Reasons" />
+                </div>
+              )
+            )}
+
+            {/* ── House Rules ── */}
+            {activeTab === "rules" && (
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
+                {/* Check-in */}
+                <FadeUp delay={0}>
+                  <div className="h-full bg-brand-primary rounded-2xl p-4 md:p-6 flex flex-col gap-2.5 md:gap-3 shadow-sm">
+                    <span className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-white/10 flex items-center justify-center text-brand-gold-light">
+                      <Clock size={16} className="md:hidden" />
+                      <Clock size={18} className="hidden md:block" />
+                    </span>
+                    <div>
+                      <p className="text-[9px] md:text-[10px] font-bold text-white/50 uppercase tracking-widest mb-1">Check-in</p>
+                      <p className="text-base md:text-xl font-display font-semibold text-white">{houseRules.checkIn}</p>
+                    </div>
                   </div>
                 </FadeUp>
-              ))}
-            </div>
-          </div>
-        </section>
-      ) : (
-        <>
-          {/* ── 3a. Popular Amenities ── */}
-          <section className="py-16 md:py-24 bg-white">
-            <div className="max-w-7xl mx-auto px-4 md:px-8">
-              <FadeUp>
-                <SectionHeading eyebrow="Facilities" title="Popular Amenities" />
-              </FadeUp>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
-                {popularAmenities.map((amenity, idx) => (
-                  <FadeUp key={idx} delay={idx * 60}>
-                    <div className="flex flex-col items-center text-center gap-3 p-5 bg-brand-background border border-brand-primary/8 rounded-2xl hover:border-brand-secondary/30 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                      <span className="w-12 h-12 rounded-2xl bg-brand-primary flex items-center justify-center text-brand-gold-light shrink-0">
-                        {resolveHighlightIcon(amenity)}
+                {/* Check-out */}
+                <FadeUp delay={60}>
+                  <div className="h-full bg-brand-secondary rounded-2xl p-4 md:p-6 flex flex-col gap-2.5 md:gap-3 shadow-sm">
+                    <span className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-white/10 flex items-center justify-center text-white">
+                      <Clock size={16} className="md:hidden" />
+                      <Clock size={18} className="hidden md:block" />
+                    </span>
+                    <div>
+                      <p className="text-[9px] md:text-[10px] font-bold text-white/50 uppercase tracking-widest mb-1">Check-out</p>
+                      <p className="text-base md:text-xl font-display font-semibold text-white">{houseRules.checkOut}</p>
+                    </div>
+                  </div>
+                </FadeUp>
+                {/* Rules */}
+                {houseRules.rules.map((rule, idx) => (
+                  <FadeUp key={idx} delay={(idx + 2) * 60}>
+                    <div className="h-full bg-white border border-brand-primary/8 rounded-2xl p-4 md:p-6 flex flex-col gap-2.5 md:gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                      <span className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-brand-primary/8 flex items-center justify-center text-brand-secondary">
+                        {resolveRuleIcon(rule)}
                       </span>
-                      <p className="text-xs font-semibold text-brand-primary leading-snug">{amenity}</p>
+                      <p className="text-xs md:text-sm font-semibold text-brand-primary leading-snug">{rule}</p>
                     </div>
                   </FadeUp>
                 ))}
               </div>
-            </div>
-          </section>
+            )}
 
-          {/* ── 3b. Room Amenities ── */}
-          <section className="py-16 md:py-24 bg-brand-background">
-            <div className="max-w-7xl mx-auto px-4 md:px-8">
-              <FadeUp>
-                <SectionHeading eyebrow="In Your Room" title="Room Amenities" />
-              </FadeUp>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {roomAmenities.map((amenity, idx) => (
-                  <FadeUp key={idx} delay={idx * 30}>
-                    <div className="flex items-center gap-3 bg-white border border-brand-primary/8 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-brand-secondary/20 transition-all duration-300">
-                      <span className="w-9 h-9 rounded-lg bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
-                        {resolveHighlightIcon(amenity)}
-                      </span>
-                      <span className="text-xs font-semibold text-brand-primary/80">{amenity}</span>
-                    </div>
-                  </FadeUp>
-                ))}
-              </div>
-            </div>
-          </section>
-        </>
-      )}
-
-      {/* ── 5. Why Stay With Us — rich cards if whyStayCards, else simple list ── */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <FadeUp>
-            <SectionHeading eyebrow="The Difference" title="Why Stay With Us" />
-          </FadeUp>
-          {property.whyStayCards && property.whyStayCards.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {property.whyStayCards.map((card, idx) => (
-                <FadeUp key={idx} delay={idx * 60} className="h-full">
-                  <div className="h-full bg-brand-background border border-brand-primary/8 rounded-2xl p-6 flex flex-col gap-3 shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 group">
-                    <span className="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center text-white shrink-0">
-                      {resolveHighlightIcon(card.title)}
-                    </span>
-                    <h3 className="text-sm font-bold text-brand-primary leading-snug group-hover:text-brand-secondary transition-colors">
-                      {card.title}
-                    </h3>
-                    <p className="text-xs text-brand-primary/55 font-light leading-relaxed">
-                      {card.description}
-                    </p>
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {whyStayFeatures.map((feature, idx) => (
-                <FadeUp key={idx} delay={idx * 60}>
-                  <div className="bg-brand-background border border-brand-primary/8 rounded-2xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 group h-full">
-                    <span className="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center text-white shrink-0">
-                      {resolveHighlightIcon(feature)}
-                    </span>
-                    <p className="text-sm font-semibold text-brand-primary leading-snug group-hover:text-brand-secondary transition-colors">
-                      {feature}
-                    </p>
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* ── 7. House Rules ── */}
-      {!property.hideHouseRules && (
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <FadeUp>
-            <SectionHeading eyebrow="Good To Know" title="House Rules" />
-          </FadeUp>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {/* Check-in */}
-            <FadeUp delay={0}>
-              <div className="bg-brand-primary rounded-2xl p-6 flex flex-col gap-3 shadow-sm">
-                <span className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-brand-gold-light">
-                  <Clock size={18} />
-                </span>
-                <div>
-                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-1">Check-in</p>
-                  <p className="text-xl font-display font-semibold text-white">{houseRules.checkIn}</p>
-                </div>
-              </div>
-            </FadeUp>
-            {/* Check-out */}
-            <FadeUp delay={60}>
-              <div className="bg-brand-secondary rounded-2xl p-6 flex flex-col gap-3 shadow-sm">
-                <span className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white">
-                  <Clock size={18} />
-                </span>
-                <div>
-                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-1">Check-out</p>
-                  <p className="text-xl font-display font-semibold text-white">{houseRules.checkOut}</p>
-                </div>
-              </div>
-            </FadeUp>
-            {/* Rules */}
-            {houseRules.rules.map((rule, idx) => (
-              <FadeUp key={idx} delay={(idx + 2) * 60}>
-                <div className="bg-brand-background border border-brand-primary/8 rounded-2xl p-6 flex flex-col gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                  <span className="w-10 h-10 rounded-xl bg-brand-primary/8 flex items-center justify-center text-brand-secondary">
-                    {resolveRuleIcon(rule)}
-                  </span>
-                  <p className="text-sm font-semibold text-brand-primary leading-snug">{rule}</p>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
-        </div>
-      </section>
-      )}
-
-      {/* ── 8. Nearby Attractions — tabbed when structured data available ── */}
-      {(nearbyAttractions.length > 0 || (property.nearbyLandmarks && property.nearbyLandmarks.length > 0)) && (
-        <section className="py-16 md:py-24 bg-brand-background">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <FadeUp>
-              <SectionHeading eyebrow="Explore Around" title="Nearby Attractions" />
-            </FadeUp>
-
-            {property.nearbyLandmarks && property.nearbyTransport ? (
+            {/* ── Nearby Attractions — tabbed when structured data available ── */}
+            {activeTab === "nearby" && (
+            property.nearbyLandmarks && property.nearbyTransport ? (
               /* ── Tabbed view for structured landmark + transport data ── */
               <div>
                 <FadeUp delay={60}>
@@ -604,34 +673,37 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
                 </FadeUp>
 
                 {nearbyTab === "landmarks" && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {property.nearbyLandmarks.map((place, idx) => (
-                      <FadeUp key={idx} delay={idx * 60}>
-                        <div className="bg-white border border-brand-primary/8 rounded-2xl p-5 flex items-center gap-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-brand-secondary/30 transition-all duration-300">
-                          <span className="w-12 h-12 rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
-                            {resolveAttractionIcon(place.name)}
-                          </span>
-                          <div>
-                            <p className="text-xs font-bold text-brand-primary leading-snug">{place.name}</p>
-                            <p className="text-[10px] text-brand-secondary font-semibold mt-0.5">{place.distance}</p>
+                  <>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 md:gap-4">
+                      {property.nearbyLandmarks.map((place, idx) => (
+                        <FadeUp key={idx} delay={Math.min(idx, 6) * 60} className={nearbyLandmarksExpand.itemHiddenClass(idx)}>
+                          <div className="h-full bg-white border border-brand-primary/8 rounded-xl md:rounded-2xl p-3 md:p-5 flex items-center gap-2.5 md:gap-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-brand-secondary/30 transition-all duration-300">
+                            <span className="w-9 h-9 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
+                              {resolveAttractionIcon(place.name)}
+                            </span>
+                            <div>
+                              <p className="text-[11px] md:text-xs font-bold text-brand-primary leading-snug">{place.name}</p>
+                              <p className="text-[9px] md:text-[10px] text-brand-secondary font-semibold mt-0.5">{place.distance}</p>
+                            </div>
                           </div>
-                        </div>
-                      </FadeUp>
-                    ))}
-                  </div>
+                        </FadeUp>
+                      ))}
+                    </div>
+                    <ShowMoreButton {...nearbyLandmarksExpand} total={property.nearbyLandmarks.length} label="Landmarks" />
+                  </>
                 )}
 
                 {nearbyTab === "food-shopping" && property.nearbyFoodShopping && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 md:gap-4">
                     {property.nearbyFoodShopping.map((place, idx) => (
                       <FadeUp key={idx} delay={idx * 60}>
-                        <div className="bg-white border border-brand-primary/8 rounded-2xl p-5 flex items-center gap-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-brand-secondary/30 transition-all duration-300">
-                          <span className="w-12 h-12 rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
+                        <div className="h-full bg-white border border-brand-primary/8 rounded-xl md:rounded-2xl p-3 md:p-5 flex items-center gap-2.5 md:gap-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-brand-secondary/30 transition-all duration-300">
+                          <span className="w-9 h-9 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
                             {resolveAttractionIcon(place.name)}
                           </span>
                           <div>
-                            <p className="text-xs font-bold text-brand-primary leading-snug">{place.name}</p>
-                            <p className="text-[10px] text-brand-secondary font-semibold mt-0.5">{place.distance}</p>
+                            <p className="text-[11px] md:text-xs font-bold text-brand-primary leading-snug">{place.name}</p>
+                            <p className="text-[9px] md:text-[10px] text-brand-secondary font-semibold mt-0.5">{place.distance}</p>
                           </div>
                         </div>
                       </FadeUp>
@@ -640,27 +712,27 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
                 )}
 
                 {nearbyTab === "transport" && (
-                  <div className="space-y-6">
+                  <div className="space-y-5 md:space-y-6">
                     {property.nearbyTransport.map((group, gIdx) => (
                       <FadeUp key={gIdx} delay={gIdx * 80}>
                         <div>
-                          <h3 className="text-[10px] font-bold text-brand-primary/40 uppercase tracking-[0.18em] mb-3">
+                          <h3 className="text-[10px] font-bold text-brand-primary/40 uppercase tracking-[0.18em] mb-2.5 md:mb-3">
                             {group.type}
                           </h3>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 md:gap-4">
                             {group.items.map((item, iIdx) => (
-                              <div key={iIdx} className="bg-white border border-brand-primary/8 rounded-2xl p-5 flex items-center gap-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-brand-secondary/30 transition-all duration-300">
-                                <span className="w-12 h-12 rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
+                              <div key={iIdx} className="h-full bg-white border border-brand-primary/8 rounded-xl md:rounded-2xl p-3 md:p-5 flex items-center gap-2.5 md:gap-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-brand-secondary/30 transition-all duration-300">
+                                <span className="w-9 h-9 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
                                   {group.type.toLowerCase().includes("railway") || group.type.toLowerCase().includes("train")
-                                    ? <Train size={20} />
+                                    ? <Train size={18} />
                                     : item.name.toLowerCase().includes("taxi") || item.name.toLowerCase().includes("stand")
-                                      ? <Car size={20} />
-                                      : <Bus size={20} />
+                                      ? <Car size={18} />
+                                      : <Bus size={18} />
                                   }
                                 </span>
                                 <div>
-                                  <p className="text-xs font-bold text-brand-primary leading-snug">{item.name}</p>
-                                  <p className="text-[10px] text-brand-secondary font-semibold mt-0.5">{item.distance}</p>
+                                  <p className="text-[11px] md:text-xs font-bold text-brand-primary leading-snug">{item.name}</p>
+                                  <p className="text-[9px] md:text-[10px] text-brand-secondary font-semibold mt-0.5">{item.distance}</p>
                                 </div>
                               </div>
                             ))}
@@ -673,24 +745,28 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
               </div>
             ) : (
               /* ── Simple grid fallback for string array data ── */
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
-                {nearbyAttractions.map((attraction, idx) => (
-                  <FadeUp key={idx} delay={idx * 60}>
-                    <div className="bg-white border border-brand-primary/8 rounded-2xl p-5 flex flex-col items-center text-center gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-brand-secondary/30 transition-all duration-300 h-full">
-                      <span className="w-12 h-12 rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
-                        {resolveAttractionIcon(attraction)}
-                      </span>
-                      <p className="text-xs font-semibold text-brand-primary leading-snug">{attraction}</p>
-                    </div>
-                  </FadeUp>
-                ))}
-              </div>
+              <>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3 md:gap-4">
+                  {nearbyAttractions.map((attraction, idx) => (
+                    <FadeUp key={idx} delay={Math.min(idx, 6) * 60} className={nearbyFallbackExpand.itemHiddenClass(idx)}>
+                      <div className="bg-white border border-brand-primary/8 rounded-xl md:rounded-2xl p-3.5 md:p-5 flex flex-col items-center text-center gap-2 md:gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-brand-secondary/30 transition-all duration-300 h-full">
+                        <span className="w-9 h-9 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
+                          {resolveAttractionIcon(attraction)}
+                        </span>
+                        <p className="text-[11px] md:text-xs font-semibold text-brand-primary leading-snug">{attraction}</p>
+                      </div>
+                    </FadeUp>
+                  ))}
+                </div>
+                <ShowMoreButton {...nearbyFallbackExpand} total={nearbyAttractions.length} label="Attractions" />
+              </>
+            )
             )}
-          </div>
-        </section>
-      )}
+          </motion.div>
+        </div>
+      </section>
 
-      {/* ── 9. Guest Experience (when guestHighlights available) ── */}
+      {/* ── 4. Guest Experience (when guestHighlights available) ── */}
       {property.guestHighlights && property.guestHighlights.length > 0 && (
         <section className="py-16 md:py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
