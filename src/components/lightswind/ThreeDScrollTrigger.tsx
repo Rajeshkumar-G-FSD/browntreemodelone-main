@@ -195,7 +195,15 @@ function ThreeDScrollTriggerRowImpl({
       ref={containerRef}
       className={cn("w-full overflow-hidden whitespace-nowrap", className)}
       {...props}
-      onMouseEnter={() => { isPausedRef.current = true; }}
+      onMouseEnter={() => {
+        // Touch devices synthesize a "mouseenter" on tap but never reliably
+        // fire the matching "mouseleave" once the finger lifts or the page
+        // scrolls — that permanently freezes this row's animation on mobile.
+        // Only real pointer hover (desktop mouse) should pause it.
+        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+          isPausedRef.current = true;
+        }
+      }}
       onMouseLeave={() => { isPausedRef.current = false; }}
     >
       <motion.div
