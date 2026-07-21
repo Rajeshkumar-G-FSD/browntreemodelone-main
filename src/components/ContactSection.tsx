@@ -133,7 +133,7 @@ export default function ContactSection() {
     }
     setPhoneError(null);
 
-    const waMessage = `New Concierge Inquiry — Brown Tree Resorts\n\n*Full Name:* ${name}\n*Email:* ${email}\n*Telephone:* ${normalizedPhone}\n\n*Special Inquiry & Requests:*\n${message}`;
+    const waMessage = `New Inquiry — Brown Tree Resorts\n\n*Full Name:* ${name}\n*Email:* ${email}\n*Telephone:* ${normalizedPhone}\n\n*Message:*\n${message}`;
     const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
 
     // Open synchronously (same user gesture) so browsers don't block the popup
@@ -160,13 +160,13 @@ export default function ContactSection() {
           <div className="space-y-4">
             <div className="inline-flex items-center space-x-2 text-xs font-bold tracking-[0.25em] text-brand-secondary uppercase">
               <Mail size={14} />
-              <span>BESPOKE CONCIERGE</span>
+              <span>Get In Touch</span>
             </div>
             <h2 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-brand-primary leading-[1.2]">
-              Inquire About Our Sanctuaries
+              Plan Your Hill Station Getaway
             </h2>
             <p className="font-sans text-sm md:text-base text-brand-primary/70 font-light leading-relaxed">
-              Whether arranging a private celebration, securing exclusive heli-skiing charters, or booking customized overwater suites, our private concierge is at your service.
+              Whether you're choosing between our properties in Ooty, Kothagiri, or Kodaikanal, planning a family trip, or have a special request for your stay, our team is here to help you plan every detail.
             </p>
           </div>
 
@@ -230,12 +230,12 @@ export default function ContactSection() {
               <div className="space-y-2">
                 <h3 className="font-display text-2xl font-semibold text-brand-primary">Inquiry Sent via WhatsApp</h3>
                 <p className="font-sans text-sm text-brand-primary/70 max-w-md mx-auto font-light leading-relaxed">
-                  Thank you for contacting Brown Tree Resorts. Your inquiry details have been shared with our concierge team on WhatsApp, and they will reach out to you shortly with a customized proposal.
+                  Thank you for contacting Brown Tree Resorts. Your inquiry details have been shared with our team on WhatsApp, and we'll get back to you shortly to help plan your stay.
                 </p>
               </div>
               <div className="pt-4 flex items-center justify-center space-x-2 text-xs font-semibold text-brand-secondary">
                 <Sparkles size={14} className="animate-pulse" />
-                <span>EXPERIENCE EXTRAORDINARY WELLNESS</span>
+                <span>WE LOOK FORWARD TO WELCOMING YOU</span>
               </div>
               <button
                 onClick={() => setIsSubmitted(false)}
@@ -248,10 +248,10 @@ export default function ContactSection() {
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="space-y-1">
                 <p className="text-xs font-bold text-brand-secondary tracking-widest uppercase">
-                  digital inquiry dossier
+                  Send Us a Message
                 </p>
                 <p className="text-xs text-brand-primary/55 font-light">
-                  Please furnish your details below. Fields marked with an asterisk are required.
+                  Fill in your details below. Fields marked with an asterisk are required.
                 </p>
               </div>
 
@@ -266,7 +266,7 @@ export default function ContactSection() {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. Lady Eleanor Sterling"
+                    placeholder="e.g. Priya Sharma"
                     className="py-3 border-b border-brand-primary/15 focus:border-brand-secondary focus:outline-none text-sm text-brand-primary font-medium transition-colors bg-transparent placeholder-brand-primary/25"
                   />
                 </div>
@@ -281,7 +281,7 @@ export default function ContactSection() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="e.g. eleanor@sterlingestate.com"
+                    placeholder="e.g. priya.sharma@gmail.com"
                     className="py-3 border-b border-brand-primary/15 focus:border-brand-secondary focus:outline-none text-sm text-brand-primary font-medium transition-colors bg-transparent placeholder-brand-primary/25"
                   />
                 </div>
@@ -327,7 +327,7 @@ export default function ContactSection() {
               {/* Special Request Text Area */}
               <div className="flex flex-col relative group">
                 <label className="text-[10px] font-bold text-brand-primary/60 tracking-wider uppercase mb-1">
-                  Special Inquiry & Requests *
+                  Your Message *
                 </label>
                 <textarea
                   ref={messageRef}
@@ -335,7 +335,7 @@ export default function ContactSection() {
                   rows={4}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Tell us about your desired stay, suite preferences, yacht charters, or sound therapy requirements..."
+                  placeholder="Tell us your preferred property, travel dates, number of guests, or any special requests..."
                   className="py-3 border-b border-brand-primary/15 focus:border-brand-secondary focus:outline-none text-sm text-brand-primary font-light transition-colors bg-transparent resize-none placeholder-brand-primary/25"
                 />
               </div>
@@ -348,10 +348,10 @@ export default function ContactSection() {
                 className="w-full bg-brand-primary hover:bg-brand-secondary disabled:bg-brand-primary/50 text-brand-gold-light hover:text-white font-sans text-xs font-semibold tracking-widest py-4 rounded-full flex items-center justify-center space-x-3 shadow-lg shadow-brand-primary/15 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
               >
                 {loading ? (
-                  <span>TRANSMITTING INQUIRY DOSSIER...</span>
+                  <span>SENDING YOUR MESSAGE...</span>
                 ) : (
                   <>
-                    <span>TRANSMIT CONCIERGE INQUIRY</span>
+                    <span>SEND INQUIRY</span>
                     <Send size={14} className="shrink-0" />
                   </>
                 )}
