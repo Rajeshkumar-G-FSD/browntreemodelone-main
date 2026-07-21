@@ -13,9 +13,8 @@ interface DestinationsSectionProps {
 }
 
 export default function DestinationsSection({ destinations, onSelectDestination }: DestinationsSectionProps) {
-  const sliderItems: SliderItemData[] = destinations.map((dest, index) => ({
+  const sliderItems: SliderItemData[] = destinations.map((dest) => ({
     title: dest.name,
-    num: String(index + 1).padStart(2, "0"),
     imageUrl: dest.image,
     data: dest,
   }));

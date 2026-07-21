@@ -17,7 +17,7 @@ import Footer from "./components/Footer";
 import ChatBot from "./components/ChatBot";
 import Toaster from "./components/Toaster";
 
-import { PROPERTIES, REVIEWS, DESTINATIONS } from "./data";
+import { PROPERTIES, DESTINATIONS } from "./data";
 import { Property, Suite } from "./types";
 import { toPropertySlug, findPropertyBySlug, toThankYouSlug, findPropertyByThankYouSlug } from "./slug";
 import { useSEO } from "./hooks/useSEO";
@@ -215,7 +215,7 @@ export default function App() {
               onSelectDestination={handleSelectDestination}
             />
 
-<ReviewsSection reviews={REVIEWS} />
+<ReviewsSection />
 
             <ContactSection />
           </main>

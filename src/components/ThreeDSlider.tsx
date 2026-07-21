@@ -7,7 +7,6 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from "re
 
 export interface SliderItemData {
   title: string;
-  num: string;
   imageUrl: string;
   data?: any;
 }
@@ -72,10 +71,6 @@ function SliderItem({ item, setRef, onClick }: SliderItemProps) {
 
         <div className="absolute z-10 text-white bottom-5 left-5 right-5 text-[clamp(18px,2.4vw,28px)] font-display drop-shadow-md">
           {item.title}
-        </div>
-
-        <div className="absolute z-10 text-white/30 top-2.5 left-5 font-display text-[clamp(20px,8vw,64px)] leading-none">
-          {item.num}
         </div>
       </div>
     </div>
