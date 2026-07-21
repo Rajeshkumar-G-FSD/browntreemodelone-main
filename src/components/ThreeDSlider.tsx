@@ -42,7 +42,10 @@ function SliderItem({ item, setRef, onClick }: SliderItemProps) {
         overflow-hidden will-change-transform"
       style={
         {
-          "--height": "clamp(340px, 50vw, 640px)",
+          // Capped at 84% of the stage's own height (not just viewport width) so a
+          // wide-but-short desktop window can never make the card taller than its
+          // container — that was clipping the bottom-anchored title off-screen.
+          "--height": "min(clamp(340px, 50vw, 640px), 84%)",
           "--width": `calc(var(--height) * ${aspect})`,
           transition: "none",
         } as CSSProperties & Record<string, string>
