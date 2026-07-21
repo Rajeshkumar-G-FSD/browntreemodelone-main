@@ -3,39 +3,43 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Quote } from "lucide-react";
 import {
   ThreeDScrollTriggerContainer,
   ThreeDScrollTriggerRow,
 } from "./lightswind/ThreeDScrollTrigger";
-import { ALL_REVIEW_IMAGES } from "../reviewImages";
+import { GUEST_REVIEWS, type GuestReview } from "../reviewTexts";
 
 // Rows scroll continuously and speed up/reverse with page scroll velocity
-// (see ThreeDScrollTrigger.tsx). Cards use a fixed height with natural
-// width (no forced aspect ratio) so these wide review screenshots
-// (~3.6:1 to ~10.2:1) never get cropped — width just varies per image.
-function ReviewCard({ src }: { src: string }) {
+// (see ThreeDScrollTrigger.tsx). Cards render real text (transcribed from
+// the guest-review screenshots) instead of images, so title/description
+// font sizes are genuinely uniform across every card via CSS — impossible
+// with screenshots, since each one's baked-in text scale differs. Fixed
+// card width/height + line-clamp keeps every card the same size regardless
+// of how long that particular review is.
+function ReviewCard({ review }: { review: GuestReview }) {
   return (
-    <div className="inline-block shrink-0 mx-2 sm:mx-3 rounded-xl overflow-hidden bg-white shadow-xl h-[110px] sm:h-[150px] md:h-[190px] lg:h-[220px]">
-      <img
-        src={src}
-        alt="Guest reflection"
-        loading="lazy"
-        className="h-full w-auto block"
-      />
+    <div className="inline-flex flex-col shrink-0 mx-2 sm:mx-3 rounded-xl bg-white shadow-xl p-4 sm:p-5 md:p-6 w-[250px] sm:w-[300px] md:w-[340px] h-[160px] sm:h-[180px] md:h-[200px]">
+      <Quote size={16} className="mb-2 shrink-0" style={{ color: "#D4AF37" }} />
+      <h3 className="text-sm sm:text-base font-bold leading-snug mb-1.5 line-clamp-1" style={{ color: "#18281e" }}>
+        &ldquo;{review.title}&rdquo;
+      </h3>
+      <p className="text-xs sm:text-sm font-light leading-relaxed line-clamp-4 sm:line-clamp-5" style={{ color: "rgba(24,40,30,0.65)" }}>
+        {review.content}
+      </p>
     </div>
   );
 }
 
 // Split the pool into three rows (round-robin) so each row has its own mix
 // rather than every row showing the same sequence.
-function splitRows(images: string[], rowCount: number): string[][] {
-  const rows: string[][] = Array.from({ length: rowCount }, () => []);
-  images.forEach((src, i) => rows[i % rowCount].push(src));
+function splitRows<T>(items: T[], rowCount: number): T[][] {
+  const rows: T[][] = Array.from({ length: rowCount }, () => []);
+  items.forEach((item, i) => rows[i % rowCount].push(item));
   return rows;
 }
 
-const ROWS = splitRows(ALL_REVIEW_IMAGES, 3);
+const ROWS = splitRows(GUEST_REVIEWS, 3);
 const ROW_DIRECTION: (1 | -1)[] = [1, -1, 1];
 
 export default function ReviewsSection() {
@@ -66,8 +70,8 @@ export default function ReviewsSection() {
       <ThreeDScrollTriggerContainer className="space-y-4 sm:space-y-5 md:space-y-6">
         {ROWS.map((row, i) => (
           <ThreeDScrollTriggerRow key={i} direction={ROW_DIRECTION[i % ROW_DIRECTION.length]} baseVelocity={3}>
-            {row.map((src, j) => (
-              <ReviewCard key={j} src={src} />
+            {row.map((review, j) => (
+              <ReviewCard key={j} review={review} />
             ))}
           </ThreeDScrollTriggerRow>
         ))}
