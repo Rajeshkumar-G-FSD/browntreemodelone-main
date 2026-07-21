@@ -57,6 +57,9 @@ export interface Property {
   aboutSectionTitle?: string;
   heroSubtitle?: string;
   hideHouseRules?: boolean;
+  // Optional overrides for the "Location" / "Stay Type" quick-stat card on the detail page
+  locationDisplay?: string;
+  stayTypeDisplay?: string;
 }
 
 export interface Experience {

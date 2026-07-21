@@ -371,14 +371,14 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
                   <MapPin size={15} className="text-brand-secondary shrink-0" />
                   <div>
                     <span className="text-[10px] font-bold text-brand-primary/40 uppercase tracking-wider block">Location</span>
-                    <span className="text-xs font-semibold text-brand-primary">{property.region}, {property.location}</span>
+                    <span className="text-xs font-semibold text-brand-primary">{property.locationDisplay ?? `${property.region}, ${property.location}`}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <BedDouble size={15} className="text-brand-secondary shrink-0" />
                   <div>
                     <span className="text-[10px] font-bold text-brand-primary/40 uppercase tracking-wider block">Stay Type</span>
-                    <span className="text-xs font-semibold text-brand-primary">{property.type} · {property.region}</span>
+                    <span className="text-xs font-semibold text-brand-primary">{property.stayTypeDisplay ?? `${property.type} · ${property.region}`}</span>
                   </div>
                 </div>
                 <div>

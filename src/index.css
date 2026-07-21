@@ -77,13 +77,3 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-brand-secondary);
 }
-
-/* Rotating light source for the "border beam" glow-card effect — the
-   element this spins is a conic-gradient much larger than its container,
-   clipped to just the border ring by an inset white card layered on top. */
-@keyframes border-beam-spin {
-  to { transform: rotate(360deg); }
-}
-.animate-border-beam {
-  animation: border-beam-spin 3.2s linear infinite;
-}

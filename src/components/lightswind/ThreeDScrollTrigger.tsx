@@ -99,6 +99,15 @@ interface ThreeDScrollTriggerRowImplProps extends ThreeDScrollTriggerRowProps {
   velocityFactor: MotionValue<number>;
 }
 
+// Wrap a position into [0, unitWidth) — shared by the ambient auto-scroll
+// and by drag/inertia so both move through the same seamless loop.
+const wrapX = (v: number, unitWidth: number) => {
+  if (unitWidth <= 0) return v;
+  if (v >= unitWidth) return v % unitWidth;
+  if (v < 0) return unitWidth + (v % unitWidth);
+  return v;
+};
+
 function ThreeDScrollTriggerRowImpl({
   children,
   baseVelocity = 5,
@@ -118,6 +127,111 @@ function ThreeDScrollTriggerRowImpl({
   // ThreeDScrollTriggerRowImpl instances with their own isPausedRef, so they
   // keep moving normally.
   const isPausedRef = useRef(false);
+
+  // Drag-to-swipe: a pointer drag directly drives baseXRef (same convention
+  // as the auto-scroll loop below), and isPausedRef holds the ambient
+  // animation off for the duration of the drag *and* the inertia coast that
+  // follows release, so the two never fight over baseXRef in the same frame.
+  const dragRef = useRef<{ startX: number; startBaseX: number; lastX: number; lastT: number; velocity: number; moved: boolean; captured: boolean } | null>(null);
+  const inertiaRafRef = useRef<number | null>(null);
+  const suppressNextClickRef = useRef(false);
+
+  const stopInertia = () => {
+    if (inertiaRafRef.current != null) {
+      cancelAnimationFrame(inertiaRafRef.current);
+      inertiaRafRef.current = null;
+    }
+  };
+  useEffect(() => stopInertia, []);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    stopInertia();
+    isPausedRef.current = true;
+    // Pointer capture is deliberately NOT taken here — capturing retargets
+    // the native click event to this row element even for a plain tap with
+    // zero movement, which meant a card's own onClick (open the expanded
+    // view) never fired at all. It's only taken lazily in handlePointerMove
+    // once real drag movement is detected, so a simple tap still dispatches
+    // its click straight to the tapped card as normal.
+    dragRef.current = {
+      startX: e.clientX,
+      startBaseX: baseXRef.current,
+      lastX: e.clientX,
+      lastT: performance.now(),
+      velocity: 0,
+      moved: false,
+      captured: false,
+    };
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    const drag = dragRef.current;
+    if (!drag) return;
+    const now = performance.now();
+    const dt = now - drag.lastT;
+    if (dt > 0) {
+      const instantVelocity = (e.clientX - drag.lastX) / dt; // px/ms, +right
+      drag.velocity = drag.velocity * 0.7 + instantVelocity * 0.3;
+    }
+    drag.lastX = e.clientX;
+    drag.lastT = now;
+
+    const delta = e.clientX - drag.startX;
+    if (Math.abs(delta) > 6) {
+      drag.moved = true;
+      if (!drag.captured) {
+        drag.captured = true;
+        (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+      }
+    }
+
+    const newBaseX = wrapX(drag.startBaseX - delta, unitWidthRef.current);
+    baseXRef.current = newBaseX;
+    x.set(newBaseX);
+  };
+
+  const handlePointerUp = () => {
+    const drag = dragRef.current;
+    dragRef.current = null;
+    if (!drag) return;
+
+    if (drag.moved) suppressNextClickRef.current = true;
+
+    // Inertia: coast on the drag's exit velocity, decaying it each frame,
+    // then hand control back to the ambient auto-scroll once it settles.
+    let velocity = -drag.velocity; // invert to baseX's convention (see handlePointerMove)
+    let lastT = performance.now();
+    const step = (t: number) => {
+      const dt = t - lastT;
+      lastT = t;
+      velocity *= 0.94;
+      const newBaseX = wrapX(baseXRef.current + velocity * dt, unitWidthRef.current);
+      baseXRef.current = newBaseX;
+      x.set(newBaseX);
+      if (Math.abs(velocity) > 0.01) {
+        inertiaRafRef.current = requestAnimationFrame(step);
+      } else {
+        inertiaRafRef.current = null;
+        isPausedRef.current = false;
+      }
+    };
+    if (Math.abs(velocity) > 0.03) {
+      inertiaRafRef.current = requestAnimationFrame(step);
+    } else {
+      isPausedRef.current = false;
+    }
+  };
+
+  // A drag that actually moved the row shouldn't also register as a click on
+  // whatever card is underneath the pointer — capture-phase so this runs
+  // before the card's own onClick (which opens its expanded view).
+  const handleClickCapture = (e: React.MouseEvent) => {
+    if (suppressNextClickRef.current) {
+      suppressNextClickRef.current = false;
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  };
 
   // Memoized children
   const childrenArray = useMemo(() => React.Children.toArray(children), [children]);
@@ -193,7 +307,8 @@ function ThreeDScrollTriggerRowImpl({
   return (
     <div
       ref={containerRef}
-      className={cn("w-full overflow-hidden whitespace-nowrap", className)}
+      className={cn("w-full overflow-hidden whitespace-nowrap cursor-grab active:cursor-grabbing select-none", className)}
+      style={{ touchAction: "pan-y" }}
       {...props}
       onMouseEnter={() => {
         // Touch devices synthesize a "mouseenter" on tap but never reliably
@@ -204,7 +319,18 @@ function ThreeDScrollTriggerRowImpl({
           isPausedRef.current = true;
         }
       }}
-      onMouseLeave={() => { isPausedRef.current = false; }}
+      onMouseLeave={() => {
+        // Don't lift the pause mid-drag/inertia — a drag started with a
+        // mouse can carry the cursor outside these bounds while the button
+        // is still held, and this firing early would let the ambient
+        // auto-scroll fight the drag over baseXRef in the same frame.
+        if (!dragRef.current && inertiaRafRef.current == null) isPausedRef.current = false;
+      }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+      onClickCapture={handleClickCapture}
     >
       <motion.div
         className="inline-flex will-change-transform transform-gpu"

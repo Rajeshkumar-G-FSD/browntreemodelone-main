@@ -72,6 +72,8 @@ export const PROPERTIES: Property[] = [
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
+    locationDisplay: "Kaverty Village, Ooty, India",
+    stayTypeDisplay: "Ooty · Nilgiri Hills",
     price: 3000,
     rating: 4.9,
     reviewCount: 42,
@@ -94,8 +96,7 @@ export const PROPERTIES: Property[] = [
       "Power Backup",
       "Room Service",
       "Daily Housekeeping",
-      "Caretaker Assistance",
-      "Kids Play Area"
+      "Caretaker Assistance"
     ],
     propertyHighlightCards: [
       "Private Room in a Homestay",
@@ -111,15 +112,13 @@ export const PROPERTIES: Property[] = [
       "Power Backup",
       "Room Service",
       "Housekeeping",
-      "Caretaker Assistance",
-      "Kids Play Area"
+      "Caretaker Assistance"
     ],
     roomAmenities: [
       "Bathroom",
       "Comfortable Seating Area",
       "Private Balcony",
       "Balcony / Terrace",
-      "Blackout Curtains",
       "Ceiling Fan",
       "Fireplace",
       "Closet",
@@ -196,6 +195,8 @@ export const PROPERTIES: Property[] = [
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
+    locationDisplay: "Nilgiri Hills, Ooty, India / Ooty Down",
+    stayTypeDisplay: "Home Stay",
     price: 3000,
     rating: 4.9,
     reviewCount: 118,
@@ -219,8 +220,6 @@ export const PROPERTIES: Property[] = [
       "Power Backup",
       "Refrigerator",
       "Housekeeping",
-      "Doctor on Call",
-      "Luggage Assistance",
       "CCTV Surveillance"
     ],
     propertyHighlightCards: [
@@ -237,8 +236,6 @@ export const PROPERTIES: Property[] = [
       "Free Parking",
       "Power Backup",
       "Housekeeping",
-      "Luggage Assistance",
-      "Doctor on Call",
       "CCTV Surveillance",
       "Bonfire"
     ],
@@ -247,11 +244,8 @@ export const PROPERTIES: Property[] = [
       "LED Television",
       "Sofa",
       "Living Area",
-      "Heater (Selected Rooms)",
       "Complimentary Toiletries",
-      "Iron & Ironing Board",
       "Dental Kit",
-      "Refrigerator",
       "Fresh Towels",
       "Hot Water",
       "Dining Area"
@@ -262,7 +256,6 @@ export const PROPERTIES: Property[] = [
       "Beautiful Mountain Views",
       "Family Friendly Stay",
       "Warm Personalized Hospitality",
-      "On-site Dining",
       "Comfortable Spacious Rooms",
       "Pickup & Drop Available"
     ],
@@ -270,10 +263,9 @@ export const PROPERTIES: Property[] = [
       checkIn: "2:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "No Smoking Inside Rooms",
+        "Non Smoking Rooms",
         "Family Friendly",
-        "Valid Government ID Required",
-        "Pets on Request"
+        "Valid Government ID Required"
       ]
     },
     nearbyAttractions: [
