@@ -73,7 +73,7 @@ export const PROPERTIES: Property[] = [
     location: "Ooty, India",
     region: "Nilgiri Hills",
     locationDisplay: "Kaverty Village, Ooty, India",
-    stayTypeDisplay: "Ooty · Nilgiri Hills",
+    stayTypeDisplay: "VILLA / HOME STAYS",
     price: 3000,
     rating: 4.9,
     reviewCount: 42,
@@ -210,31 +210,35 @@ export const PROPERTIES: Property[] = [
     ],
     amenitiesRating: 4.4,
     nearbyLandmarks: [
-      { name: "Ooty Lake", distance: "3.2 km" },
-      { name: "Government Botanical Garden", distance: "4.8 km" },
-      { name: "Rose Garden", distance: "5.5 km" },
-      { name: "Tea Museum", distance: "7.4 km" },
-      { name: "Doddabetta Peak", distance: "9.6 km" },
-      { name: "Pykara Lake", distance: "19.5 km" }
+      { name: "Ooty Lake", distance: "7 km" },
+      { name: "Government Botanical Garden", distance: "6 km" },
+      { name: "Government Rose Garden", distance: "7 km" },
+      { name: "Tea Factory & Museum", distance: "8 km" },
+      { name: "Doddabetta Peak", distance: "10 km" },
+      { name: "Pykara Lake", distance: "26 km" },
+      { name: "Mudumalai Tiger Reserve", distance: "42 km" }
     ],
     nearbyFoodShopping: [
-      { name: "Charing Cross Market", distance: "4.9 km" },
-      { name: "Main Bazaar", distance: "5.3 km" },
-      { name: "Tibetan Market", distance: "5.6 km" }
+      { name: "Charing Cross Market", distance: "6 km" },
+      { name: "Main Bazaar", distance: "6.5 km" },
+      { name: "Tibetan Market", distance: "6 km" }
     ],
     nearbyTransport: [
       {
         type: "Bus Terminals",
         items: [
-          { name: "ATC Bus Stand", distance: "5.1 km" },
-          { name: "Ooty Bus Station", distance: "5.4 km" }
+          { name: "ATC Bus Stand", distance: "6 km" },
+          { name: "Ooty Bus Station", distance: "7 km" }
         ]
       },
       {
-        type: "Railway Stations",
+        type: "Railway & Transit",
         items: [
-          { name: "Udhagamandalam Railway Station (Nilgiri Mountain Railway)", distance: "5.2 km" },
-          { name: "Ketti Railway Station", distance: "9.8 km" }
+          { name: "Ooty Taxi Stand", distance: "6.5 km" },
+          { name: "Udhagamandalam Railway Station", distance: "7 km" },
+          { name: "Lovedale Railway Station", distance: "9 km" },
+          { name: "Ketti Railway Station", distance: "12 km" },
+          { name: "Coonoor Railway Station", distance: "24 km" }
         ]
       }
     ],
@@ -266,7 +270,7 @@ export const PROPERTIES: Property[] = [
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
-    locationDisplay: "Nilgiri Hills, Ooty, India / Ooty Down",
+    locationDisplay: "Nilgiri Hills, Ooty, India / Ooty Town",
     stayTypeDisplay: "Home Stay",
     price: 3000,
     rating: 4.9,
@@ -394,29 +398,35 @@ export const PROPERTIES: Property[] = [
     ],
     amenitiesRating: 4.7,
     nearbyLandmarks: [
-      { name: "Government Botanical Garden", distance: "1.9 km" },
-      { name: "Elk Hill", distance: "3.6 km" },
-      { name: "Ooty Lake", distance: "4.8 km" },
-      { name: "Tiger Hill", distance: "5 km" },
-      { name: "Rallia Dam", distance: "17.1 km" }
+      { name: "Ooty Lake", distance: "2 km" },
+      { name: "Government Botanical Garden", distance: "2 km" },
+      { name: "Government Rose Garden", distance: "1.5 km" },
+      { name: "Tea Factory & Museum", distance: "4 km" },
+      { name: "Doddabetta Peak", distance: "8 km" },
+      { name: "Pykara Lake", distance: "21 km" },
+      { name: "Mudumalai Tiger Reserve", distance: "40 km" }
     ],
     nearbyFoodShopping: [
-      { name: "Tibetan Market", distance: "1.7 km" },
-      { name: "Commercial Market", distance: "2.3 km" },
-      { name: "Charing Cross", distance: "2.6 km" }
+      { name: "Charing Cross Market", distance: "500 m" },
+      { name: "Main Bazaar", distance: "600 m" },
+      { name: "Tibetan Market", distance: "700 m" }
     ],
     nearbyTransport: [
       {
         type: "Bus Terminals",
         items: [
-          { name: "ATC Bus Stand", distance: "2.9 km" },
-          { name: "Ooty Bus Station", distance: "3.1 km" }
+          { name: "ATC Bus Stand", distance: "1 km" },
+          { name: "Ooty Bus Station", distance: "1.5 km" }
         ]
       },
       {
-        type: "Railway Stations",
+        type: "Railway & Transit",
         items: [
-          { name: "Udhagamandalam Railway Station", distance: "3.7 km" }
+          { name: "Ooty Taxi Stand", distance: "1 km" },
+          { name: "Udhagamandalam Railway Station", distance: "1.5 km" },
+          { name: "Lovedale Railway Station", distance: "4 km" },
+          { name: "Ketti Railway Station", distance: "7 km" },
+          { name: "Coonoor Railway Station", distance: "18 km" }
         ]
       }
     ],
@@ -448,6 +458,8 @@ export const PROPERTIES: Property[] = [
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
+    locationDisplay: "Perar, Ooty, India",
+    stayTypeDisplay: "HOME STAYS",
     price: 5500,
     rating: 4.8,
     reviewCount: 24,
@@ -609,40 +621,36 @@ export const PROPERTIES: Property[] = [
       "Cool, refreshing mountain climate"
     ],
     amenitiesRating: 3.8,
-    nearbyAttractions: [
-      "Rallia Dam – 8 km",
-      "Ooty Lake – 13.7 km",
-      "Coonoor Falls – 18.8 km",
-      "John Sullivan Memorial – 19.6 km",
-      "ATC Bus Stand – 11.8 km",
-      "Ooty Bus Station – 12.5 km",
-      "Ketti Railway Station – 8.3 km",
-      "Udhagamandalam Railway Station – 12.6 km"
-    ],
     nearbyLandmarks: [
-      { name: "Rallia Dam", distance: "8 km" },
-      { name: "Ooty Lake", distance: "13.7 km" },
-      { name: "Coonoor Falls", distance: "18.8 km" },
-      { name: "John Sullivan Memorial", distance: "19.6 km" }
+      { name: "Ooty Lake", distance: "10 km" },
+      { name: "Government Botanical Garden", distance: "8 km" },
+      { name: "Government Rose Garden", distance: "9 km" },
+      { name: "Tea Factory & Museum", distance: "9 km" },
+      { name: "Doddabetta Peak", distance: "8 km" },
+      { name: "Pykara Lake", distance: "30 km" },
+      { name: "Mudumalai Tiger Reserve", distance: "49 km" }
     ],
     nearbyFoodShopping: [
-      { name: "Main Bazaar", distance: "12.3 km" },
-      { name: "Charing Cross Market", distance: "12.6 km" },
-      { name: "Tibetan Market", distance: "13 km" }
+      { name: "Charing Cross Market", distance: "8 km" },
+      { name: "Main Bazaar", distance: "9 km" },
+      { name: "Tibetan Market", distance: "8 km" }
     ],
     nearbyTransport: [
       {
         type: "Bus Terminals",
         items: [
-          { name: "ATC Bus Stand", distance: "11.8 km" },
-          { name: "Ooty Bus Station", distance: "12.5 km" }
+          { name: "ATC Bus Stand", distance: "9 km" },
+          { name: "Ooty Bus Station", distance: "10 km" }
         ]
       },
       {
-        type: "Railway Stations",
+        type: "Railway & Transit",
         items: [
-          { name: "Ketti Railway Station", distance: "8.3 km" },
-          { name: "Udhagamandalam Railway Station", distance: "12.6 km" }
+          { name: "Ooty Taxi Stand", distance: "9 km" },
+          { name: "Udhagamandalam Railway Station", distance: "10 km" },
+          { name: "Lovedale Railway Station", distance: "7 km" },
+          { name: "Ketti Railway Station", distance: "9 km" },
+          { name: "Coonoor Railway Station", distance: "19 km" }
         ]
       }
     ],
@@ -674,6 +682,7 @@ export const PROPERTIES: Property[] = [
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
+    stayTypeDisplay: "HOTEL",
     price: 3500,
     rating: 4.8,
     reviewCount: 18,
@@ -818,28 +827,19 @@ export const PROPERTIES: Property[] = [
       "Excellent connectivity to transport hubs"
     ],
     amenitiesRating: 4.0,
-    nearbyAttractions: [
-      "Ooty Lake – 3.5 km",
-      "Coonoor Falls – 17.4 km",
-      "Rallia Dam – 18 km",
-      "Elk Hill – 1.5 km",
-      "Government Botanical Garden – 1.7 km",
-      "Honeymoon Boat House – 4.9 km",
-      "Ketti Valley – 5 km"
-    ],
     nearbyLandmarks: [
-      { name: "Elk Hill", distance: "1.5 km" },
-      { name: "Government Botanical Garden", distance: "1.7 km" },
-      { name: "Ooty Lake", distance: "3.5 km" },
-      { name: "Honeymoon Boat House", distance: "4.9 km" },
-      { name: "Ketti Valley", distance: "5 km" },
-      { name: "Coonoor Falls", distance: "17.4 km" },
-      { name: "Rallia Dam", distance: "18 km" }
+      { name: "Ooty Lake", distance: "3 km" },
+      { name: "Government Botanical Garden", distance: "1.8 km" },
+      { name: "Government Rose Garden", distance: "1.2 km" },
+      { name: "Tea Factory & Museum", distance: "4.5 km" },
+      { name: "Doddabetta Peak", distance: "8 km" },
+      { name: "Pykara Lake", distance: "22 km" },
+      { name: "Mudumalai Tiger Reserve", distance: "41 km" }
     ],
     nearbyFoodShopping: [
-      { name: "Tibetan Market", distance: "1.4 km" },
-      { name: "Commercial Market", distance: "1.7 km" },
-      { name: "Main Bazaar", distance: "2 km" }
+      { name: "Charing Cross Market", distance: "600 m" },
+      { name: "Main Bazaar", distance: "1 km" },
+      { name: "Tibetan Market", distance: "700 m" }
     ],
     nearbyTransport: [
       {
@@ -856,7 +856,7 @@ export const PROPERTIES: Property[] = [
           { name: "Udhagamandalam Railway Station", distance: "2.3 km" },
           { name: "Lovedale Railway Station", distance: "4.5 km" },
           { name: "Ketti Railway Station", distance: "6.9 km" },
-          { name: "Coonoor Railway Station", distance: "15.8 km" }
+          { name: "Coonoor Railway Station", distance: "18 km" }
         ]
       }
     ],
@@ -888,6 +888,8 @@ export const PROPERTIES: Property[] = [
     type: "Kothagiri",
     location: "Kothagiri, India",
     region: "Nilgiri Hills",
+    locationDisplay: "Konakarai, Kothagiri, India",
+    stayTypeDisplay: "HOME STAYS",
     price: 5000,
     rating: 4.6,
     reviewCount: 36,
@@ -1067,24 +1069,36 @@ export const PROPERTIES: Property[] = [
     ],
     amenitiesRating: 4.6,
     nearbyLandmarks: [
-      { name: "John Sullivan Memorial", distance: "8.1 km" },
-      { name: "Rallia Dam", distance: "15.1 km" }
+      { name: "Elk Falls", distance: "5 km" },
+      { name: "Longwood Shola", distance: "6 km" },
+      { name: "Catherine Falls", distance: "12 km" },
+      { name: "Rangasamy Peak", distance: "14 km" },
+      { name: "Kodanad View Point", distance: "18 km" },
+      { name: "Doddabetta Peak", distance: "32 km" },
+      { name: "Government Botanical Garden", distance: "33 km" },
+      { name: "Ooty Lake", distance: "35 km" }
     ],
     nearbyFoodShopping: [
-      { name: "Kothagiri Main Market", distance: "3 km" },
-      { name: "Kothagiri Bazaar", distance: "3.4 km" }
+      { name: "Kotagiri Market", distance: "4 km" },
+      { name: "Local Tea Shops", distance: "4 km" },
+      { name: "Fresh Vegetable Market", distance: "4 km" },
+      { name: "Charing Cross Market (Ooty)", distance: "33 km" }
     ],
     nearbyTransport: [
       {
         type: "Bus Terminals",
         items: [
-          { name: "Kothagiri Bus Stand", distance: "3.2 km" }
+          { name: "Kotagiri Bus Stand", distance: "4 km" },
+          { name: "Ooty Bus Station", distance: "34 km" }
         ]
       },
       {
-        type: "Railway",
+        type: "Railway & Transit",
         items: [
-          { name: "Coonoor Railway Station", distance: "23 km" }
+          { name: "Coonoor Railway Station", distance: "18 km" },
+          { name: "Ketti Railway Station", distance: "25 km" },
+          { name: "Lovedale Railway Station", distance: "29 km" },
+          { name: "Udhagamandalam Railway Station", distance: "34 km" }
         ]
       }
     ],
@@ -1096,6 +1110,8 @@ export const PROPERTIES: Property[] = [
     type: "Kodaikanal",
     location: "Kodaikanal, India",
     region: "Palani Hills",
+    locationDisplay: "Near Kodaikanal Lake, India",
+    stayTypeDisplay: "HOTEL",
     price: 4500,
     rating: 4.9,
     reviewCount: 29,
@@ -1242,36 +1258,58 @@ export const PROPERTIES: Property[] = [
     ],
     amenitiesRating: 4.5,
     nearbyLandmarks: [
-      { name: "Bryant Park", distance: "1.8 km" },
-      { name: "Kodaikanal Lake", distance: "2.7 km" },
-      { name: "Pine Forest", distance: "2.9 km" },
-      { name: "Bear Shola Falls", distance: "1.5 km" },
-      { name: "Kurinji Andavar Temple", distance: "2.2 km" },
-      { name: "Fairy Falls", distance: "3.5 km" },
-      { name: "Liril Falls", distance: "4.1 km" }
+      { name: "Kodaikanal Lake", distance: "500 m" },
+      { name: "Coaker's Walk", distance: "1.1 km" },
+      { name: "Bryant Park", distance: "900 m" },
+      { name: "Bear Shola Falls", distance: "1.3 km" },
+      { name: "Chettiar Park", distance: "2 km" },
+      { name: "Kurinji Andavar Temple", distance: "2.6 km" },
+      { name: "Pine Forest", distance: "3.2 km" },
+      { name: "Kodaikanal Solar Observatory", distance: "3.5 km" },
+      { name: "Fairy Falls", distance: "3.8 km" },
+      { name: "Upper Lake View", distance: "4.2 km" },
+      { name: "Silver Cascade Falls", distance: "4.8 km" },
+      { name: "Liril Falls", distance: "5.8 km" },
+      { name: "Green Valley View (Suicide Point)", distance: "6.5 km" },
+      { name: "Guna Caves (Devil's Kitchen)", distance: "6.8 km" },
+      { name: "Pillar Rocks", distance: "7 km" },
+      { name: "Dolphin's Nose View Point", distance: "8.5 km" },
+      { name: "Moir Point", distance: "9 km" },
+      { name: "Berijam Lake", distance: "22 km" }
     ],
     nearbyFoodShopping: [
-      { name: "Organic Farmers Market", distance: "7 min walk" },
-      { name: "Potter's Shed", distance: "10 min walk" },
-      { name: "Corsack", distance: "10 min walk" },
-      { name: "Eco Nut", distance: "11 min walk" },
-      { name: "Bazar Road", distance: "1.3 km" },
-      { name: "Spices Corner", distance: "4 km" }
+      { name: "Organic Farmers Market", distance: "550 m" },
+      { name: "Anna Salai Shopping Street", distance: "650 m" },
+      { name: "Astoria Veg Restaurant", distance: "650 m" },
+      { name: "Lake Road Shopping Area", distance: "600 m" },
+      { name: "Tava Restaurant", distance: "700 m" },
+      { name: "Local Chocolate Shops", distance: "700 m" },
+      { name: "Potter's Shed", distance: "800 m" },
+      { name: "Corsack", distance: "850 m" },
+      { name: "Hilltop Towers Restaurant", distance: "850 m" },
+      { name: "Eco Nut", distance: "900 m" },
+      { name: "Royal Tibet Restaurant", distance: "900 m" },
+      { name: "Café Cariappa", distance: "900 m" },
+      { name: "Bazaar Road", distance: "1 km" },
+      { name: "Homemade Chocolate Factory", distance: "1 km" },
+      { name: "Cloud Street", distance: "1 km" },
+      { name: "Aby's Café", distance: "1.2 km" },
+      { name: "Spices Corner", distance: "3.5 km" }
     ],
     nearbyTransport: [
       {
         type: "Bus Terminals",
         items: [
-          { name: "Kodaikanal Bus Stand", distance: "1.2 km" },
-          { name: "Srinivasapuram Bus Stand", distance: "2.8 km" }
+          { name: "Kodaikanal Bus Stand", distance: "900 m" },
+          { name: "Srinivasapuram Bus Stand", distance: "2.5 km" }
         ]
       },
       {
         type: "Nearby Transit Points",
         items: [
-          { name: "7 Roads Junction", distance: "9 min walk" },
-          { name: "Kodaikanal Bus Stand", distance: "1.2 km" },
-          { name: "Srinivasapuram Bus Stand", distance: "2.8 km" }
+          { name: "7 Roads Junction", distance: "700 m" },
+          { name: "Kodaikanal Bus Stand", distance: "900 m" },
+          { name: "Srinivasapuram Bus Stand", distance: "2.5 km" }
         ]
       }
     ],
