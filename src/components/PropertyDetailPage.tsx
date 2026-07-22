@@ -33,6 +33,45 @@ function FadeUp({ children, delay = 0, className = "" }: { children: ReactNode; 
   );
 }
 
+// ─── Left-to-right wave text reveal — each character rises into place in
+//     sequence, giving a wave motion sweeping from the first letter to the
+//     last. Used for the Quick Stats card values so every property page
+//     (Location / Stay Type) animates in the same consistent way.
+const waveContainer = {
+  hidden: {},
+  visible: (delay: number) => ({
+    transition: { staggerChildren: 0.032, delayChildren: delay },
+  }),
+};
+const waveChar = {
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+};
+
+function WaveText({ text, className = "", delay = 0 }: { text: string; className?: string; delay?: number }) {
+  return (
+    <motion.span
+      className={`inline-block ${className}`}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
+      variants={waveContainer}
+      custom={delay / 1000}
+    >
+      {Array.from(text).map((char, i) => (
+        <motion.span
+          key={i}
+          variants={waveChar}
+          className="inline-block"
+          style={char === " " ? { whiteSpace: "pre" } : undefined}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+}
+
 // ─── Section heading ──────────────────────────────────────────────────────────
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
@@ -371,14 +410,21 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
                   <MapPin size={15} className="text-brand-secondary shrink-0" />
                   <div>
                     <span className="text-[10px] font-bold text-brand-primary/40 uppercase tracking-wider block">Location</span>
-                    <span className="text-xs font-semibold text-brand-primary">{property.locationDisplay ?? `${property.region}, ${property.location}`}</span>
+                    <WaveText
+                      className="text-xs font-semibold text-brand-primary"
+                      text={property.locationDisplay ?? `${property.region}, ${property.location}`}
+                    />
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <BedDouble size={15} className="text-brand-secondary shrink-0" />
                   <div>
                     <span className="text-[10px] font-bold text-brand-primary/40 uppercase tracking-wider block">Stay Type</span>
-                    <span className="text-xs font-semibold text-brand-primary">{property.stayTypeDisplay ?? `${property.type} · ${property.region}`}</span>
+                    <WaveText
+                      className="text-xs font-semibold text-brand-primary"
+                      text={property.stayTypeDisplay ?? `${property.type} · ${property.region}`}
+                      delay={150}
+                    />
                   </div>
                 </div>
                 <div>

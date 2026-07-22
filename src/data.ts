@@ -271,7 +271,7 @@ export const PROPERTIES: Property[] = [
     location: "Ooty, India",
     region: "Nilgiri Hills",
     locationDisplay: "Nilgiri Hills, Ooty, India / Ooty Town",
-    stayTypeDisplay: "Home Stay",
+    stayTypeDisplay: "HOME STAYS",
     price: 3000,
     rating: 4.9,
     reviewCount: 118,
