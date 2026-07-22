@@ -239,7 +239,8 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
   };
 
   // Use extended data if available, with sensible fallbacks
-  const highlightCards = property.propertyHighlightCards ?? property.highlights;
+  const keyHighlights = property.highlights;
+  const propertyCards = property.propertyHighlightCards ?? property.highlights;
   const popularAmenities = property.popularAmenities ?? property.amenities.slice(0, 7);
   const roomAmenities = property.roomAmenities ?? property.amenities;
   const whyStayFeatures = property.whyStayFeatures ?? property.highlights;
@@ -252,7 +253,8 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
   const whyStayItems = property.whyStayCards ?? whyStayFeatures;
 
   // Mobile "show all" collapse state — one per long-list section (see useExpandable above)
-  const highlightsExpand = useExpandable(highlightCards.length, 6);
+  const keyHighlightsExpand = useExpandable(keyHighlights.length, 6);
+  const propertyCardsExpand = useExpandable(propertyCards.length, 6);
   const roomAmenitiesExpand = useExpandable(roomAmenities.length, 8);
   const whyStayExpand = useExpandable(whyStayItems.length, 4);
   const nearbyFallbackExpand = useExpandable(nearbyAttractions.length, 6);
@@ -269,7 +271,8 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
   const hasGuestStories = !!(property.guestHighlights && property.guestHighlights.length > 0);
 
   const tabDefs = [
-    { id: "highlights", label: "At A Glance", icon: <Sparkles size={13} /> },
+    { id: "keyHighlights", label: "Highlights", icon: <Sparkles size={13} /> },
+    { id: "propertyCards", label: "Property Cards", icon: <Home size={13} /> },
     ...(hasExperiences ? [{ id: "experiences", label: "Signature Experiences", icon: <Star size={13} /> }] : []),
     { id: "facilities", label: "Facilities", icon: <Wifi size={13} /> },
     ...(!hasAmenityCategories ? [{ id: "room", label: "In Your Room", icon: <BedDouble size={13} /> }] : []),
@@ -476,12 +479,31 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* ── At A Glance ── */}
-            {activeTab === "highlights" && (
+            {/* ── Highlights — short "at a glance" bullets (property.highlights) ── */}
+            {activeTab === "keyHighlights" && (
+              <div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                  {keyHighlights.map((item, idx) => (
+                    <FadeUp key={idx} delay={Math.min(idx, 8) * 50} className={`h-full ${keyHighlightsExpand.itemHiddenClass(idx)}`}>
+                      <div className="h-full bg-white border border-brand-primary/8 rounded-2xl p-4 md:p-5 flex items-start gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                        <span className="w-9 h-9 rounded-xl bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0">
+                          <Sparkles size={16} />
+                        </span>
+                        <p className="text-xs md:text-sm font-semibold text-brand-primary leading-snug pt-1.5">{item}</p>
+                      </div>
+                    </FadeUp>
+                  ))}
+                </div>
+                <ShowMoreButton {...keyHighlightsExpand} total={keyHighlights.length} label="Highlights" />
+              </div>
+            )}
+
+            {/* ── Property Cards — larger icon-grid (property.propertyHighlightCards) ── */}
+            {activeTab === "propertyCards" && (
               <div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
-                  {highlightCards.map((item, idx) => (
-                    <FadeUp key={idx} delay={Math.min(idx, 8) * 50} className={`h-full ${highlightsExpand.itemHiddenClass(idx)}`}>
+                  {propertyCards.map((item, idx) => (
+                    <FadeUp key={idx} delay={Math.min(idx, 8) * 50} className={`h-full ${propertyCardsExpand.itemHiddenClass(idx)}`}>
                       <div className="h-full bg-white border border-brand-primary/8 rounded-2xl p-3.5 md:p-5 flex flex-col items-center text-center gap-2.5 md:gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                         <span className="w-9 h-9 md:w-11 md:h-11 rounded-xl bg-brand-primary/5 flex items-center justify-center text-brand-secondary shrink-0">
                           {resolveHighlightIcon(item)}
@@ -491,7 +513,7 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
                     </FadeUp>
                   ))}
                 </div>
-                <ShowMoreButton {...highlightsExpand} total={highlightCards.length} label="Highlights" />
+                <ShowMoreButton {...propertyCardsExpand} total={propertyCards.length} label="Property Cards" />
               </div>
             )}
 
