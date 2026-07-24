@@ -4,6 +4,7 @@
  */
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { gsap } from "gsap";
 import { MapPin, Home, Calendar, Search, Check, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import TextType from "./TextType";
 import browntreeVideo from "../assets/images/broentree_video.mp4";
@@ -121,12 +122,30 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
   const [activePanel, setActivePanel] = useState<ActivePanel>(null);
   const [rippling, setRippling] = useState(false);
   const [checkoutEnabled, setCheckoutEnabled] = useState(false);
+  const [titleTyped, setTitleTyped] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
 
   const todayStr = new Date().toISOString().split("T")[0];
   const allFilled = !!(location && property && checkIn && checkOut);
+
+  // Once typing completes, sweep each letter from white to brown, last letter first
+  useEffect(() => {
+    if (!titleTyped || !titleRef.current) return;
+    const letters = titleRef.current.querySelectorAll("span");
+    gsap.fromTo(
+      letters,
+      { color: "#fcf9f8" },
+      {
+        color: "#5D2717",
+        duration: 0.6,
+        ease: "power2.inOut",
+        stagger: { each: 0.055, from: "end" },
+      }
+    );
+  }, [titleTyped]);
 
   // Seamless video loop
   useEffect(() => {
@@ -348,17 +367,35 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
 
         {/* Hero Title */}
         <div className="relative z-10 max-w-4xl mx-auto text-center space-y-5 md:space-y-7 animate-fade-in-up mt-8 md:mt-12">
-          <TextType
-            text="BROWN TREE"
-            className="font-display text-4xl sm:text-5xl md:text-7xl font-medium tracking-tight text-brand-background leading-[1.1]"
-            as="h1"
-            typingSpeed={60}
-            initialDelay={300}
-            loop={false}
-            showCursor={true}
-            cursorCharacter="|"
-            cursorClassName="text-brand-gold-light"
-          />
+          {/* Real H1 for SEO/screen readers — the animated text below is decorative and empty on first paint */}
+          <h1 className="sr-only">
+            Brown Tree Resorts – Luxury Resort, Home Stay &amp; Heritage Stays in Ooty, Kothagiri &amp; Kodaikanal
+          </h1>
+          {!titleTyped ? (
+            <TextType
+              text="BROWN TREE"
+              className="font-brand text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1.1] text-[#fcf9f8]"
+              as="div"
+              typingSpeed={60}
+              initialDelay={300}
+              loop={false}
+              showCursor={true}
+              cursorCharacter="|"
+              cursorClassName="text-brand-gold-light"
+              onComplete={() => setTitleTyped(true)}
+            />
+          ) : (
+            <div
+              ref={titleRef}
+              className="font-brand text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1.1]"
+            >
+              {"BROWN TREE".split("").map((char, i) => (
+                <span key={i} style={{ display: "inline-block" }}>
+                  {char === " " ? " " : char}
+                </span>
+              ))}
+            </div>
+          )}
           <div className="flex flex-col items-center justify-center gap-1 mx-auto w-40 sm:w-56">
             <div className="w-full h-px bg-gradient-to-r from-transparent via-brand-gold-light/80 to-transparent" />
             <div className="w-3/4 h-px bg-gradient-to-r from-transparent via-brand-gold-light/40 to-transparent" />
@@ -367,7 +404,7 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
             <p className="font-sans text-sm sm:text-base md:text-lg font-semibold tracking-[0.18em] text-brand-gold-light uppercase">
               Resort &nbsp;·&nbsp; Home Stay &nbsp;·&nbsp; Hotels
             </p>
-            <p className="font-display text-base sm:text-lg md:text-xl text-brand-background/90 font-light italic">
+            <p className="font-hero text-lg sm:text-xl md:text-2xl text-brand-background/90 font-light tracking-wide">
               Where Every Stay Tells a Story
             </p>
           </div>

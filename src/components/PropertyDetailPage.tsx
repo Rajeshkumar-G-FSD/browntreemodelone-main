@@ -379,7 +379,7 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
                     : "border-transparent opacity-55 hover:opacity-100 hover:border-brand-primary/20"
                   }`}
               >
-                <img src={img} alt={`Gallery photo ${idx + 1}`} className="w-full h-full object-cover" />
+                <img src={img} alt={`Gallery photo ${idx + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
               </button>
             ))}
           </div>

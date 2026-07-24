@@ -90,6 +90,16 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Canonical host: force https + non-www (matches canonical tags / sitemap.xml)
+  app.use((req, res, next) => {
+    const host = req.headers.host || "";
+    const proto = req.headers["x-forwarded-proto"] || req.protocol;
+    if (process.env.NODE_ENV === "production" && (host.startsWith("www.") || proto !== "https")) {
+      return res.redirect(301, `https://browntreeresorts.com${req.originalUrl}`);
+    }
+    next();
+  });
+
   // API endpoint for chatbot
   app.post("/api/chat", async (req, res) => {
     try {

@@ -87,6 +87,8 @@ export default function ExperiencesSection({ experiences, onBookExperience }: Ex
                   src={activeExp.image}
                   alt={activeExp.title}
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/50 to-transparent" />

@@ -19,6 +19,7 @@ interface TextTypeProps {
   textColors?: string[];
   variableSpeed?: { min: number; max: number };
   onSentenceComplete?: (sentence: string, index: number) => void;
+  onComplete?: () => void;
   startOnVisible?: boolean;
   reverseMode?: boolean;
   [key: string]: any;
@@ -42,6 +43,7 @@ export default function TextType({
   textColors = [],
   variableSpeed,
   onSentenceComplete,
+  onComplete,
   startOnVisible = false,
   reverseMode = false,
   ...props
@@ -53,6 +55,7 @@ export default function TextType({
   const [isVisible, setIsVisible] = useState(!startOnVisible);
   const cursorRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLElement>(null);
+  const hasCompletedRef = useRef(false);
 
   const textArray = useMemo(() => (Array.isArray(text) ? text : [text]), [text]);
 
@@ -170,6 +173,13 @@ export default function TextType({
   ]);
 
   const isCompleted = !loop && currentTextIndex === textArray.length - 1 && currentCharIndex === textArray[currentTextIndex].length && !isDeleting;
+
+  useEffect(() => {
+    if (isCompleted && !hasCompletedRef.current) {
+      hasCompletedRef.current = true;
+      onComplete?.();
+    }
+  }, [isCompleted, onComplete]);
 
   const shouldHideCursor =
     (hideCursorWhileTyping && (currentCharIndex < textArray[currentTextIndex].length || isDeleting)) ||

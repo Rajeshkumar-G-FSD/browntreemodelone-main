@@ -232,6 +232,7 @@ export default function PropertiesSection({
               const handleLinkClick = (e: MouseEvent) => {
                 if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
                 e.preventDefault();
+                e.stopPropagation();
                 onSelectProperty(property);
               };
 
@@ -260,6 +261,8 @@ export default function PropertiesSection({
                       src={property.image}
                       alt={`${property.name} – luxury ${property.type.toLowerCase()} accommodation in ${property.location}, ${property.region}`}
                       referrerPolicy="no-referrer"
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
                     

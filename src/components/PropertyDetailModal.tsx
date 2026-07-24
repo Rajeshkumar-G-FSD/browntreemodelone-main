@@ -89,6 +89,8 @@ export default function PropertyDetailModal({ property, onClose, onBookSuite }: 
                   src={activeImage}
                   alt={property.name}
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-all duration-500"
                 />
               </div>
@@ -103,7 +105,7 @@ export default function PropertyDetailModal({ property, onClose, onBookSuite }: 
                       activeImage === img ? "border-brand-secondary scale-95 shadow-md" : "border-transparent opacity-70 hover:opacity-100"
                     }`}
                   >
-                    <img src={img} alt={`Thumbnail ${idx + 1}`} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                    <img src={img} alt={`Thumbnail ${idx + 1}`} referrerPolicy="no-referrer" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>

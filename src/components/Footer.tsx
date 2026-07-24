@@ -38,10 +38,12 @@ export default function Footer({ onNavigate }: FooterProps) {
           {/* Brand & Description Block */}
           <div className="md:col-span-4 space-y-6">
             <div className="flex items-center">
-              <img 
-                src={btLogo} 
-                alt="Brown Tree Resorts brand logo – curated hill station accommodations across the Nilgiri and Palani Hills" 
-                className="h-14 md:h-18 w-auto object-contain" 
+              <img
+                src={btLogo}
+                alt="Brown Tree Resorts brand logo – curated hill station accommodations across the Nilgiri and Palani Hills"
+                loading="lazy"
+                decoding="async"
+                className="h-14 md:h-18 w-auto object-contain"
               />
             </div>
             <p className="font-sans text-xs sm:text-sm text-brand-background/70 font-light leading-relaxed max-w-sm">
