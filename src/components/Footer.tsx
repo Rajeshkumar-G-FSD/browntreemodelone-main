@@ -99,9 +99,9 @@ export default function Footer({ onNavigate }: FooterProps) {
                   </button>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-brand-gold-light transition duration-300">
-                    Offers
-                  </a>
+                  <button onClick={() => handleLinkClick("reviews")} className="hover:text-brand-gold-light transition duration-300 cursor-pointer text-left">
+                    Review
+                  </button>
                 </li>
               </ul>
             </div>
