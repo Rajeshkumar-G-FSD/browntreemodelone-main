@@ -162,7 +162,7 @@ export const PROPERTIES: Property[] = [
       checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "🚭 Smoking Inside the Rooms is Not Allowed.",
+        "Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
         "Valid Government ID Required"
       ]
@@ -205,13 +205,13 @@ export const PROPERTIES: Property[] = [
     ],
     amenitiesRating: 4.4,
     nearbyLandmarks: [
-      { name: "Ooty Lake", distance: "7 km" },
-      { name: "Government Botanical Garden", distance: "6 km" },
-      { name: "Government Rose Garden", distance: "7 km" },
-      { name: "Tea Factory & Museum", distance: "8 km" },
-      { name: "Doddabetta Peak", distance: "10 km" },
-      { name: "Pykara Lake", distance: "26 km" },
-      { name: "Mudumalai Tiger Reserve", distance: "42 km" }
+      { name: "Ooty Lake", distance: "10.1 km" },
+      { name: "Government Botanical Garden", distance: "10.5 km" },
+      { name: "Government Rose Garden", distance: "11 km" },
+      { name: "Tea Factory & Museum", distance: "13 km" },
+      { name: "Doddabetta Peak", distance: "17 km" },
+      { name: "Pykara Lake (Boat House)", distance: "20 km" },
+      { name: "Mudumalai Tiger Reserve (Theppakadu)", distance: "29 km" }
     ],
     nearbyFoodShopping: [
       { name: "Charing Cross Market", distance: "6 km" },
@@ -342,7 +342,7 @@ export const PROPERTIES: Property[] = [
       checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "🚭 Smoking Inside the Rooms is Not Allowed.",
+        "Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
         "Valid Government ID Required"
       ]
@@ -537,7 +537,7 @@ export const PROPERTIES: Property[] = [
       checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "🚭 Smoking Inside the Rooms is Not Allowed.",
+        "Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
         "Valid Government ID Required"
       ]
@@ -751,7 +751,7 @@ export const PROPERTIES: Property[] = [
       checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "🚭 Smoking Inside the Rooms is Not Allowed.",
+        "Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
         "Valid Government ID Required"
       ]
@@ -978,7 +978,7 @@ export const PROPERTIES: Property[] = [
       checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "🚭 Smoking Inside the Rooms is Not Allowed.",
+        "Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
         "Valid Government ID Required"
       ]
@@ -1169,7 +1169,7 @@ export const PROPERTIES: Property[] = [
       checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "🚭 Smoking Inside the Rooms is Not Allowed.",
+        "Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
         "Valid Government ID Required"
       ]

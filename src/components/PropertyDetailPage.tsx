@@ -248,7 +248,7 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
   const houseRules = property.houseRules ?? {
     checkIn: "12:00 PM",
     checkOut: "11:00 AM",
-    rules: ["🚭 Smoking Inside the Rooms is Not Allowed.", "Valid Government ID Required", "Family Friendly"]
+    rules: ["Smoking Inside the Rooms is Not Allowed.", "Valid Government ID Required", "Family Friendly"]
   };
   const nearbyAttractions = property.nearbyAttractions ?? [];
   const whyStayItems = property.whyStayCards ?? whyStayFeatures;
@@ -560,8 +560,8 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
                           <ul className="space-y-1.5 md:space-y-2">
                             {cat.items.map((item, i) => (
                               <li key={i} className="flex items-start gap-2 md:gap-2.5">
-                                <span className="w-4 h-4 md:w-5 md:h-5 rounded-md bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0 mt-0.5">
-                                  <Check size={10} strokeWidth={3} />
+                                <span className="w-4 h-4 md:w-5 md:h-5 rounded-md bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shrink-0 mt-0.5 [&>svg]:w-2.5 [&>svg]:h-2.5">
+                                  {resolveHighlightIcon(item)}
                                 </span>
                                 <span className="text-[11px] md:text-xs text-brand-primary/70 font-light leading-snug">{item}</span>
                               </li>
