@@ -181,6 +181,8 @@ export default function ContactSection() {
                   DIRECT LINE
                 </span>
                 <a href="tel:+919363036766" className="block text-sm font-semibold text-brand-primary hover:text-brand-secondary transition-colors">+91 93630 36766</a>
+                <a href="tel:+919363036866" className="block text-sm font-semibold text-brand-primary hover:text-brand-secondary transition-colors">+91 93630 36866</a>
+                <a href="tel:+918925266866" className="block text-sm font-semibold text-brand-primary hover:text-brand-secondary transition-colors">+91 89252 66866</a>
               </div>
             </div>
 

@@ -56,11 +56,11 @@ function getLocalReply(text: string): string | null {
   }
 
   if (/\b(cancel|cancellation|refund)\b/.test(t)) {
-    return "For cancellations or refunds, please reach out to our concierge team directly at **+91 93630 36766**, and we'll personally assist you.";
+    return "For cancellations or refunds, please reach out to our concierge team directly at **+91 93630 36766**, **+91 93630 36866**, or **+91 89252 66866**, and we'll personally assist you.";
   }
 
   if (/\b(contact|phone|call|number|email|reach)\b/.test(t)) {
-    return "You can reach us directly:\n\n- 📞 **+91 93630 36766**\n- ✉️ **browntreeresort@gmail.com**\n\nWe're available 24×7!";
+    return "You can reach us directly:\n\n- 📞 **+91 93630 36766**\n- 📞 **+91 93630 36866**\n- 📞 **+91 89252 66866**\n- ✉️ **browntreeresort@gmail.com**\n\nWe're available 24×7!";
   }
 
   return null;

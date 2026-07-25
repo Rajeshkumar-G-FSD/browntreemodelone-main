@@ -6,8 +6,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Sparkles } from "lucide-react";
 
-const btLogo = "https://i.postimg.cc/7ZFbxYFr/browntree-logo.png";
-
 interface HeaderProps {
   onNavigate: (sectionId: string) => void;
   onOpenBooking: () => void;
@@ -48,20 +46,8 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center">
-        {/* Brand Logo — left anchor */}
-        <div className="flex-1 flex justify-start">
-          <button
-            id="logo-button"
-            onClick={() => handleItemClick("home")}
-            className="flex items-center focus:outline-none group cursor-pointer"
-          >
-            <img
-              src={btLogo}
-              alt="Brown Tree Resorts logo – luxury resort, home stay and heritage stays in Ooty, Kothagiri and Kodaikanal"
-              className="h-11 md:h-14 w-auto object-contain transition-all duration-300 group-hover:scale-105"
-            />
-          </button>
-        </div>
+        {/* Left spacer — balances the right-side controls so nav stays centered */}
+        <div className="flex-1 flex justify-start" />
 
         {/* Desktop Navigation — centered */}
         <nav id="desktop-nav" className="hidden lg:flex items-center space-x-8">

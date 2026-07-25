@@ -8,6 +8,7 @@ import { gsap } from "gsap";
 import { MapPin, Home, Calendar, Search, Check, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import TextType from "./TextType";
 import browntreeVideo from "../assets/images/broentree_video.mp4";
+import btLogo from "../assets/images/brown_tree_transparents.png";
 import { useToast } from "./useToast";
 import { getBookingUrl } from "../bookingUrls";
 
@@ -123,6 +124,7 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
   const [rippling, setRippling] = useState(false);
   const [checkoutEnabled, setCheckoutEnabled] = useState(false);
   const [titleTyped, setTitleTyped] = useState(false);
+  const [showLogoLetter, setShowLogoLetter] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -172,6 +174,7 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
         duration: 0.6,
         ease: "power2.inOut",
         stagger: { each: 0.055, from: "start" },
+        onComplete: () => setShowLogoLetter(true),
       },
       "+=0.4"
     );
@@ -375,6 +378,16 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
           box-shadow: 0 0 0 2px rgba(212,175,55,0.55) inset;
           background: rgba(248,245,239,0.7) !important;
         }
+        @keyframes logoLetterIn {
+          0%   { opacity: 0; transform: scale(0.5); }
+          60%  { opacity: 1; transform: scale(1.12); }
+          100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes logoSwing {
+          0%   { transform: rotate(-18deg); }
+          50%  { transform: rotate(18deg); }
+          100% { transform: rotate(-18deg); }
+        }
       `}</style>
 
       <section
@@ -419,11 +432,41 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
               ref={titleRef}
               className="font-brand text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1.1]"
             >
-              {"BROWN TREE".split("").map((char, i) => (
-                <span key={i} style={{ display: "inline-block" }}>
-                  {char === " " ? " " : char}
-                </span>
-              ))}
+              {"BROWN TREE".split("").map((char, i) =>
+                i === 2 && showLogoLetter ? (
+                  <span
+                    key={i}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "0.84em",
+                      height: "0.84em",
+                      verticalAlign: "-0.07em",
+                      margin: "0 0.02em",
+                      animation: "logoLetterIn 0.5s cubic-bezier(0.16,1,0.3,1) both",
+                    }}
+                  >
+                    <img
+                      src={btLogo}
+                      alt=""
+                      aria-hidden="true"
+                      style={{
+                        display: "block",
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                        objectPosition: "center",
+                        animation: "logoSwing 2s ease-in-out infinite",
+                      }}
+                    />
+                  </span>
+                ) : (
+                  <span key={i} style={{ display: "inline-block" }}>
+                    {char === " " ? " " : char}
+                  </span>
+                )
+              )}
             </div>
           )}
           <div className="flex flex-col items-center justify-center gap-1 mx-auto w-40 sm:w-56">

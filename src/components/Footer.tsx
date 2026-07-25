@@ -4,8 +4,7 @@
  */
 
 import { Facebook, Instagram, Youtube } from "lucide-react";
-
-const btLogo = "https://i.postimg.cc/7ZFbxYFr/browntree-logo.png";
+import btLogo from "../assets/images/brown_tree_transparents.png";
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
@@ -52,7 +51,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             {/* Social media icons */}
             <div className="flex items-center space-x-4 pt-2">
               <a
-                href="https://www.facebook.com"
+                href="https://www.facebook.com/browntreeofficial"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-brand-gold-light/35 flex items-center justify-center text-brand-gold-light hover:bg-brand-secondary hover:text-white hover:border-brand-secondary transition-all duration-300"
@@ -61,7 +60,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <Facebook size={16} />
               </a>
               <a
-                href="https://www.instagram.com/brown_tree_1/"
+                href="https://www.instagram.com/browntreeofficial"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-brand-gold-light/35 flex items-center justify-center text-brand-gold-light hover:bg-brand-secondary hover:text-white hover:border-brand-secondary transition-all duration-300"
@@ -70,7 +69,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <Instagram size={16} />
               </a>
               <a
-                href="https://www.youtube.com"
+                href="https://www.youtube.com/@BrownTreeResortss"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-brand-gold-light/35 flex items-center justify-center text-brand-gold-light hover:bg-brand-secondary hover:text-white hover:border-brand-secondary transition-all duration-300"
