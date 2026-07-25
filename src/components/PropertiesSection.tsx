@@ -280,7 +280,7 @@ export default function PropertiesSection({
                   {/* Glassmorphic Info Pane Anchored at Bottom */}
                   <div className="p-6 space-y-4 bg-white/95 border-t border-brand-primary/5">
                     <div className="flex justify-between items-start gap-3">
-                      <div>
+                      <div className="min-w-0 flex-1" style={{ containerType: "inline-size" }}>
                         <SplitText
                           text={property.type}
                           tag="span"
@@ -295,12 +295,15 @@ export default function PropertiesSection({
                           rootMargin="-50px"
                           textAlign="left"
                         />
-                        <h3 className="font-display text-xl font-medium text-brand-primary mt-1 group-hover:text-brand-secondary transition-colors duration-300">
+                        <h3
+                          className="font-display font-medium text-brand-primary mt-1 group-hover:text-brand-secondary transition-colors duration-300"
+                          style={{ fontSize: "clamp(0.7rem, 3.6cqi, 1.25rem)" }}
+                        >
                           <a href={propertyHref} onClick={handleLinkClick} className="hover:text-brand-secondary transition-colors">
                             <BlurText
                               text={property.name}
                               tag="span"
-                              className="!justify-start !text-left"
+                              className="!flex-nowrap !justify-start !text-left"
                               delay={15}
                               animateBy="words"
                               direction="top"

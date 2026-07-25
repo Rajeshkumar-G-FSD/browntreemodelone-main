@@ -26,9 +26,9 @@ const GLOW_PALETTE = ["#34A853", "#4285F4", "#8E44AD", "#C17A4E"];
 // display name + destination instead (e.g. "The Abode : Ooty").
 const PROPERTY_INFO: Record<string, { name: string; location: string }> = {
   "THE ABODE BY BROWN TREE": { name: "The Abode", location: "Ooty" },
-  "Sholas Residency by Brown Tree": { name: "Sholas Residency", location: "Ooty" },
-  "Humming Bird by Brown Tree Resorts": { name: "Humming Bird", location: "Kothagiri" },
-  "Hotel Vetrivel International by Brown Tree Resorts": { name: "Hotel Vetrivel", location: "Kodaikanal" },
+  "SHOLAS RESIDENCY BY BROWN TREE": { name: "Sholas Residency", location: "Ooty" },
+  "HUMMING BIRD BY BROWN TREE": { name: "Humming Bird", location: "Kothagiri" },
+  "HOTEL VETRIVEL INTERNATIONAL BY BROWN TREE": { name: "Hotel Vetrivel", location: "Kodaikanal" },
 };
 
 function GoogleIcon({ size = 15 }: { size?: number }) {

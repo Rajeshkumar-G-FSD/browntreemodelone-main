@@ -44,7 +44,7 @@ function getLocalReply(text: string): string | null {
   }
 
   if (/check.?in|check.?out/.test(t)) {
-    return "Standard **check-in is from 2:00 PM** and **check-out is by 11:00 AM**. Early check-in or late check-out can be arranged on request, subject to availability.";
+    return "Standard **check-in is from 12:00 PM** and **check-out is by 11:00 AM**. Early check-in or late check-out can be arranged on request, subject to availability.";
   }
 
   if (/\b(amenities|facilities|wifi|wi-fi|parking|pool|restaurant|food|dining)\b/.test(t)) {
@@ -56,11 +56,11 @@ function getLocalReply(text: string): string | null {
   }
 
   if (/\b(cancel|cancellation|refund)\b/.test(t)) {
-    return "For cancellations or refunds, please reach out to our concierge team directly at **+91 98765 43210** or **+91 90954 87848**, and we'll personally assist you.";
+    return "For cancellations or refunds, please reach out to our concierge team directly at **+91 93630 36766**, and we'll personally assist you.";
   }
 
   if (/\b(contact|phone|call|number|email|reach)\b/.test(t)) {
-    return "You can reach us directly:\n\n- 📞 **+91 98765 43210**\n- 📞 **+91 90954 87848**\n- 📞 **+91 93630 36766**\n- ✉️ **browntreeresort@gmail.com**\n\nWe're available 24×7!";
+    return "You can reach us directly:\n\n- 📞 **+91 93630 36766**\n- ✉️ **browntreeresort@gmail.com**\n\nWe're available 24×7!";
   }
 
   return null;
@@ -77,11 +77,11 @@ function matchLocation(text: string): ChatLocation | null {
 
 const PROPERTY_MATCHERS: { keywords: string[]; name: string; location: ChatLocation }[] = [
   { keywords: ["abode"], name: "THE ABODE BY BROWN TREE", location: "OOTY" },
-  { keywords: ["earthy nest", "earthy"], name: "The Earthy Nest by Brown Tree", location: "OOTY" },
-  { keywords: ["tea leaf"], name: "Tea Leaf Stays by Brown Tree Resorts", location: "OOTY" },
-  { keywords: ["sholas"], name: "Sholas Residency by Brown Tree", location: "OOTY" },
-  { keywords: ["humming bird", "hummingbird"], name: "Humming Bird by Brown Tree Resorts", location: "KOTHAGIRI" },
-  { keywords: ["vetrivel"], name: "Hotel Vetrivel International by Brown Tree Resorts", location: "KODAIKANAL" },
+  { keywords: ["earthy nest", "earthy"], name: "THE EARTHY NEST BY BROWN TREE", location: "OOTY" },
+  { keywords: ["tea leaf"], name: "TEA LEAF STAYS BY BROWN TREE", location: "OOTY" },
+  { keywords: ["sholas"], name: "SHOLAS RESIDENCY BY BROWN TREE", location: "OOTY" },
+  { keywords: ["humming bird", "hummingbird"], name: "HUMMING BIRD BY BROWN TREE", location: "KOTHAGIRI" },
+  { keywords: ["vetrivel"], name: "HOTEL VETRIVEL INTERNATIONAL BY BROWN TREE", location: "KODAIKANAL" },
 ];
 
 // Recognizes a property typed as free text (e.g. "tea leaf") so it can be
@@ -188,11 +188,11 @@ export default function ChatBot() {
     
     let botText = "";
     if (location === "OOTY") {
-      botText = "Excellent choice. Here are our premier properties in **OOTY**:\n\n1. **THE ABODE BY BROWN TREE**\n2. **The Earthy Nest by Brown Tree**\n3. **Tea Leaf Stays by Brown Tree Resorts**\n4. **Sholas Residency by Brown Tree**\n\nClick on any property below to explore its luxurious details!";
+      botText = "Excellent choice. Here are our premier properties in **OOTY**:\n\n1. **THE ABODE BY BROWN TREE**\n2. **THE EARTHY NEST BY BROWN TREE**\n3. **TEA LEAF STAYS BY BROWN TREE**\n4. **SHOLAS RESIDENCY BY BROWN TREE**\n\nClick on any property below to explore its luxurious details!";
     } else if (location === "KOTHAGIRI") {
-      botText = "Excellent choice. Here is our retreat in **KOTHAGIRI**:\n\n- **Humming Bird by Brown Tree Resorts**\n\nClick below to explore its details!";
+      botText = "Excellent choice. Here is our retreat in **KOTHAGIRI**:\n\n- **HUMMING BIRD BY BROWN TREE**\n\nClick below to explore its details!";
     } else if (location === "KODAIKANAL") {
-      botText = "Excellent choice. Here is our resort in **KODAIKANAL**:\n\n- **Hotel Vetrivel International by Brown Tree Resorts**\n\nClick below to explore details!";
+      botText = "Excellent choice. Here is our resort in **KODAIKANAL**:\n\n- **HOTEL VETRIVEL INTERNATIONAL BY BROWN TREE**\n\nClick below to explore details!";
     }
 
     const botMsg: Message = { sender: "bot", text: botText };
@@ -407,13 +407,13 @@ export default function ChatBot() {
 
                         <button
                           type="button"
-                          onClick={() => handleSelectProperty("The Earthy Nest by Brown Tree")}
+                          onClick={() => handleSelectProperty("THE EARTHY NEST BY BROWN TREE")}
                           className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
                         >
                           <div className="flex items-center space-x-3">
                             <span className="text-lg">🍃</span>
                             <div>
-                              <p className="text-xs font-semibold text-stone-850">The Earthy Nest by Brown Tree</p>
+                              <p className="text-xs font-semibold text-stone-850">THE EARTHY NEST BY BROWN TREE</p>
                               <p className="text-[10px] text-stone-500">Eco-luxury mountain view cabins</p>
                             </div>
                           </div>
@@ -422,13 +422,13 @@ export default function ChatBot() {
 
                         <button
                           type="button"
-                          onClick={() => handleSelectProperty("Tea Leaf Stays by Brown Tree Resorts")}
+                          onClick={() => handleSelectProperty("TEA LEAF STAYS BY BROWN TREE")}
                           className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
                         >
                           <div className="flex items-center space-x-3">
                             <span className="text-lg">🌱</span>
                             <div>
-                              <p className="text-xs font-semibold text-stone-850">Tea Leaf Stays by Brown Tree Resorts</p>
+                              <p className="text-xs font-semibold text-stone-850">TEA LEAF STAYS BY BROWN TREE</p>
                               <p className="text-[10px] text-stone-500">High-altitude luxury tea estate stays</p>
                             </div>
                           </div>
@@ -437,13 +437,13 @@ export default function ChatBot() {
 
                         <button
                           type="button"
-                          onClick={() => handleSelectProperty("Sholas Residency by Brown Tree")}
+                          onClick={() => handleSelectProperty("SHOLAS RESIDENCY BY BROWN TREE")}
                           className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
                         >
                           <div className="flex items-center space-x-3">
                             <span className="text-lg">☀️</span>
                             <div>
-                              <p className="text-xs font-semibold text-stone-850">Sholas Residency by Brown Tree</p>
+                              <p className="text-xs font-semibold text-stone-850">SHOLAS RESIDENCY BY BROWN TREE</p>
                               <p className="text-[10px] text-stone-500">Boutique stay in the heart of Ooty</p>
                             </div>
                           </div>
@@ -455,13 +455,13 @@ export default function ChatBot() {
                     {selectedLocation === "KOTHAGIRI" && (
                       <button
                         type="button"
-                        onClick={() => handleSelectProperty("Humming Bird by Brown Tree Resorts")}
+                        onClick={() => handleSelectProperty("HUMMING BIRD BY BROWN TREE")}
                         className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
                       >
                         <div className="flex items-center space-x-3">
                           <span className="text-lg">🐦</span>
                           <div>
-                            <p className="text-xs font-semibold text-stone-850">Humming Bird by Brown Tree Resorts</p>
+                            <p className="text-xs font-semibold text-stone-850">HUMMING BIRD BY BROWN TREE</p>
                             <p className="text-[10px] text-stone-500">Scenic valley-view suites & trails</p>
                           </div>
                         </div>
@@ -472,13 +472,13 @@ export default function ChatBot() {
                     {selectedLocation === "KODAIKANAL" && (
                       <button
                         type="button"
-                        onClick={() => handleSelectProperty("Hotel Vetrivel International by Brown Tree Resorts")}
+                        onClick={() => handleSelectProperty("HOTEL VETRIVEL INTERNATIONAL BY BROWN TREE")}
                         className="w-full text-left bg-white hover:bg-stone-100 border border-stone-150 hover:border-stone-300 p-3 rounded-xl transition-all duration-300 flex items-center justify-between shadow-sm cursor-pointer group"
                       >
                         <div className="flex items-center space-x-3">
                           <span className="text-lg">🏨</span>
                           <div>
-                            <p className="text-xs font-semibold text-stone-850">Hotel Vetrivel International by Brown Tree Resorts</p>
+                            <p className="text-xs font-semibold text-stone-850">HOTEL VETRIVEL INTERNATIONAL BY BROWN TREE</p>
                             <p className="text-[10px] text-stone-500">Premium luxury stays near the lake</p>
                           </div>
                         </div>

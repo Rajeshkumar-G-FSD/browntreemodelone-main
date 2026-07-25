@@ -102,12 +102,12 @@ const LOCATIONS = [
 const PROPERTIES: Record<string, string[]> = {
   Ooty: [
     "THE ABODE BY BROWN TREE",
-    "The Earthy Nest by Brown Tree",
-    "Tea Leaf Stays by Brown Tree Resorts",
-    "Sholas Residency by Brown Tree",
+    "THE EARTHY NEST BY BROWN TREE",
+    "TEA LEAF STAYS BY BROWN TREE",
+    "SHOLAS RESIDENCY BY BROWN TREE",
   ],
-  Kothagiri: ["Humming Bird by Brown Tree Resorts"],
-  Kodaikanal: ["Hotel Vetrivel International by Brown Tree Resorts"],
+  Kothagiri: ["HUMMING BIRD BY BROWN TREE"],
+  Kodaikanal: ["HOTEL VETRIVEL INTERNATIONAL BY BROWN TREE"],
 };
 
 type ActivePanel = "location" | "property" | "checkin" | "checkout" | null;
@@ -131,19 +131,49 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
   const todayStr = new Date().toISOString().split("T")[0];
   const allFilled = !!(location && property && checkIn && checkOut);
 
-  // Once typing completes, sweep each letter from white to brown, last letter first
+  // Once typing completes: sweep each letter from white into the logo's
+  // gold-to-brown gradient last letter first, then sweep back to white
+  // first letter to last, so the title settles back to its original white.
   useEffect(() => {
     if (!titleTyped || !titleRef.current) return;
-    const letters = titleRef.current.querySelectorAll("span");
-    gsap.fromTo(
+    const letters = Array.from(titleRef.current.querySelectorAll("span"));
+    const n = letters.length;
+    const gradientStops: [number, number, number][] = [
+      [0xe9, 0xc1, 0x76], // brand-gold-light
+      [0xc9, 0x8f, 0x3a], // warm amber bridge
+      [0x5d, 0x27, 0x17], // logo brown
+    ];
+    const colorAt = (i: number) => {
+      const t = n > 1 ? i / (n - 1) : 0;
+      const segCount = gradientStops.length - 1;
+      const seg = Math.min(Math.floor(t * segCount), segCount - 1);
+      const localT = t * segCount - seg;
+      const [r1, g1, b1] = gradientStops[seg];
+      const [r2, g2, b2] = gradientStops[seg + 1];
+      const r = Math.round(r1 + (r2 - r1) * localT);
+      const g = Math.round(g1 + (g2 - g1) * localT);
+      const b = Math.round(b1 + (b2 - b1) * localT);
+      return `rgb(${r},${g},${b})`;
+    };
+    const tl = gsap.timeline();
+    tl.fromTo(
       letters,
       { color: "#fcf9f8" },
       {
-        color: "#5D2717",
+        color: (i: number) => colorAt(i),
         duration: 0.6,
         ease: "power2.inOut",
         stagger: { each: 0.055, from: "end" },
       }
+    ).to(
+      letters,
+      {
+        color: "#fcf9f8",
+        duration: 0.6,
+        ease: "power2.inOut",
+        stagger: { each: 0.055, from: "start" },
+      },
+      "+=0.4"
     );
   }, [titleTyped]);
 
@@ -401,7 +431,7 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
             <div className="w-3/4 h-px bg-gradient-to-r from-transparent via-brand-gold-light/40 to-transparent" />
           </div>
           <div className="space-y-1.5">
-            <p className="font-sans text-sm sm:text-base md:text-lg font-semibold tracking-[0.18em] text-brand-gold-light uppercase">
+            <p className="font-script italic text-2xl sm:text-3xl md:text-4xl tracking-wide text-brand-gold-light">
               Resort &nbsp;·&nbsp; Home Stay &nbsp;·&nbsp; Hotels
             </p>
             <p className="font-hero text-lg sm:text-xl md:text-2xl text-brand-background/90 font-light tracking-wide">

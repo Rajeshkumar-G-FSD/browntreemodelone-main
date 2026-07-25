@@ -7,10 +7,18 @@
 <IfModule mod_alias.c>
   Redirect 301 /properties/the-earthy-nest-ooty /ooty-the-earthy-nest-by-brown-tree
   Redirect 301 /properties/the-abode-ooty /ooty-the-abode-by-brown-tree
-  Redirect 301 /properties/tea-leaf-stays-ooty /ooty-tea-leaf-stays-by-brown-tree-resorts
-  Redirect 301 /properties/humming-bird-kotagiri /kothagiri-humming-bird-by-brown-tree-resorts
-  Redirect 301 /properties/sholas-residency-ooty /ooty-sholas-residency-by-brown-tree-resorts
-  Redirect 301 /properties/hotel-vetrivel-kodaikanal /kodaikanal-hotel-vetrivel-international-by-brown-tree-resorts
+  Redirect 301 /properties/tea-leaf-stays-ooty /ooty-tea-leaf-stays-by-brown-tree
+  Redirect 301 /properties/humming-bird-kotagiri /kothagiri-humming-bird-by-brown-tree
+  Redirect 301 /properties/sholas-residency-ooty /ooty-sholas-residency-by-brown-tree
+  Redirect 301 /properties/hotel-vetrivel-kodaikanal /kodaikanal-hotel-vetrivel-international-by-brown-tree
+
+  # 2026-07-24: dropped "Resorts" from these 4 property names, which changed their
+  # slugs (toPropertySlug derives from property.name) — these were live, indexed
+  # URLs, so redirect them forward too, not just the older /properties/ paths above.
+  Redirect 301 /ooty-tea-leaf-stays-by-brown-tree-resorts /ooty-tea-leaf-stays-by-brown-tree
+  Redirect 301 /kothagiri-humming-bird-by-brown-tree-resorts /kothagiri-humming-bird-by-brown-tree
+  Redirect 301 /ooty-sholas-residency-by-brown-tree-resorts /ooty-sholas-residency-by-brown-tree
+  Redirect 301 /kodaikanal-hotel-vetrivel-international-by-brown-tree-resorts /kodaikanal-hotel-vetrivel-international-by-brown-tree
 </IfModule>
 
 <IfModule mod_rewrite.c>

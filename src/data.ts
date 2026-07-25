@@ -68,7 +68,7 @@ import earthyNestGarden from "./assets/images/earthynest_garden.jpeg";
 export const PROPERTIES: Property[] = [
   {
     id: "azure-orchid",
-    name: "The Earthy Nest by Brown Tree",
+    name: "THE EARTHY NEST BY BROWN TREE",
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
@@ -84,11 +84,11 @@ export const PROPERTIES: Property[] = [
       earthyNestBrestosgroom,
       earthyNestGarden,
     ],
-    description: "Nestled amidst the serene beauty of nature, The Earthy Nest by Brown Tree offers the perfect escape for travelers seeking peace, comfort, and unforgettable experiences. Surrounded by lush greenery and refreshing mountain air, our homestay creates a warm and welcoming atmosphere where guests can truly relax and reconnect with nature.\n\nWake up to scenic views, enjoy peaceful morning walks, and unwind in thoughtfully designed rooms featuring cozy interiors, comfortable bedding, elegant furnishings, and modern amenities. Every room is equipped with an individual geyser providing 24-hour hot water, ensuring complete comfort at any time of the day.\n\nWhether you're planning a family vacation, a romantic getaway, or a short weekend retreat, our attentive caretaker and friendly staff are always available to make your stay seamless, relaxing, and memorable.",
+    description: "Nestled amidst the serene beauty of nature, THE EARTHY NEST BY BROWN TREE offers the perfect escape for travelers seeking peace, comfort, and unforgettable experiences. Surrounded by lush greenery and refreshing mountain air, our homestay creates a warm and welcoming atmosphere where guests can truly relax and reconnect with nature.\n\nWake up to scenic views, enjoy peaceful morning walks, and unwind in thoughtfully designed rooms featuring cozy interiors, comfortable bedding, elegant furnishings, and modern amenities. Every room is equipped with an individual geyser providing 24-hour hot water, ensuring complete comfort at any time of the day.\n\nWhether you're planning a family vacation, a romantic getaway, or a short weekend retreat, our attentive caretaker and friendly staff are always available to make your stay seamless, relaxing, and memorable.",
     highlights: [
-      "Overlooking Nilgiri Tea Valleys",
       "Peaceful Nature Retreat",
-      "Guided Plantation Walk & Tea Tasting"
+      "Guided Plantation Walk & Tea Tasting",
+      "Barbecue Evenings"
     ],
     amenities: [
       "Parking",
@@ -159,11 +159,10 @@ export const PROPERTIES: Property[] = [
       { title: "Personalized Guest Service", description: "Attentive, individual care ensuring a seamless and comfortable stay." }
     ],
     houseRules: {
-      checkIn: "2:00 PM",
+      checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "No Smoking inside Rooms",
-        "Pets on Request",
+        "🚭 Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
         "Valid Government ID Required"
       ]
@@ -182,7 +181,7 @@ export const PROPERTIES: Property[] = [
       },
       {
         category: "Basic Facilities",
-        items: ["Parking", "Wi-Fi", "Power Backup", "Room Service", "Daily Housekeeping"]
+        items: ["Room Service", "Daily Housekeeping"]
       },
       {
         category: "General Services",
@@ -195,10 +194,6 @@ export const PROPERTIES: Property[] = [
       {
         category: "Dining",
         items: ["In-room Dining"]
-      },
-      {
-        category: "Common Areas",
-        items: ["Balcony / Terrace"]
       }
     ],
     guestHighlights: [
@@ -262,7 +257,7 @@ export const PROPERTIES: Property[] = [
         amenities: ["Large Infinity Pool", "Kitchenette", "Private Hammock", "Sun Loungers", "Wellness Room"]
       }
     ],
-    coordinates: { lat: 11.4102, lng: 76.6950 }
+    coordinates: { lat: 11.4565194, lng: 76.6903861 }
   },
   {
     id: "heritage-pine",
@@ -270,7 +265,7 @@ export const PROPERTIES: Property[] = [
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
-    locationDisplay: "Nilgiri Hills, Ooty, India / Ooty Town",
+    locationDisplay: "Nilgiri Hills, Ooty, India",
     stayTypeDisplay: "HOME STAYS",
     price: 3000,
     rating: 4.9,
@@ -284,7 +279,7 @@ export const PROPERTIES: Property[] = [
       theAbodeCot,
       theAbodeDoubleHot,
     ],
-    description: "THE ABODE BY BROWN TREE RESORTS – French Styled Hillside Villa in Ooty\n\nNestled on a peaceful hillside in Ooty, THE ABODE BY BROWN TREE RESORTS is surrounded by lush greenery and panoramic views of the Nilgiri Mountains. Inspired by elegant French-style architecture, the resort offers a perfect escape from city life while providing modern comforts for couples, families, and leisure travelers.\n\nWhether you're enjoying a relaxing vacation, celebrating special moments, or exploring Ooty's attractions, every stay promises warmth, comfort, and unforgettable memories. Wake up to breathtaking valley and hill views, savour freshly prepared meals in our cozy dining area, and experience the warmth of dedicated hospitality that makes every moment truly special.",
+    description: "THE ABODE BY BROWN TREE – French Styled Hillside Villa in Ooty\n\nNestled on a peaceful hillside in Ooty, THE ABODE BY BROWN TREE is surrounded by lush greenery and panoramic views of the Nilgiri Mountains. Inspired by elegant French-style architecture, the resort offers a perfect escape from city life while providing modern comforts for couples, families, and leisure travelers.\n\nWhether you're enjoying a relaxing vacation, celebrating special moments, or exploring Ooty's attractions, every stay promises warmth, comfort, and unforgettable memories. Wake up to breathtaking valley and hill views, savour freshly prepared meals in our cozy dining area, and experience the warmth of dedicated hospitality that makes every moment truly special.",
     highlights: [
       "French Styled Hillside Villa",
       "Panoramic Nilgiri Mountain Views",
@@ -344,10 +339,10 @@ export const PROPERTIES: Property[] = [
       { title: "Pickup & Drop Available", description: "Convenient transfer assistance to make your travel seamless." }
     ],
     houseRules: {
-      checkIn: "2:00 PM",
+      checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "Non Smoking Rooms",
+        "🚭 Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
         "Valid Government ID Required"
       ]
@@ -366,7 +361,7 @@ export const PROPERTIES: Property[] = [
       },
       {
         category: "Basic Facilities",
-        items: ["Free Parking", "Power Backup", "Housekeeping", "Refrigerator"]
+        items: ["Housekeeping", "Refrigerator"]
       },
       {
         category: "Room Amenities",
@@ -377,16 +372,8 @@ export const PROPERTIES: Property[] = [
         items: ["Dining Area"]
       },
       {
-        category: "Safety",
-        items: ["CCTV Surveillance"]
-      },
-      {
         category: "Outdoor Activities",
         items: ["Bonfire"]
-      },
-      {
-        category: "Common Areas",
-        items: ["Living Area", "Dining Area"]
       }
     ],
     guestHighlights: [
@@ -450,11 +437,11 @@ export const PROPERTIES: Property[] = [
         amenities: ["Spacious Bedroom", "Separate Living Area", "Sofa", "LED TV", "Attached Bathroom", "Premium Amenities", "Extra Seating Space", "Beautiful Hillside Views"]
       }
     ],
-    coordinates: { lat: 11.4050, lng: 76.7120 }
+    coordinates: { lat: 11.4140574, lng: 76.7193744 }
   },
   {
     id: "tea-leaf-stays",
-    name: "Tea Leaf Stays by Brown Tree Resorts",
+    name: "TEA LEAF STAYS BY BROWN TREE",
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
@@ -481,7 +468,7 @@ export const PROPERTIES: Property[] = [
       teaLeafBedroom,
       teaLeafBedB,
     ],
-    description: "Stay Close to Nature\n\nTea Leaf Stays by Brown Tree Resorts is nestled in the peaceful tea estates of Ooty, offering guests an authentic hill-country experience surrounded by rolling green plantations and mist-covered mountains.\n\nDesigned to blend naturally with its surroundings, the resort combines rustic charm with modern comfort. Every stay offers tranquility, scenic beauty, and personalized hospitality, making it an ideal destination for couples, families, photographers, and nature lovers.\n\nRelax on your private balcony, enjoy freshly brewed Nilgiri tea, explore nearby plantations, or simply soak in the breathtaking landscapes that make Ooty one of India's most loved hill stations.",
+    description: "Stay Close to Nature\n\nTEA LEAF STAYS BY BROWN TREE is nestled in the peaceful tea estates of Ooty, offering guests an authentic hill-country experience surrounded by rolling green plantations and mist-covered mountains.\n\nDesigned to blend naturally with its surroundings, the resort combines rustic charm with modern comfort. Every stay offers tranquility, scenic beauty, and personalized hospitality, making it an ideal destination for couples, families, photographers, and nature lovers.\n\nRelax on your private balcony, enjoy freshly brewed Nilgiri tea, explore nearby plantations, or simply soak in the breathtaking landscapes that make Ooty one of India's most loved hill stations.",
     highlights: [
       "Tea Plantation Views",
       "Cozy Wooden Interiors",
@@ -547,13 +534,12 @@ export const PROPERTIES: Property[] = [
       { title: "Personalized Hospitality", description: "Friendly staff dedicated to making every stay truly memorable." }
     ],
     houseRules: {
-      checkIn: "2:00 PM",
+      checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "No Smoking Inside Rooms",
+        "🚭 Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
-        "Valid Government ID Required",
-        "Pets on Request"
+        "Valid Government ID Required"
       ]
     },
     signatureExperiences: [
@@ -674,11 +660,11 @@ export const PROPERTIES: Property[] = [
         amenities: ["Fireplace", "Separate Living Area", "Panoramic Valley View", "Coffee Machine", "Premium Toiletries", "Spacious Bathroom", "Daily Housekeeping"]
       }
     ],
-    coordinates: { lat: 11.4150, lng: 76.6850 }
+    coordinates: { lat: 11.4113965, lng: 76.7627152 }
   },
   {
     id: "solar-residency",
-    name: "Sholas Residency by Brown Tree Resorts",
+    name: "SHOLAS RESIDENCY BY BROWN TREE",
     type: "Ooty",
     location: "Ooty, India",
     region: "Nilgiri Hills",
@@ -704,7 +690,7 @@ export const PROPERTIES: Property[] = [
       solarDinning,
       solarRestroom,
     ],
-    description: "Sholas Residency by Brown Tree Resorts is a stylish hotel located on Palace Road in the heart of Ooty. Perfectly positioned near the city's major attractions, shopping areas, railway station, and bus terminal, the hotel offers guests the perfect combination of convenience and comfort.\n\nDesigned with contemporary interiors and modern amenities, Sholas Residency welcomes families, couples, business travelers, and holidaymakers seeking a relaxing stay in the Queen of Hill Stations.\n\nEnjoy thoughtfully designed rooms, warm hospitality, high-speed Wi-Fi, and a delightful dining experience while exploring everything Ooty has to offer.",
+    description: "SHOLAS RESIDENCY BY BROWN TREE is a stylish hotel located on Palace Road in the heart of Ooty. Perfectly positioned near the city's major attractions, shopping areas, railway station, and bus terminal, the hotel offers guests the perfect combination of convenience and comfort.\n\nDesigned with contemporary interiors and modern amenities, Sholas Residency welcomes families, couples, business travelers, and holidaymakers seeking a relaxing stay in the Queen of Hill Stations.\n\nEnjoy thoughtfully designed rooms, warm hospitality, high-speed Wi-Fi, and a delightful dining experience while exploring everything Ooty has to offer.",
     highlights: [
       "Prime City Location",
       "Modern Comfortable Rooms",
@@ -762,13 +748,12 @@ export const PROPERTIES: Property[] = [
       { title: "Modern Comfort", description: "Well-equipped rooms with contemporary amenities and elegant interiors." }
     ],
     houseRules: {
-      checkIn: "2:00 PM",
+      checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "No Smoking Inside Rooms",
+        "🚭 Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
-        "Valid Government ID Required",
-        "Pets on Request"
+        "Valid Government ID Required"
       ]
     },
     signatureExperiences: [
@@ -880,11 +865,11 @@ export const PROPERTIES: Property[] = [
         amenities: ["King Size Bed", "Spacious Living Area", "Elegant Interior Design", "Flat Screen TV", "Electric Kettle", "High-Speed Wi-Fi", "Premium Bathroom", "Hair Dryer", "Daily Housekeeping", "Comfortable Seating Area"]
       }
     ],
-    coordinates: { lat: 11.4180, lng: 76.7000 }
+    coordinates: { lat: 11.4096264, lng: 76.7098579 }
   },
   {
     id: "misty-peaks",
-    name: "Humming Bird by Brown Tree Resorts",
+    name: "HUMMING BIRD BY BROWN TREE",
     type: "Kothagiri",
     location: "Kothagiri, India",
     region: "Nilgiri Hills",
@@ -904,7 +889,7 @@ export const PROPERTIES: Property[] = [
       hummingBirdDining,
       hummingBirdMain,
     ],
-    description: "Nestled amidst the tranquil hills of Kothagiri, Humming Bird by Brown Tree Resorts offers a serene villa experience designed for families, couples, and small groups looking to escape the rush of city life.\n\nSurrounded by lush greenery and refreshing mountain air, the property combines modern comforts with warm interiors to create a relaxing home-away-from-home. Spacious accommodations, beautiful outdoor spaces, and personalized hospitality make every stay memorable.\n\nWhether you're planning a family vacation, a romantic getaway, or a weekend retreat with friends, Humming Bird offers the perfect setting to relax, reconnect, and rejuvenate.",
+    description: "Nestled amidst the tranquil hills of Kothagiri, HUMMING BIRD BY BROWN TREE offers a serene villa experience designed for families, couples, and small groups looking to escape the rush of city life.\n\nSurrounded by lush greenery and refreshing mountain air, the property combines modern comforts with warm interiors to create a relaxing home-away-from-home. Spacious accommodations, beautiful outdoor spaces, and personalized hospitality make every stay memorable.\n\nWhether you're planning a family vacation, a romantic getaway, or a weekend retreat with friends, Humming Bird offers the perfect setting to relax, reconnect, and rejuvenate.",
     highlights: [
       "Private Villa Experience",
       "Peaceful Mountain Location",
@@ -990,10 +975,10 @@ export const PROPERTIES: Property[] = [
       { title: "Ideal for Relaxation", description: "Escape city life and experience complete tranquility in the hills of Kothagiri." }
     ],
     houseRules: {
-      checkIn: "2:00 PM",
+      checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "No Smoking Inside Rooms",
+        "🚭 Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
         "Valid Government ID Required"
       ]
@@ -1013,7 +998,7 @@ export const PROPERTIES: Property[] = [
       },
       {
         category: "Basic Facilities",
-        items: ["24-Hour Room Service", "Free Wi-Fi", "Free Parking", "Power Backup", "Housekeeping", "Refrigerator", "Laundry Service", "Elevator", "LAN Connectivity", "Umbrellas"]
+        items: ["24-Hour Room Service", "Free Wi-Fi", "Power Backup", "Housekeeping", "Refrigerator", "Laundry Service", "Elevator", "LAN Connectivity", "Umbrellas"]
       },
       {
         category: "General Services",
@@ -1033,7 +1018,7 @@ export const PROPERTIES: Property[] = [
       },
       {
         category: "Dining",
-        items: ["Halal Restaurant", "Breakfast", "Indian Cuisine", "Jain Food Available", "Kid's Menu", "Barbecue", "Indian Chef"]
+        items: ["Breakfast", "Indian Cuisine", "Jain Food Available", "Kid's Menu", "Barbecue", "Indian Chef"]
       },
       {
         category: "Safety & Security",
@@ -1049,11 +1034,11 @@ export const PROPERTIES: Property[] = [
       },
       {
         category: "Indoor Activities",
-        items: ["Carrom Board", "Indoor Games"]
+        items: ["Carrom Board"]
       },
       {
         category: "Common Areas",
-        items: ["Living Room", "Balcony", "Terrace", "Garden", "24-Hour Reception"]
+        items: ["Living Room", "Balcony", "Garden", "24-Hour Reception"]
       },
       {
         category: "Additional Facilities",
@@ -1102,15 +1087,15 @@ export const PROPERTIES: Property[] = [
         ]
       }
     ],
-    coordinates: { lat: 11.4300, lng: 76.8800 }
+    coordinates: { lat: 11.4041210, lng: 76.8943181 }
   },
   {
     id: "mirage-ridge",
-    name: "Hotel Vetrivel International by Brown Tree Resorts",
+    name: "HOTEL VETRIVEL INTERNATIONAL BY BROWN TREE",
     type: "Kodaikanal",
     location: "Kodaikanal, India",
     region: "Palani Hills",
-    locationDisplay: "Near Kodaikanal Lake, India",
+    locationDisplay: "Kodaikanal, India",
     stayTypeDisplay: "HOTEL",
     price: 4500,
     rating: 4.9,
@@ -1128,7 +1113,7 @@ export const PROPERTIES: Property[] = [
       vetrivelBed,
     ],
     heroSubtitle: "Experience modern comfort in the heart of Kodaikanal with spacious rooms, premium hospitality, delicious dining, wellness experiences, and easy access to the city's iconic attractions.",
-    description: "Hotel Vetrivel International by Brown Tree Resorts is a modern hotel located in the heart of Kodaikanal, offering guests a perfect blend of comfort, convenience, and personalized hospitality.\n\nWhether you're visiting for a family vacation, honeymoon, business trip, or weekend getaway, the hotel provides spacious accommodations, modern amenities, and warm service designed to make every stay memorable.\n\nLocated close to Kodaikanal's major attractions, shopping streets, restaurants, and transport hubs, the hotel allows guests to explore the beauty of the Princess of Hill Stations while enjoying a relaxing and comfortable stay.",
+    description: "HOTEL VETRIVEL INTERNATIONAL BY BROWN TREE is a modern hotel located in the heart of Kodaikanal, offering guests a perfect blend of comfort, convenience, and personalized hospitality.\n\nWhether you're visiting for a family vacation, honeymoon, business trip, or weekend getaway, the hotel provides spacious accommodations, modern amenities, and warm service designed to make every stay memorable.\n\nLocated close to Kodaikanal's major attractions, shopping streets, restaurants, and transport hubs, the hotel allows guests to explore the beauty of the Princess of Hill Stations while enjoying a relaxing and comfortable stay.",
     aboutSectionTitle: "Comfort, Convenience & Hospitality",
     highlights: [
       "Prime City Location",
@@ -1181,10 +1166,10 @@ export const PROPERTIES: Property[] = [
       { title: "Warm Hospitality", description: "Friendly staff dedicated to providing exceptional guest experiences." }
     ],
     houseRules: {
-      checkIn: "2:00 PM",
+      checkIn: "12:00 PM",
       checkOut: "11:00 AM",
       rules: [
-        "No Smoking Inside Rooms",
+        "🚭 Smoking Inside the Rooms is Not Allowed.",
         "Family Friendly",
         "Valid Government ID Required"
       ]
@@ -1201,7 +1186,7 @@ export const PROPERTIES: Property[] = [
       },
       {
         category: "Basic Facilities",
-        items: ["Free High-Speed Wi-Fi", "Housekeeping", "24-Hour Room Service", "Free Parking", "Laundry Service", "Elevator", "Power Backup", "Umbrellas"]
+        items: ["Free High-Speed Wi-Fi", "Housekeeping", "Laundry Service", "Elevator", "Power Backup", "Umbrellas"]
       },
       {
         category: "General Services",
@@ -1221,7 +1206,7 @@ export const PROPERTIES: Property[] = [
       },
       {
         category: "Dining",
-        items: ["Halal Cuisine", "Kosher Cuisine", "Indian Vegetarian Cuisine", "Dining Area", "Barbecue"]
+        items: ["Halal Cuisine", "Kosher Cuisine", "Indian Vegetarian Cuisine", "Barbecue"]
       },
       {
         category: "Safety & Security",
@@ -1232,12 +1217,8 @@ export const PROPERTIES: Property[] = [
         items: ["LED Television"]
       },
       {
-        category: "Outdoor Experiences",
-        items: ["Bonfire"]
-      },
-      {
         category: "Common Areas",
-        items: ["Lounge", "Reception", "Living Room", "Balcony", "Terrace"]
+        items: ["Reception", "Living Room", "Balcony", "Terrace"]
       },
       {
         category: "Business Facilities",
@@ -1333,7 +1314,7 @@ export const PROPERTIES: Property[] = [
         amenities: ["Spacious Living Area", "Balcony (Selected Rooms)", "Sofa Seating", "Dining Area", "Work Desk", "Premium Bathroom", "LED Television", "Complimentary Toiletries", "Comfortable Bedding"]
       }
     ],
-    coordinates: { lat: 10.2381, lng: 77.4892 }
+    coordinates: { lat: 10.2401353, lng: 77.4866249 }
   }
 ];
 
@@ -1423,7 +1404,7 @@ export const REVIEWS: Review[] = [
     avatar: "https://picsum.photos/seed/woman3/100/100",
     rating: 5,
     date: "March 2026",
-    content: "The Abode by Brown Tree felt like a home away from home in the heart of Ooty. The staff were incredibly warm, the rooms spotless, and the view from our window every morning was simply breathtaking. Our kids absolutely loved it.",
+    content: "THE ABODE BY BROWN TREE felt like a home away from home in the heart of Ooty. The staff were incredibly warm, the rooms spotless, and the view from our window every morning was simply breathtaking. Our kids absolutely loved it.",
     propertyId: "heritage-pine"
   },
   {
@@ -1443,7 +1424,7 @@ export const REVIEWS: Review[] = [
     avatar: "https://picsum.photos/seed/man2/100/100",
     rating: 5,
     date: "April 2026",
-    content: "Humming Bird by Brown Tree in Kothagiri is a hidden gem. The valley views from my room were unlike anything I've seen, the birdsong at dawn was my alarm clock, and the staff went above and beyond to make me feel welcome.",
+    content: "HUMMING BIRD BY BROWN TREE in Kothagiri is a hidden gem. The valley views from my room were unlike anything I've seen, the birdsong at dawn was my alarm clock, and the staff went above and beyond to make me feel welcome.",
     propertyId: "misty-peaks"
   },
   {
@@ -1473,7 +1454,7 @@ export const REVIEWS: Review[] = [
     avatar: "https://picsum.photos/seed/man3/100/100",
     rating: 5,
     date: "June 2026",
-    content: "The Earthy Nest by Brown Tree was the ultimate group retreat. The garden area is perfect for hangouts, the rooms were cozy yet spacious, and the Ooty sunrise from the property left us all speechless. Highly recommend for friend trips!",
+    content: "THE EARTHY NEST BY BROWN TREE was the ultimate group retreat. The garden area is perfect for hangouts, the rooms were cozy yet spacious, and the Ooty sunrise from the property left us all speechless. Highly recommend for friend trips!",
     propertyId: "azure-orchid"
   },
   {

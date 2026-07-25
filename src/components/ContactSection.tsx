@@ -180,8 +180,6 @@ export default function ContactSection() {
                 <span className="block text-[8px] font-bold tracking-widest text-brand-primary/40 uppercase">
                   DIRECT LINE
                 </span>
-                <a href="tel:+919876543210" className="block text-sm font-semibold text-brand-primary hover:text-brand-secondary transition-colors">+91 98765 43210</a>
-                <a href="tel:+919095487848" className="block text-sm font-semibold text-brand-primary hover:text-brand-secondary transition-colors">+91 90954 87848</a>
                 <a href="tel:+919363036766" className="block text-sm font-semibold text-brand-primary hover:text-brand-secondary transition-colors">+91 93630 36766</a>
               </div>
             </div>

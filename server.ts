@@ -34,7 +34,7 @@ Always answer questions as 'Brown tree'. Speak in an elegant, welcoming, and pre
 Here is the official catalog of Luxe Sanctuary's properties, suites, and packages. Answer user inquiries with absolute fidelity to this data:
 
 1. PROPERTIES:
-- The Earthy Nest by Brown Tree (Ooty, India): Nestled among Ooty's emerald tea plantations and serene highlands. Nilgiri Hills view.
+- THE EARTHY NEST BY BROWN TREE (Ooty, India): Nestled among Ooty's emerald tea plantations and serene highlands. Nilgiri Hills view.
   * Pricing: Starts at ₹3000/night.
   * Highlights: Overlooking Nilgiri Tea Valleys, Heated Glass-Wall Infinity Pool, Guided Plantation Walk & Tea Tasting.
   * Amenities: Heated Infinity Pool, Dedicated 24/7 Butler, Fully Retractable Glass Balconies, In-Villa Spa Curation, Sunset Deck, Personal Tea Sommelier.
@@ -50,7 +50,7 @@ Here is the official catalog of Luxe Sanctuary's properties, suites, and package
     - Maharaja Pine Suite (₹3000/night, max 2 guests, 120 sqm, copper soaking tub, hand-woven Indian rugs, terrace bed).
     - Royal Garden Pavilion (₹4500/night, max 3 guests, 210 sqm, private courtyard pool, dedicated chauffeur, antique furnishings).
 
-- Tea Leaf Stays by Brown Tree Resorts (Ooty, India): Enveloped by sprawling, lush organic tea plantations. Custom architectural glass facades.
+- TEA LEAF STAYS BY BROWN TREE (Ooty, India): Enveloped by sprawling, lush organic tea plantations. Custom architectural glass facades.
   * Pricing: Starts at ₹5500/night.
   * Highlights: Organic Tea Plantation Views, Bespoke Tea Sommelier Tasting, Panoramic Mist-View Sun Decks.
   * Amenities: Private Organic Tea Gardens, Dedicated Butler & Estate Chef, Panoramic Sun Decks, Glass-Wall Mountain Showers, Artisanal Teapot Selection, In-Villa Fireplace Lounge.
@@ -58,7 +58,7 @@ Here is the official catalog of Luxe Sanctuary's properties, suites, and package
     - Organic Tea Leaf Suite (₹5500/night, max 2 guests, 135 sqm, wood-trimmed suite, fireplace lounge, terrace loungers, luxury silk linens).
     - Presidential Tea Valley Pavilion (₹7500/night, max 4 guests, 260 sqm, heated geothermal jacuzzi, outdoor dining area, fully retractable glass walls).
 
-- Humming Bird by Brown Tree Resorts (Kothagiri, India): Cloud-kissed offbeat Nilgiri retreat with rough-hewn cedar and soaring glass.
+- HUMMING BIRD BY BROWN TREE (Kothagiri, India): Cloud-kissed offbeat Nilgiri retreat with rough-hewn cedar and soaring glass.
   * Pricing: Starts at ₹5000/night.
   * Highlights: Quiet Offbeat Highland Escape, In-Lodge Stargazing Telescope, Geothermal Outdoor Hot Pool.
   * Amenities: Double-sided Stone Fireplace, Observatory Deck, Geothermal Hot Tub, Organic Spice Garden, Coffee Curation, Highland Trekking Guide.
@@ -66,7 +66,7 @@ Here is the official catalog of Luxe Sanctuary's properties, suites, and package
     - Highland Hearth Loft (₹5000/night, max 2 guests, 95 sqm, stone fireplace, telescope access, heated floors, steam shower).
     - Summit Ridge Vista Suite (₹7500/night, max 4 guests, 185 sqm, outdoor geothermal tub, private sauna, wine dispenser).
 
-- Hotel Vetrivel International by Brown Tree Resorts (Kodaikanal, India): Local stone and sleek brass architecture high on Kodaikanal's dramatic ridges.
+- HOTEL VETRIVEL INTERNATIONAL BY BROWN TREE (Kodaikanal, India): Local stone and sleek brass architecture high on Kodaikanal's dramatic ridges.
   * Pricing: Starts at ₹4500/night.
   * Highlights: Epic Valley-Sunset Views, Astronomer-Guided Stargazing, Private Trek in Shola Reserve.
   * Amenities: Valley View Pool, Hammam Wellness Room, Mountain Glamping Star-Deck, Brass Firepit Lounge, Local Culinary Chef Services, Leather Lounge.
@@ -137,10 +137,17 @@ async function startServer() {
   const legacyPropertyRedirects: Record<string, string> = {
     "/properties/the-earthy-nest-ooty": "/ooty-the-earthy-nest-by-brown-tree",
     "/properties/the-abode-ooty": "/ooty-the-abode-by-brown-tree",
-    "/properties/tea-leaf-stays-ooty": "/ooty-tea-leaf-stays-by-brown-tree-resorts",
-    "/properties/humming-bird-kotagiri": "/kothagiri-humming-bird-by-brown-tree-resorts",
-    "/properties/sholas-residency-ooty": "/ooty-sholas-residency-by-brown-tree-resorts",
-    "/properties/hotel-vetrivel-kodaikanal": "/kodaikanal-hotel-vetrivel-international-by-brown-tree-resorts",
+    "/properties/tea-leaf-stays-ooty": "/ooty-tea-leaf-stays-by-brown-tree",
+    "/properties/humming-bird-kotagiri": "/kothagiri-humming-bird-by-brown-tree",
+    "/properties/sholas-residency-ooty": "/ooty-sholas-residency-by-brown-tree",
+    "/properties/hotel-vetrivel-kodaikanal": "/kodaikanal-hotel-vetrivel-international-by-brown-tree",
+    // 2026-07-24: dropped "Resorts" from these 4 property names, which changed their
+    // slugs (toPropertySlug derives from property.name) — these were live, indexed
+    // URLs, so redirect them forward too, not just the older /properties/ paths above.
+    "/ooty-tea-leaf-stays-by-brown-tree-resorts": "/ooty-tea-leaf-stays-by-brown-tree",
+    "/kothagiri-humming-bird-by-brown-tree-resorts": "/kothagiri-humming-bird-by-brown-tree",
+    "/ooty-sholas-residency-by-brown-tree-resorts": "/ooty-sholas-residency-by-brown-tree",
+    "/kodaikanal-hotel-vetrivel-international-by-brown-tree-resorts": "/kodaikanal-hotel-vetrivel-international-by-brown-tree",
   };
   app.get(Object.keys(legacyPropertyRedirects), (req, res) => {
     res.redirect(301, legacyPropertyRedirects[req.path]);

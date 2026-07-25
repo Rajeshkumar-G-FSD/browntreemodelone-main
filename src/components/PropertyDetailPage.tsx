@@ -11,10 +11,11 @@ import {
   Tv, Plug, Wind, Flame, Phone, Mail, Clock, Key, Sparkles,
   Smile, Sun, Cigarette, ChevronRight, ChevronDown, Flower2, Landmark,
   ParkingCircle, ShieldCheck, Bed, Leaf, Utensils, Bus,
-  ThumbsUp, Camera, MapPinned, ShoppingBag
+  ThumbsUp, Camera, MapPinned, ShoppingBag, Map as MapIcon, Navigation
 } from "lucide-react";
 import { motion } from "motion/react";
 import { Property, Suite } from "../types";
+import { getMapEmbedUrl, getMapDirectionsUrl } from "../lib/googleMaps";
 import SplitText from "./SplitText";
 import BlurText from "./BlurText";
 
@@ -245,9 +246,9 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
   const roomAmenities = property.roomAmenities ?? property.amenities;
   const whyStayFeatures = property.whyStayFeatures ?? property.highlights;
   const houseRules = property.houseRules ?? {
-    checkIn: "2:00 PM",
+    checkIn: "12:00 PM",
     checkOut: "11:00 AM",
-    rules: ["No Smoking inside Rooms", "Valid Government ID Required", "Family Friendly"]
+    rules: ["🚭 Smoking Inside the Rooms is Not Allowed.", "Valid Government ID Required", "Family Friendly"]
   };
   const nearbyAttractions = property.nearbyAttractions ?? [];
   const whyStayItems = property.whyStayCards ?? whyStayFeatures;
@@ -278,6 +279,7 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
     ...(!hasAmenityCategories ? [{ id: "room", label: "In Your Room", icon: <BedDouble size={13} /> }] : []),
     { id: "whystay", label: "Why Stay", icon: <Heart size={13} /> },
     ...(hasRules ? [{ id: "rules", label: "House Rules", icon: <Clock size={13} /> }] : []),
+    { id: "location", label: "Location", icon: <MapIcon size={13} /> },
     ...(hasNearby ? [{ id: "nearby", label: "Nearby", icon: <MapPinned size={13} /> }] : []),
     ...(hasGuestStories ? [{ id: "guestStories", label: "Guest Stories", icon: <ThumbsUp size={13} /> }] : []),
   ];
@@ -693,6 +695,47 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
               </div>
             )}
 
+            {/* ── Location ── */}
+            {activeTab === "location" && (
+              <div>
+                <FadeUp delay={0}>
+                  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+                    <div>
+                      <div className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-brand-secondary uppercase mb-2">
+                        <MapPinned size={13} />
+                        <span>Find Us</span>
+                      </div>
+                      <p className="text-sm md:text-base font-semibold text-brand-primary">
+                        {property.locationDisplay || property.location}
+                      </p>
+                    </div>
+                    <a
+                      href={getMapDirectionsUrl(property.coordinates)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 w-fit bg-brand-primary hover:bg-brand-secondary text-brand-gold-light hover:text-white font-sans text-xs font-bold tracking-widest uppercase px-6 py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
+                    >
+                      <Navigation size={14} />
+                      <span>Get Directions</span>
+                    </a>
+                  </div>
+                </FadeUp>
+
+                <FadeUp delay={80}>
+                  <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-brand-primary/8 ring-1 ring-brand-secondary/15">
+                    <iframe
+                      title={`Map showing the location of ${property.name}`}
+                      src={getMapEmbedUrl(property.coordinates)}
+                      className="w-full h-[340px] md:h-[440px] border-0 block"
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                    <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 rounded-3xl" />
+                  </div>
+                </FadeUp>
+              </div>
+            )}
+
             {/* ── Nearby Attractions — tabbed when structured data available ── */}
             {activeTab === "nearby" && (
             property.nearbyLandmarks && property.nearbyTransport ? (
@@ -882,10 +925,10 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
                 <span>Inquire Now</span>
               </button>
               <a
-                href="tel:+919876543210"
+                href="tel:+919363036766"
                 className="flex items-center gap-2 text-white/70 hover:text-white font-semibold text-sm tracking-wider px-4 py-4 transition-all duration-300 cursor-pointer"
               >
-                <span>or call +91 98765 43210</span>
+                <span>or call +91 93630 36766</span>
               </a>
             </div>
           </FadeUp>
