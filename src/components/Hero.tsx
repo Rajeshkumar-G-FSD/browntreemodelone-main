@@ -682,18 +682,17 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
                 <button
                   type="button"
                   onClick={handleSearchClick}
-                  className={`relative overflow-hidden flex items-center justify-center gap-2.5 font-sans font-semibold text-xs tracking-[0.13em] uppercase px-6 py-4 rounded-[14px] transition-all duration-300 w-full md:w-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer active:scale-95 ${rippling ? "btn-ripple" : ""}`}
+                  aria-label="Search Availability"
+                  className={`relative overflow-hidden flex items-center justify-center py-4 rounded-[14px] transition-all duration-300 w-full md:w-[52px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer active:scale-95 ${rippling ? "btn-ripple" : ""}`}
                   style={{
                     background: "linear-gradient(135deg,#D4AF37 0%,#b8941f 60%,#96770f 100%)",
                     color: "#FFFFFF",
                     boxShadow: "0 4px 22px rgba(212,175,55,0.48)",
-                    minWidth: "160px",
                   }}
                   onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "linear-gradient(135deg,#4A2C1D 0%,#5D3A29 100%)"; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "linear-gradient(135deg,#D4AF37 0%,#b8941f 60%,#96770f 100%)"; }}
                 >
-                  <Search size={15} style={{ flexShrink: 0 }} />
-                  <span>Search Availability</span>
+                  <Search size={18} style={{ flexShrink: 0 }} />
                 </button>
               </div>
 
