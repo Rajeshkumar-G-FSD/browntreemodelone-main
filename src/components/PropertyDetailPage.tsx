@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useRef, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import {
   ArrowLeft, Star, MapPin, BedDouble, Check,
   Home, Car, Wifi, Zap, Bell, Users, TreePine, Mountain,
@@ -18,6 +18,7 @@ import { Property, Suite } from "../types";
 import { getMapEmbedUrl, getMapDirectionsUrl } from "../lib/googleMaps";
 import SplitText from "./SplitText";
 import BlurText from "./BlurText";
+import PropertyGallerySlider from "./PropertyGallerySlider";
 
 // ─── Animated section wrapper (motion whileInView) ────────────────────────────
 function FadeUp({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
@@ -215,29 +216,7 @@ interface PropertyDetailPageProps {
 
 export default function PropertyDetailPage({ property, onBack, onBookSuite, onInquire }: PropertyDetailPageProps) {
   const gallery = property.gallery.length > 0 ? property.gallery : [property.image];
-  const [activeImage, setActiveImage] = useState(gallery[0]);
   const [nearbyTab, setNearbyTab] = useState<"landmarks" | "food-shopping" | "transport">("landmarks");
-  const indexRef = useRef(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const startSlide = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      indexRef.current = (indexRef.current + 1) % gallery.length;
-      setActiveImage(gallery[indexRef.current]);
-    }, 2000);
-  };
-
-  useEffect(() => {
-    startSlide();
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [property]);
-
-  const handleThumbnailClick = (img: string, idx: number) => {
-    indexRef.current = idx;
-    setActiveImage(img);
-    startSlide();
-  };
 
   // Use extended data if available, with sensible fallbacks
   const keyHighlights = property.highlights;
@@ -301,17 +280,13 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
         </div>
       </div>
 
-      {/* ── Hero image ── */}
-      <div className="relative w-full overflow-hidden bg-brand-primary/5">
-        <img
-          src={activeImage}
-          alt={`${property.name} – luxury ${property.type.toLowerCase()} hill station stay in ${property.location}, ${property.region}`}
-          className="w-full h-auto object-contain transition-all duration-700 max-h-[80vh]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/85 via-brand-primary/20 to-transparent" />
-
-        <div className="absolute bottom-0 left-0 right-0 px-4 pb-5 md:px-10 md:pb-8">
+      {/* ── Hero gallery slider ── */}
+      <PropertyGallerySlider
+        images={gallery}
+        alt={`${property.name} – luxury ${property.type.toLowerCase()} hill station stay in ${property.location}, ${property.region}`}
+        overlay={
           <motion.div
+            key={`${property.id}-overlay`}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
@@ -363,30 +338,8 @@ export default function PropertyDetailPage({ property, onBack, onBookSuite, onIn
               </div>
             </div>
           </motion.div>
-        </div>
-      </div>
-
-      {/* ── Thumbnail strip ── */}
-      <div className="bg-white border-b border-brand-primary/8 px-4 md:px-8 py-3">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center space-x-2 overflow-x-auto pb-1 scrollbar-none no-scrollbar">
-            {gallery.map((img, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleThumbnailClick(img, idx)}
-                className={`relative shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer
-                  w-12 h-9 sm:w-16 sm:h-11 md:w-20 md:h-14
-                  ${activeImage === img
-                    ? "border-brand-secondary shadow-md scale-95"
-                    : "border-transparent opacity-55 hover:opacity-100 hover:border-brand-primary/20"
-                  }`}
-              >
-                <img src={img} alt={`Gallery photo ${idx + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+        }
+      />
 
       {/* ════════════════════════════════════════════════════════════════════════
           PREMIUM CONTENT SECTIONS — everything below the hero

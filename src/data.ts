@@ -60,10 +60,23 @@ import vetrivelDoublesbed from "./assets/images/vetrivel_inn_doublesbed.jpg";
 import vetrivelSuiteBed from "./assets/images/vetrivel_inn_suite_bed.jpg";
 import vetrivelBedRed from "./assets/images/vetrivel_inn_bed_red.jpg";
 import vetrivelBed from "./assets/images/vetrivel_inn_bed.jpg";
-import earthyNestFront from "./assets/images/earthynest_frontviiew.png";
-import earthyNestBedroom from "./assets/images/earthynest_bedroom.jpeg";
-import earthyNestBrestosgroom from "./assets/images/earthynest_brestosgroom.jpeg";
-import earthyNestGarden from "./assets/images/earthynest_garden.jpeg";
+import earthyNestMainview from "./assets/images/the_earthy_nest_by_browntree_mainview.png";
+import earthyNestFrontview from "./assets/images/the_earthy_nest_by_browntree_frontview.png";
+import earthyNestEntrance from "./assets/images/the_earthy_nest_by_browntree_entrance.png";
+import earthyNestHall from "./assets/images/the_earthy_nest_by_browntree_hall.png";
+import earthyNestSittingArea from "./assets/images/the_earthy_nest_by_browntree_sitting_area.png";
+import earthyNestDining from "./assets/images/the_earthy_nest_by_browntree_dining.png";
+import earthyNestBedroomDulex from "./assets/images/the_earthy_nest_by_browntree_bedroom_dulex.png";
+import earthyNestBedPremium from "./assets/images/the_earthy_nest_by_browntree_bed_premium.png";
+import earthyNestRestroom from "./assets/images/the_earthy_nest_by_browntree_restroom.png";
+import earthyNestRestroomClassic from "./assets/images/the_earthy_nest_by_browntree_restroom_classic.png";
+import earthyNestWoodseat from "./assets/images/the_earthy_nest_by_browntree_woodseat.png";
+import earthyNestSteps from "./assets/images/the_earthy_nest_by_browntree_steps.png";
+import earthyNestSideview from "./assets/images/the_earthy_nest_by_browntree_sideview.png";
+import earthyNestParking from "./assets/images/the_earthy_nest_by_browntree_parking.png";
+import earthyNestGardenview from "./assets/images/the_earthy_nest_by_browntree_gardenview.png";
+import earthyNestForestview from "./assets/images/the_earthy_nest_by_browntree_forestview.png";
+import earthyNestMasinagudiview from "./assets/images/the_earthy_nest_by_browntree_masinagudiview.png";
 
 export const PROPERTIES: Property[] = [
   {
@@ -77,12 +90,25 @@ export const PROPERTIES: Property[] = [
     price: 3000,
     rating: 4.9,
     reviewCount: 42,
-    image: earthyNestFront,
+    image: earthyNestMainview,
     gallery: [
-      earthyNestFront,
-      earthyNestBedroom,
-      earthyNestBrestosgroom,
-      earthyNestGarden,
+      earthyNestMainview,
+      earthyNestFrontview,
+      earthyNestEntrance,
+      earthyNestHall,
+      earthyNestSittingArea,
+      earthyNestDining,
+      earthyNestBedroomDulex,
+      earthyNestBedPremium,
+      earthyNestRestroom,
+      earthyNestRestroomClassic,
+      earthyNestWoodseat,
+      earthyNestSteps,
+      earthyNestSideview,
+      earthyNestParking,
+      earthyNestGardenview,
+      earthyNestForestview,
+      earthyNestMasinagudiview,
     ],
     description: "Nestled amidst the serene beauty of nature, THE EARTHY NEST BY BROWN TREE offers the perfect escape for travelers seeking peace, comfort, and unforgettable experiences. Surrounded by lush greenery and refreshing mountain air, our homestay creates a warm and welcoming atmosphere where guests can truly relax and reconnect with nature.\n\nWake up to scenic views, enjoy peaceful morning walks, and unwind in thoughtfully designed rooms featuring cozy interiors, comfortable bedding, elegant furnishings, and modern amenities. Every room is equipped with an individual geyser providing 24-hour hot water, ensuring complete comfort at any time of the day.\n\nWhether you're planning a family vacation, a romantic getaway, or a short weekend retreat, our attentive caretaker and friendly staff are always available to make your stay seamless, relaxing, and memorable.",
     highlights: [
