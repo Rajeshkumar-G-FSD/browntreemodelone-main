@@ -7,12 +7,21 @@ import { Property, Experience, Review, Destination } from "./types";
 import ootyDestImage from "./assets/images/ooty.png";
 import kothagiriDestImage from "./assets/images/kothagiri.png";
 import kodaikanaldestImage from "./assets/images/kodaikanal.png";
-import theAbodeMain from "./assets/images/theabodebybrowntree.png";
-import theAbodeGarden from "./assets/images/theabodebybrowntree_gareden.jpg";
-import theAbodeInterior from "./assets/images/theabodebybrowntree_.jpg";
-import theAbodeDining from "./assets/images/theabodebybrowntree_dining.jpg";
-import theAbodeCot from "./assets/images/theabodebybrowntree_cot.jpg";
-import theAbodeDoubleHot from "./assets/images/theabodebybrowntree_doublehot.jpg";
+import theAbodeMainview from "./assets/images/the_abode_by_browntree.png";
+import theAbodeFrontview from "./assets/images/the_abode_by_browntree_frontview.png";
+import theAbodeReception from "./assets/images/the_abode_by_browntree_reception.png";
+import theAbodeParking from "./assets/images/the_abode_by_browntree_parking.png";
+import theAbodeBalcony from "./assets/images/the_abode_by_browntree_balcony.png";
+import theAbodeBalconyView from "./assets/images/the_abode_by_browntree_balcony_view.png";
+import theAbodeBedRoomFullview from "./assets/images/the_abode_by_browntree_bed_room_fullview.png";
+import theAbodeBedRoom from "./assets/images/the_abode_by_browntree_bed_room.png";
+import theAbodeBedRoomAlt from "./assets/images/the_abode_by_browntree_bed_room_.png";
+import theAbodeBedRooms from "./assets/images/the_abode_by_browntree_bed_rooms.png";
+import theAbodeBedRoomChair from "./assets/images/the_abode_by_browntree_bed_room_chair.png";
+import theAbodeBed from "./assets/images/the_abode_by_browntree_bed.png";
+import theAbodeSuiteRoom from "./assets/images/the_abode_by_browntree_suite_room.png";
+import theAbodeSuiteRooms from "./assets/images/the_abode_by_browntree_suite_rooms.png";
+import theAbodeDining from "./assets/images/the_abode_by_browntree_dining.png";
 import teaLeafMain from "./assets/images/Tealeaf.png";
 import teaLeafInterior from "./assets/images/Tealeaf_.jpeg";
 import teaLeafCampfire from "./assets/images/Tealeaf_campfire.webp";
@@ -296,14 +305,23 @@ export const PROPERTIES: Property[] = [
     price: 3000,
     rating: 4.9,
     reviewCount: 118,
-    image: theAbodeMain,
+    image: theAbodeMainview,
     gallery: [
-      theAbodeMain,
-      theAbodeGarden,
-      theAbodeInterior,
+      theAbodeMainview,
+      theAbodeFrontview,
+      theAbodeReception,
+      theAbodeParking,
+      theAbodeBalcony,
+      theAbodeBalconyView,
+      theAbodeBedRoomFullview,
+      theAbodeBedRoom,
+      theAbodeBedRoomAlt,
+      theAbodeBedRooms,
+      theAbodeBedRoomChair,
+      theAbodeBed,
+      theAbodeSuiteRoom,
+      theAbodeSuiteRooms,
       theAbodeDining,
-      theAbodeCot,
-      theAbodeDoubleHot,
     ],
     description: "THE ABODE BY BROWN TREE – French Styled Hillside Villa in Ooty\n\nNestled on a peaceful hillside in Ooty, THE ABODE BY BROWN TREE is surrounded by lush greenery and panoramic views of the Nilgiri Mountains. Inspired by elegant French-style architecture, the resort offers a perfect escape from city life while providing modern comforts for couples, families, and leisure travelers.\n\nWhether you're enjoying a relaxing vacation, celebrating special moments, or exploring Ooty's attractions, every stay promises warmth, comfort, and unforgettable memories. Wake up to breathtaking valley and hill views, savour freshly prepared meals in our cozy dining area, and experience the warmth of dedicated hospitality that makes every moment truly special.",
     highlights: [

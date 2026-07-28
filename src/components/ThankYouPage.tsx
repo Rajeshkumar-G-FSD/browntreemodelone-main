@@ -33,8 +33,8 @@ export default function ThankYouPage({ property, onBack, onViewProperty }: Thank
             Thank You for Your Interest in {property.name}
           </h1>
           <p className="font-sans text-sm md:text-base text-brand-primary/70 font-light leading-relaxed max-w-md mx-auto">
-            Your inquiry has been shared with our concierge team on WhatsApp. We will reach out to you shortly
-            with availability and a customized proposal for {property.location}.
+            We've received your inquiry and sent it to our team on WhatsApp. We'll get back to you shortly
+            with availability and pricing for your stay at {property.location}.
           </p>
         </div>
 
@@ -46,7 +46,7 @@ export default function ThankYouPage({ property, onBack, onViewProperty }: Thank
             className="flex items-center gap-2 bg-brand-primary hover:bg-brand-secondary text-brand-gold-light hover:text-white font-sans text-xs font-semibold tracking-widest px-8 py-4 rounded-full transition-all duration-300 cursor-pointer"
           >
             <MessageCircle size={15} />
-            <span>MESSAGE US AGAIN</span>
+            <span>MESSAGE US ON WHATSAPP</span>
           </a>
           <a
             href="tel:+919095487848"
@@ -70,7 +70,7 @@ export default function ThankYouPage({ property, onBack, onViewProperty }: Thank
             className="flex items-center gap-1 text-brand-primary/60 hover:text-brand-secondary transition-colors cursor-pointer"
           >
             <ArrowLeft size={14} />
-            <span>Explore All Sanctuaries</span>
+            <span>Explore All Properties</span>
           </button>
         </div>
       </div>
