@@ -53,6 +53,7 @@ import hummingBirdDeluxBedrooms from "./assets/images/humming_bird_kothagiri_del
 import hummingBirdWindowview from "./assets/images/humming_bird_kothagiri_windowview.png";
 import hummingBirdVillage from "./assets/images/humming_bird_kothagiri_village.png";
 import hummingBirdPremiumRooms from "./assets/images/humming_bird_kothagiri_premuim_rooms.png";
+import sholasEntrance from "./assets/images/the_hotel_sholas_ooty_entrance.png";
 import sholasBedroom from "./assets/images/the_hotel_sholas_ooty_bedroom.png";
 import sholasBedroomWood from "./assets/images/the_hotel_sholas_ooty_bedroom_wood.png";
 import sholasBedroomBrown from "./assets/images/the_hotel_sholas_ooty_bedroom_brown.png";
@@ -70,15 +71,22 @@ import sholasReception from "./assets/images/the_hotel_sholas_ooty_reception.png
 import sholasYellowBedrooms from "./assets/images/the_hotel_sholas_ooty_yellwo_bedrooms.png";
 import sholasSuite from "./assets/images/the_hotel_sholas_ooty_suite.png";
 import sholasRestroom from "./assets/images/the_hotel_sholas_ooty_restroom.png";
-import vetrivelMain from "./assets/images/vetrivel_inn.png";
-import vetrivelFrontview from "./assets/images/vetrivel_inn_frontview.jpg";
-import vetrivelRestroom from "./assets/images/vetrivel_inn_restroom.jpg";
-import vetrivelBedNightview from "./assets/images/vetrivel_inn_bed_nightview.jpg";
-import vetrivelDinning from "./assets/images/vetrivel_inn_dinning.jpg";
-import vetrivelDoublesbed from "./assets/images/vetrivel_inn_doublesbed.jpg";
-import vetrivelSuiteBed from "./assets/images/vetrivel_inn_suite_bed.jpg";
-import vetrivelBedRed from "./assets/images/vetrivel_inn_bed_red.jpg";
-import vetrivelBed from "./assets/images/vetrivel_inn_bed.jpg";
+import vetrivelEntranceArea from "./assets/images/the_hotel_veterivel_enterance_area.png";
+import vetrivelReceptionArea from "./assets/images/the_hotel_veterivel_reception_area.png";
+import vetrivelParking from "./assets/images/the_hotel_veterivel_parking.png";
+import vetrivelBalconyView from "./assets/images/the_hotel_veterivel_balcony_view.png";
+import vetrivelWindowsView from "./assets/images/the_hotel_veterivel_windows_view.png";
+import vetrivelClassicWindowsView from "./assets/images/the_hotel_veterivel_clssic_windows_view.png";
+import vetrivelClassicBedrooms from "./assets/images/the_hotel_veterivel_classic_bedrooms.png";
+import vetrivelClassicBedroomsGroundFloor from "./assets/images/the_hotel_veterivel_classic_bedrooms_ground_floor.png";
+import vetrivelClassicBedroomsUnderground from "./assets/images/the_hotel_veterivel_classic_bedrooms_underground.png";
+import vetrivelClassicBedroomsNightview from "./assets/images/the_hotel_veterivel_classic_bedrooms_nightview.png";
+import vetrivelClassicBedRoom from "./assets/images/the_hotel_veterivel_clssic_bed_room.png";
+import vetrivelBedRooms from "./assets/images/the_hotel_veterivel_bed_rroms.png";
+import vetrivelDoubleBed from "./assets/images/the_hotel_veterivel_double_bed.png";
+import vetrivelPremiumBed from "./assets/images/the_hotel_veterivel_premium_bed.png";
+import vetrivelSunRooms from "./assets/images/the_hotel_veterivel_sun_rooms.png";
+import vetrivelSunRoomDoubleBed from "./assets/images/the_hotel_veterivel_sun_room_double_bed.png";
 import earthyNestMainview from "./assets/images/the_earthy_nest_by_browntree_mainview.png";
 import earthyNestFrontview from "./assets/images/the_earthy_nest_by_browntree_frontview.png";
 import earthyNestEntrance from "./assets/images/the_earthy_nest_by_browntree_entrance.png";
@@ -726,8 +734,9 @@ export const PROPERTIES: Property[] = [
     price: 3500,
     rating: 4.8,
     reviewCount: 18,
-    image: sholasReception,
+    image: sholasEntrance,
     gallery: [
+      sholasEntrance,
       sholasReception,
       sholasSuite,
       sholasBedroom,
@@ -1164,17 +1173,24 @@ export const PROPERTIES: Property[] = [
     price: 4500,
     rating: 4.9,
     reviewCount: 29,
-    image: vetrivelMain,
+    image: vetrivelEntranceArea,
     gallery: [
-      vetrivelMain,
-      vetrivelFrontview,
-      vetrivelRestroom,
-      vetrivelBedNightview,
-      vetrivelDinning,
-      vetrivelDoublesbed,
-      vetrivelSuiteBed,
-      vetrivelBedRed,
-      vetrivelBed,
+      vetrivelEntranceArea,
+      vetrivelReceptionArea,
+      vetrivelParking,
+      vetrivelBalconyView,
+      vetrivelWindowsView,
+      vetrivelClassicWindowsView,
+      vetrivelClassicBedrooms,
+      vetrivelClassicBedroomsGroundFloor,
+      vetrivelClassicBedroomsUnderground,
+      vetrivelClassicBedroomsNightview,
+      vetrivelClassicBedRoom,
+      vetrivelBedRooms,
+      vetrivelDoubleBed,
+      vetrivelPremiumBed,
+      vetrivelSunRooms,
+      vetrivelSunRoomDoubleBed,
     ],
     heroSubtitle: "Experience modern comfort in the heart of Kodaikanal with spacious rooms, premium hospitality, delicious dining, wellness experiences, and easy access to the city's iconic attractions.",
     description: "HOTEL VETRIVEL INTERNATIONAL BY BROWN TREE is a modern hotel located in the heart of Kodaikanal, offering guests a perfect blend of comfort, convenience, and personalized hospitality.\n\nWhether you're visiting for a family vacation, honeymoon, business trip, or weekend getaway, the hotel provides spacious accommodations, modern amenities, and warm service designed to make every stay memorable.\n\nLocated close to Kodaikanal's major attractions, shopping streets, restaurants, and transport hubs, the hotel allows guests to explore the beauty of the Princess of Hill Stations while enjoying a relaxing and comfortable stay.",
