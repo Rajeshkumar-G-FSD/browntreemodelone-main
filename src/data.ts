@@ -53,21 +53,23 @@ import hummingBirdDeluxBedrooms from "./assets/images/humming_bird_kothagiri_del
 import hummingBirdWindowview from "./assets/images/humming_bird_kothagiri_windowview.png";
 import hummingBirdVillage from "./assets/images/humming_bird_kothagiri_village.png";
 import hummingBirdPremiumRooms from "./assets/images/humming_bird_kothagiri_premuim_rooms.png";
-import solarMain from "./assets/images/solar.png";
-import solarSinglebed from "./assets/images/solar_singlebed.jpeg";
-import solarSinglebedA from "./assets/images/solar_singlebed_.jpeg.jpeg";
-import solarDoublebed from "./assets/images/solar_doublebed.jpeg";
-import solarSinglebedPremium from "./assets/images/solar_singlebed_premium.jpeg";
-import solarSinglebedRed from "./assets/images/solar_singlebed_red.jpeg";
-import solarSinglebedDulex from "./assets/images/solar_singlebed_dulex.jpeg";
-import solarSinglebedSuite from "./assets/images/solar_singlebed_suite.jpeg";
-import solarSinglebedSuiteA from "./assets/images/solar_singlebed_suite_.jpeg";
-import solarSinglebedSuiteRed from "./assets/images/solar_singlebed_suite_red.jpeg";
-import solarSinglebedSuiteRedA from "./assets/images/solar_singlebed_suite_red_.jpeg";
-import solarSinglebedSuiteGreen from "./assets/images/solar_singlebed_suite_green.jpeg";
-import solarSinglebedSuitePink from "./assets/images/solar_singlebed_suite_pink.jpeg";
-import solarDinning from "./assets/images/solar_dinning.jpeg";
-import solarRestroom from "./assets/images/solar_restroom.jpeg";
+import sholasBedroom from "./assets/images/the_hotel_sholas_ooty_bedroom.png";
+import sholasBedroomWood from "./assets/images/the_hotel_sholas_ooty_bedroom_wood.png";
+import sholasBedroomBrown from "./assets/images/the_hotel_sholas_ooty_bedroom_brown.png";
+import sholasBedroomBrownSuite from "./assets/images/the_hotel_sholas_ooty_bedroom_brown_suite.png";
+import sholasBedroomBrownBlue from "./assets/images/the_hotel_sholas_ooty_bedroom_brown_blue.png";
+import sholasBedroomYellow from "./assets/images/the_hotel_sholas_ooty_bedroom_yellow.png";
+import sholasBedroomPink from "./assets/images/the_hotel_sholas_ooty_bedroom_pink.png";
+import sholasBedroomRed from "./assets/images/the_hotel_sholas_ooty_bedroom_red.png";
+import sholasBedroomGreen from "./assets/images/the_hotel_sholas_ooty_bedroom_green.png";
+import sholasBedroomBrownDot from "./assets/images/the_hotel_sholas_ooty_bedroom_brown_dot.png";
+import sholasBedroomBrownBlueSuite from "./assets/images/the_hotel_sholas_ooty_bedroom_brown_blue_suite.png";
+import sholasBedroomWoodYellowPlain from "./assets/images/the_hotel_sholas_ooty_bedroom_wood_yellow_plain.png";
+import sholasDining from "./assets/images/the_hotel_sholas_ooty_dinsing.png";
+import sholasReception from "./assets/images/the_hotel_sholas_ooty_reception.png";
+import sholasYellowBedrooms from "./assets/images/the_hotel_sholas_ooty_yellwo_bedrooms.png";
+import sholasSuite from "./assets/images/the_hotel_sholas_ooty_suite.png";
+import sholasRestroom from "./assets/images/the_hotel_sholas_ooty_restroom.png";
 import vetrivelMain from "./assets/images/vetrivel_inn.png";
 import vetrivelFrontview from "./assets/images/vetrivel_inn_frontview.jpg";
 import vetrivelRestroom from "./assets/images/vetrivel_inn_restroom.jpg";
@@ -724,23 +726,25 @@ export const PROPERTIES: Property[] = [
     price: 3500,
     rating: 4.8,
     reviewCount: 18,
-    image: solarMain,
+    image: sholasReception,
     gallery: [
-      solarMain,
-      solarSinglebed,
-      solarSinglebedA,
-      solarDoublebed,
-      solarSinglebedPremium,
-      solarSinglebedRed,
-      solarSinglebedDulex,
-      solarSinglebedSuite,
-      solarSinglebedSuiteA,
-      solarSinglebedSuiteRed,
-      solarSinglebedSuiteRedA,
-      solarSinglebedSuiteGreen,
-      solarSinglebedSuitePink,
-      solarDinning,
-      solarRestroom,
+      sholasReception,
+      sholasSuite,
+      sholasBedroom,
+      sholasBedroomWood,
+      sholasBedroomBrown,
+      sholasBedroomBrownSuite,
+      sholasBedroomBrownBlue,
+      sholasBedroomBrownBlueSuite,
+      sholasBedroomBrownDot,
+      sholasBedroomYellow,
+      sholasYellowBedrooms,
+      sholasBedroomWoodYellowPlain,
+      sholasBedroomPink,
+      sholasBedroomRed,
+      sholasBedroomGreen,
+      sholasDining,
+      sholasRestroom,
     ],
     description: "SHOLAS RESIDENCY BY BROWN TREE is a stylish hotel located on Palace Road in the heart of Ooty. Perfectly positioned near the city's major attractions, shopping areas, railway station, and bus terminal, the hotel offers guests the perfect combination of convenience and comfort.\n\nDesigned with contemporary interiors and modern amenities, Sholas Residency welcomes families, couples, business travelers, and holidaymakers seeking a relaxing stay in the Queen of Hill Stations.\n\nEnjoy thoughtfully designed rooms, warm hospitality, high-speed Wi-Fi, and a delightful dining experience while exploring everything Ooty has to offer.",
     highlights: [
