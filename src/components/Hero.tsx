@@ -383,10 +383,13 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
           60%  { opacity: 1; transform: scale(1.12); }
           100% { opacity: 1; transform: scale(1); }
         }
-        @keyframes logoSwing {
-          0%   { transform: rotate(-18deg); }
-          50%  { transform: rotate(18deg); }
-          100% { transform: rotate(-18deg); }
+        @keyframes logoHeartbeat {
+          0%   { transform: scale(1); }
+          14%  { transform: scale(1.22); }
+          28%  { transform: scale(1); }
+          42%  { transform: scale(1.22); }
+          70%  { transform: scale(1); }
+          100% { transform: scale(1); }
         }
       `}</style>
 
@@ -457,7 +460,8 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
                         height: "100%",
                         objectFit: "contain",
                         objectPosition: "center",
-                        animation: "logoSwing 2s ease-in-out infinite",
+                        transformOrigin: "center",
+                        animation: "logoHeartbeat 1.4s ease-in-out infinite",
                       }}
                     />
                   </span>

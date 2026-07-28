@@ -4,7 +4,7 @@
  */
 
 import { Property } from "./types";
-import { toPropertySlug, toThankYouSlug } from "./slug";
+import { toPropertySlug, toThankYouSlug, ABOUT_US_PATH } from "./slug";
 
 export const SITE_URL = "https://browntreeresorts.com";
 
@@ -125,6 +125,15 @@ export function buildPropertySEO(property: Property): SEOData {
     jsonLd: [lodgingBusiness, breadcrumb],
   };
 }
+
+export const ABOUT_US_SEO: SEOData = {
+  title: "About Us | Brown Tree Resorts",
+  description:
+    "Since 2021, Brown Tree has grown from a 7-key villa to a 60-key hospitality brand across Ooty, Kotagiri and Kodaikanal. Learn our story and join our team.",
+  path: ABOUT_US_PATH,
+  image: "https://i.postimg.cc/9MBBdTWW/nature.png",
+  imageAlt: "Brown Tree Resorts hillside properties across the Nilgiri Hills",
+};
 
 /** Per-property Google Ads conversion landing page — noindexed, not part of the sitemap. */
 export function buildThankYouSEO(property: Property): SEOData {

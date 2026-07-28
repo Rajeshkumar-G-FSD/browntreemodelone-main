@@ -9,10 +9,11 @@ import { Menu, X, Sparkles } from "lucide-react";
 interface HeaderProps {
   onNavigate: (sectionId: string) => void;
   onOpenBooking: () => void;
+  onOpenAboutUs: () => void;
   activeSection: string;
 }
 
-export default function Header({ onNavigate, onOpenBooking, activeSection }: HeaderProps) {
+export default function Header({ onNavigate, onOpenBooking, onOpenAboutUs, activeSection }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -26,13 +27,18 @@ export default function Header({ onNavigate, onOpenBooking, activeSection }: Hea
 
   const navItems = [
     { label: "HOME", id: "home" },
+    { label: "ABOUT", id: "about" },
     { label: "PROPERTIES", id: "properties" },
     { label: "DESTINATIONS", id: "destinations" },
     { label: "REVIEWS", id: "reviews" }
   ];
 
   const handleItemClick = (id: string) => {
-    onNavigate(id);
+    if (id === "about") {
+      onOpenAboutUs();
+    } else {
+      onNavigate(id);
+    }
     setIsMobileMenuOpen(false);
   };
 

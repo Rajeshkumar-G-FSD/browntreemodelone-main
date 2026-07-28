@@ -8,9 +8,10 @@ import btLogo from "../assets/images/brown_tree_transparents.png";
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
+  onOpenAboutUs: (focusId?: string) => void;
 }
 
-export default function Footer({ onNavigate }: FooterProps) {
+export default function Footer({ onNavigate, onOpenAboutUs }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   const handleLinkClick = (id: string) => {
@@ -113,9 +114,9 @@ export default function Footer({ onNavigate }: FooterProps) {
               </h4>
               <ul className="space-y-3 text-xs font-medium text-brand-background/75">
                 <li>
-                  <a href="#" className="hover:text-brand-gold-light transition duration-300">
+                  <button onClick={() => onOpenAboutUs()} className="hover:text-brand-gold-light transition duration-300 cursor-pointer text-left">
                     About Us
-                  </a>
+                  </button>
                 </li>
                 <li>
                   <button onClick={() => handleLinkClick("contact")} className="hover:text-brand-gold-light transition duration-300 cursor-pointer text-left">
@@ -123,9 +124,9 @@ export default function Footer({ onNavigate }: FooterProps) {
                   </button>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-brand-gold-light transition duration-300">
+                  <button onClick={() => onOpenAboutUs("careers")} className="hover:text-brand-gold-light transition duration-300 cursor-pointer text-left">
                     Careers
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>

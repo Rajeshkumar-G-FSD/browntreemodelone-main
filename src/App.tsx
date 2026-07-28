@@ -6,6 +6,7 @@
 import { useState, useEffect, useMemo } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import AboutUsPage from "./components/AboutUsPage";
 import PropertiesSection from "./components/PropertiesSection";
 import DestinationsSection from "./components/DestinationsSection";
 import ReviewsSection from "./components/ReviewsSection";
@@ -19,9 +20,9 @@ import Toaster from "./components/Toaster";
 
 import { PROPERTIES, DESTINATIONS } from "./data";
 import { Property, Suite } from "./types";
-import { toPropertySlug, findPropertyBySlug, toThankYouSlug, findPropertyByThankYouSlug } from "./slug";
+import { toPropertySlug, findPropertyBySlug, toThankYouSlug, findPropertyByThankYouSlug, ABOUT_US_PATH } from "./slug";
 import { useSEO } from "./hooks/useSEO";
-import { buildPropertySEO, buildThankYouSEO, DEFAULT_SEO } from "./seo";
+import { buildPropertySEO, buildThankYouSEO, DEFAULT_SEO, ABOUT_US_SEO } from "./seo";
 import { buildPropertyInquiryMessage, buildWhatsAppUrl } from "./lib/whatsapp";
 
 export default function App() {
@@ -37,14 +38,17 @@ export default function App() {
   const propertyOnPage = findPropertyBySlug(PROPERTIES, currentPath);
   // Per-property Google Ads conversion landing page (/<slug>/thank-you)
   const thankYouProperty = findPropertyByThankYouSlug(PROPERTIES, currentPath);
-  const onSubPage = !!(propertyOnPage || thankYouProperty);
+  // Standalone, shareable About Us page (/aboutus)
+  const aboutUsOnPage = currentPath === ABOUT_US_PATH;
+  const onSubPage = !!(propertyOnPage || thankYouProperty || aboutUsOnPage);
 
   // Keep <title>, meta tags, canonical URL and JSON-LD in sync with the active route
   const seo = useMemo(() => {
     if (thankYouProperty) return buildThankYouSEO(thankYouProperty);
     if (propertyOnPage) return buildPropertySEO(propertyOnPage);
+    if (aboutUsOnPage) return ABOUT_US_SEO;
     return DEFAULT_SEO;
-  }, [propertyOnPage, thankYouProperty]);
+  }, [propertyOnPage, thankYouProperty, aboutUsOnPage]);
   useSEO(seo);
 
   // Browser back/forward support
@@ -54,10 +58,15 @@ export default function App() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  // Scroll to top when entering a property or thank-you page
+  // Scroll to top when entering a property, thank-you, or about-us page
   useEffect(() => {
     if (onSubPage) window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPath]);
+
+  // Highlight the ABOUT nav item while on its dedicated page
+  useEffect(() => {
+    if (aboutUsOnPage) setActiveSection("about");
+  }, [aboutUsOnPage]);
 
   // Track active section while scrolling on home page
   useEffect(() => {
@@ -111,6 +120,19 @@ export default function App() {
   const handleBackToHome = () => {
     window.history.pushState({}, "", "/");
     setCurrentPath("/");
+  };
+
+  // Navigate to the standalone About Us page — works from home or any sub-page.
+  // Pass focusId (e.g. "careers") to scroll to a section within the page after it mounts.
+  const handleOpenAboutUs = (focusId?: string) => {
+    window.history.pushState({}, "", ABOUT_US_PATH);
+    setCurrentPath(ABOUT_US_PATH);
+    if (focusId) {
+      setTimeout(() => {
+        const el = document.getElementById(focusId);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    }
   };
 
   // Send a property-specific WhatsApp inquiry, then land on that property's
@@ -174,6 +196,7 @@ export default function App() {
         activeSection={activeSection}
         onNavigate={handleNavigate}
         onOpenBooking={handleOpenBooking}
+        onOpenAboutUs={handleOpenAboutUs}
       />
 
       {thankYouProperty ? (
@@ -191,6 +214,12 @@ export default function App() {
           onBookSuite={handleBookSuiteFromPage}
           onInquire={handleInquireProperty}
         />
+      ) : aboutUsOnPage ? (
+        /* ── Standalone, shareable About Us page (/aboutus) ── */
+        <>
+          <AboutUsPage onBack={handleBackToHome} />
+          <Footer onNavigate={handleNavigate} onOpenAboutUs={handleOpenAboutUs} />
+        </>
       ) : (
         /* ── Home page ── */
         <>
@@ -220,7 +249,7 @@ export default function App() {
             <ContactSection />
           </main>
 
-          <Footer onNavigate={handleNavigate} />
+          <Footer onNavigate={handleNavigate} onOpenAboutUs={handleOpenAboutUs} />
         </>
       )}
 
