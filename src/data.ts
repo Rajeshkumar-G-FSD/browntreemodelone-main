@@ -37,14 +37,22 @@ import teaLeafBedroomsB from "./assets/images/Tealeaf.bed_rooms_.webp";
 import teaLeafBedA from "./assets/images/Tealeaf_bed_.webp";
 import teaLeafBedroom from "./assets/images/Tealeaf_bedroom.webp";
 import teaLeafBedB from "./assets/images/Tealeaf_bed.webp";
-import hummingBirdMain from "./assets/images/HummingBird.png";
-import hummingBirdNightview from "./assets/images/HummingBird_nightview.jpeg";
-import hummingBirdDoublebed from "./assets/images/HummingBird_doublebed.jpeg";
-import hummingBirdSinglebed from "./assets/images/HummingBird_singlebed.jpeg";
-import hummingBirdSinglebedA from "./assets/images/HummingBird_Singlebed_.jpeg";
-import hummingBirdParking from "./assets/images/HummingBird_parking.jpeg";
-import hummingBirdDining from "./assets/images/HummingBird_dining.jpeg";
-import hummingBirdBrowntree from "./assets/images/hummingbird_browntre_resorts_kothagiri.png";
+import hummingBirdPark from "./assets/images/humming_bird_kothagiri_park.png";
+import hummingBirdNightview from "./assets/images/humming_bird_kothagiri_nightview.png";
+import hummingBirdAnimals from "./assets/images/humming_bird_kothagiri_animals.png";
+import hummingBirdRestroom from "./assets/images/humming_bird_kothagiri_restroom.png";
+import hummingBirdRestrooms from "./assets/images/humming_bird_kothagiri_restrooms.png";
+import hummingBirdHall from "./assets/images/humming_bird_kothagiri_hall.png";
+import hummingBirdBedroom from "./assets/images/humming_bird_kothagiri_bedroom.png";
+import hummingBirdFrontviews from "./assets/images/humming_bird_kothagiri_frontviews.png";
+import hummingBirdCampfire from "./assets/images/humming_bird_kothagiri_campfire.png";
+import hummingBirdEstateView from "./assets/images/humming_bird_kothagiri_estate_view.png";
+import hummingBirdEstateViews from "./assets/images/humming_bird_kothagiri_estate_views.png";
+import hummingBirdDeluxBedroom from "./assets/images/humming_bird_kothagiri_delux-bedroom.png";
+import hummingBirdDeluxBedrooms from "./assets/images/humming_bird_kothagiri_delux-bedrooms.png";
+import hummingBirdWindowview from "./assets/images/humming_bird_kothagiri_windowview.png";
+import hummingBirdVillage from "./assets/images/humming_bird_kothagiri_village.png";
+import hummingBirdPremiumRooms from "./assets/images/humming_bird_kothagiri_premuim_rooms.png";
 import solarMain from "./assets/images/solar.png";
 import solarSinglebed from "./assets/images/solar_singlebed.jpeg";
 import solarSinglebedA from "./assets/images/solar_singlebed_.jpeg.jpeg";
@@ -922,16 +930,24 @@ export const PROPERTIES: Property[] = [
     price: 5000,
     rating: 4.6,
     reviewCount: 36,
-    image: hummingBirdBrowntree,
+    image: hummingBirdFrontviews,
     gallery: [
-      hummingBirdBrowntree,
+      hummingBirdFrontviews,
+      hummingBirdEstateView,
+      hummingBirdEstateViews,
+      hummingBirdPark,
+      hummingBirdVillage,
+      hummingBirdWindowview,
+      hummingBirdHall,
+      hummingBirdBedroom,
+      hummingBirdDeluxBedroom,
+      hummingBirdDeluxBedrooms,
+      hummingBirdPremiumRooms,
+      hummingBirdRestroom,
+      hummingBirdRestrooms,
+      hummingBirdCampfire,
       hummingBirdNightview,
-      hummingBirdDoublebed,
-      hummingBirdSinglebed,
-      hummingBirdSinglebedA,
-      hummingBirdParking,
-      hummingBirdDining,
-      hummingBirdMain,
+      hummingBirdAnimals,
     ],
     description: "Nestled amidst the tranquil hills of Kothagiri, HUMMING BIRD BY BROWN TREE offers a serene villa experience designed for families, couples, and small groups looking to escape the rush of city life.\n\nSurrounded by lush greenery and refreshing mountain air, the property combines modern comforts with warm interiors to create a relaxing home-away-from-home. Spacious accommodations, beautiful outdoor spaces, and personalized hospitality make every stay memorable.\n\nWhether you're planning a family vacation, a romantic getaway, or a weekend retreat with friends, Humming Bird offers the perfect setting to relax, reconnect, and rejuvenate.",
     highlights: [
