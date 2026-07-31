@@ -384,12 +384,18 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
           100% { opacity: 1; transform: scale(1); }
         }
         @keyframes logoHeartbeat {
-          0%   { transform: scale(1); }
-          14%  { transform: scale(1.22); }
-          28%  { transform: scale(1); }
-          42%  { transform: scale(1.22); }
-          70%  { transform: scale(1); }
-          100% { transform: scale(1); }
+          0%   { transform: scale(1);     filter: drop-shadow(0 0 0px rgba(233,193,118,0)); }
+          22%  { transform: scale(1.13);  filter: drop-shadow(0 0 11px rgba(233,193,118,0.6)); }
+          38%  { transform: scale(1.02);  filter: drop-shadow(0 0 4px rgba(233,193,118,0.25)); }
+          54%  { transform: scale(1.1);   filter: drop-shadow(0 0 9px rgba(233,193,118,0.5)); }
+          72%  { transform: scale(1);     filter: drop-shadow(0 0 0px rgba(233,193,118,0)); }
+          100% { transform: scale(1);     filter: drop-shadow(0 0 0px rgba(233,193,118,0)); }
+        }
+        .logo-heartbeat {
+          animation: logoHeartbeat 3.6s cubic-bezier(0.45,0,0.2,1) infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .logo-heartbeat { animation: none; }
         }
       `}</style>
 
@@ -454,6 +460,7 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
                       src={btLogo}
                       alt=""
                       aria-hidden="true"
+                      className="logo-heartbeat"
                       style={{
                         display: "block",
                         width: "100%",
@@ -461,7 +468,6 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
                         objectFit: "contain",
                         objectPosition: "center",
                         transformOrigin: "center",
-                        animation: "logoHeartbeat 1.4s ease-in-out infinite",
                       }}
                     />
                   </span>

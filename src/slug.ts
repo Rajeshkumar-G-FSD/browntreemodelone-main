@@ -8,6 +8,9 @@ import { Property } from "./types";
 // Standalone shareable page — not derived from property data, so it's a fixed constant.
 export const ABOUT_US_PATH = "/aboutus";
 
+// Standalone, shareable property portfolio brochure page (PDF viewer + download): /brochure
+export const BROCHURE_PATH = "/brochure";
+
 // Converts a property to a URL slug: /ooty-the-earthy-nest-by-brown-tree
 export function toPropertySlug(property: Property): string {
   const location = property.location.split(",")[0].trim().toLowerCase().replace(/\s+/g, "-");

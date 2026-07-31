@@ -7,6 +7,7 @@ import { useState, useEffect, useMemo } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import AboutUsPage from "./components/AboutUsPage";
+import BrochurePage from "./components/BrochurePage";
 import PropertiesSection from "./components/PropertiesSection";
 import DestinationsSection from "./components/DestinationsSection";
 import ReviewsSection from "./components/ReviewsSection";
@@ -20,9 +21,9 @@ import Toaster from "./components/Toaster";
 
 import { PROPERTIES, DESTINATIONS } from "./data";
 import { Property, Suite } from "./types";
-import { toPropertySlug, findPropertyBySlug, toThankYouSlug, findPropertyByThankYouSlug, ABOUT_US_PATH } from "./slug";
+import { toPropertySlug, findPropertyBySlug, toThankYouSlug, findPropertyByThankYouSlug, ABOUT_US_PATH, BROCHURE_PATH } from "./slug";
 import { useSEO } from "./hooks/useSEO";
-import { buildPropertySEO, buildThankYouSEO, DEFAULT_SEO, ABOUT_US_SEO } from "./seo";
+import { buildPropertySEO, buildThankYouSEO, DEFAULT_SEO, ABOUT_US_SEO, BROCHURE_SEO } from "./seo";
 import { buildPropertyInquiryMessage, buildWhatsAppUrl } from "./lib/whatsapp";
 
 export default function App() {
@@ -40,15 +41,18 @@ export default function App() {
   const thankYouProperty = findPropertyByThankYouSlug(PROPERTIES, currentPath);
   // Standalone, shareable About Us page (/aboutus)
   const aboutUsOnPage = currentPath === ABOUT_US_PATH;
-  const onSubPage = !!(propertyOnPage || thankYouProperty || aboutUsOnPage);
+  // Standalone, shareable property portfolio brochure page (/brochure)
+  const brochureOnPage = currentPath === BROCHURE_PATH;
+  const onSubPage = !!(propertyOnPage || thankYouProperty || aboutUsOnPage || brochureOnPage);
 
   // Keep <title>, meta tags, canonical URL and JSON-LD in sync with the active route
   const seo = useMemo(() => {
     if (thankYouProperty) return buildThankYouSEO(thankYouProperty);
     if (propertyOnPage) return buildPropertySEO(propertyOnPage);
     if (aboutUsOnPage) return ABOUT_US_SEO;
+    if (brochureOnPage) return BROCHURE_SEO;
     return DEFAULT_SEO;
-  }, [propertyOnPage, thankYouProperty, aboutUsOnPage]);
+  }, [propertyOnPage, thankYouProperty, aboutUsOnPage, brochureOnPage]);
   useSEO(seo);
 
   // Browser back/forward support
@@ -135,6 +139,12 @@ export default function App() {
     }
   };
 
+  // Navigate to the standalone Brochure page — works from home or any sub-page.
+  const handleOpenBrochure = () => {
+    window.history.pushState({}, "", BROCHURE_PATH);
+    setCurrentPath(BROCHURE_PATH);
+  };
+
   // Send a property-specific WhatsApp inquiry, then land on that property's
   // Google Ads conversion page (/<slug>/thank-you).
   const handleInquireProperty = (property: Property) => {
@@ -218,7 +228,13 @@ export default function App() {
         /* ── Standalone, shareable About Us page (/aboutus) ── */
         <>
           <AboutUsPage onBack={handleBackToHome} />
-          <Footer onNavigate={handleNavigate} onOpenAboutUs={handleOpenAboutUs} />
+          <Footer onNavigate={handleNavigate} onOpenAboutUs={handleOpenAboutUs} onOpenBrochure={handleOpenBrochure} />
+        </>
+      ) : brochureOnPage ? (
+        /* ── Standalone, shareable property portfolio brochure page (/brochure) ── */
+        <>
+          <BrochurePage onBack={handleBackToHome} />
+          <Footer onNavigate={handleNavigate} onOpenAboutUs={handleOpenAboutUs} onOpenBrochure={handleOpenBrochure} />
         </>
       ) : (
         /* ── Home page ── */
@@ -249,7 +265,7 @@ export default function App() {
             <ContactSection />
           </main>
 
-          <Footer onNavigate={handleNavigate} onOpenAboutUs={handleOpenAboutUs} />
+          <Footer onNavigate={handleNavigate} onOpenAboutUs={handleOpenAboutUs} onOpenBrochure={handleOpenBrochure} />
         </>
       )}
 

@@ -4,7 +4,7 @@
  */
 
 import { Property } from "./types";
-import { toPropertySlug, toThankYouSlug, ABOUT_US_PATH } from "./slug";
+import { toPropertySlug, toThankYouSlug, ABOUT_US_PATH, BROCHURE_PATH } from "./slug";
 
 export const SITE_URL = "https://browntreeresorts.com";
 
@@ -133,6 +133,16 @@ export const ABOUT_US_SEO: SEOData = {
   path: ABOUT_US_PATH,
   image: "https://i.postimg.cc/9MBBdTWW/nature.png",
   imageAlt: "Brown Tree Resorts hillside properties across the Nilgiri Hills",
+};
+
+/** Standalone, shareable property portfolio brochure page (PDF viewer + download). */
+export const BROCHURE_SEO: SEOData = {
+  title: "Property Portfolio Brochure | Brown Tree Resorts",
+  description:
+    "Download the Brown Tree Resorts property portfolio — galleries, amenities and pricing for all 5 properties across Ooty, Kotagiri and Kodaikanal.",
+  path: BROCHURE_PATH,
+  image: "https://i.postimg.cc/9MBBdTWW/nature.png",
+  imageAlt: "Brown Tree Resorts property portfolio brochure",
 };
 
 /** Per-property Google Ads conversion landing page — noindexed, not part of the sitemap. */
