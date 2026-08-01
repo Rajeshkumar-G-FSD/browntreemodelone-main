@@ -4,11 +4,9 @@
  */
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { gsap } from "gsap";
 import { MapPin, Home, Calendar, Search, Check, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import TextType from "./TextType";
 import browntreeVideo from "../assets/images/broentree_video.mp4";
-import btLogo from "../assets/images/brown_tree_transparents.png";
+import btIconLogo from "../assets/images/browntreelogo_transparent_tight.png";
 import { useToast } from "./useToast";
 import { getBookingUrl } from "../bookingUrls";
 
@@ -123,62 +121,12 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
   const [activePanel, setActivePanel] = useState<ActivePanel>(null);
   const [rippling, setRippling] = useState(false);
   const [checkoutEnabled, setCheckoutEnabled] = useState(false);
-  const [titleTyped, setTitleTyped] = useState(false);
-  const [showLogoLetter, setShowLogoLetter] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
 
   const todayStr = new Date().toISOString().split("T")[0];
   const allFilled = !!(location && property && checkIn && checkOut);
-
-  // Once typing completes: sweep each letter from white into the logo's
-  // gold-to-brown gradient last letter first, then sweep back to white
-  // first letter to last, so the title settles back to its original white.
-  useEffect(() => {
-    if (!titleTyped || !titleRef.current) return;
-    const letters = Array.from(titleRef.current.querySelectorAll("span"));
-    const n = letters.length;
-    const gradientStops: [number, number, number][] = [
-      [0xe9, 0xc1, 0x76], // brand-gold-light
-      [0xc9, 0x8f, 0x3a], // warm amber bridge
-      [0x5d, 0x27, 0x17], // logo brown
-    ];
-    const colorAt = (i: number) => {
-      const t = n > 1 ? i / (n - 1) : 0;
-      const segCount = gradientStops.length - 1;
-      const seg = Math.min(Math.floor(t * segCount), segCount - 1);
-      const localT = t * segCount - seg;
-      const [r1, g1, b1] = gradientStops[seg];
-      const [r2, g2, b2] = gradientStops[seg + 1];
-      const r = Math.round(r1 + (r2 - r1) * localT);
-      const g = Math.round(g1 + (g2 - g1) * localT);
-      const b = Math.round(b1 + (b2 - b1) * localT);
-      return `rgb(${r},${g},${b})`;
-    };
-    const tl = gsap.timeline();
-    tl.fromTo(
-      letters,
-      { color: "#fcf9f8" },
-      {
-        color: (i: number) => colorAt(i),
-        duration: 0.6,
-        ease: "power2.inOut",
-        stagger: { each: 0.055, from: "end" },
-      }
-    ).to(
-      letters,
-      {
-        color: "#fcf9f8",
-        duration: 0.6,
-        ease: "power2.inOut",
-        stagger: { each: 0.055, from: "start" },
-        onComplete: () => setShowLogoLetter(true),
-      },
-      "+=0.4"
-    );
-  }, [titleTyped]);
 
   // Seamless video loop
   useEffect(() => {
@@ -378,25 +326,6 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
           box-shadow: 0 0 0 2px rgba(212,175,55,0.55) inset;
           background: rgba(248,245,239,0.7) !important;
         }
-        @keyframes logoLetterIn {
-          0%   { opacity: 0; transform: scale(0.5); }
-          60%  { opacity: 1; transform: scale(1.12); }
-          100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes logoHeartbeat {
-          0%   { transform: scale(1);     filter: drop-shadow(0 0 0px rgba(233,193,118,0)); }
-          22%  { transform: scale(1.13);  filter: drop-shadow(0 0 11px rgba(233,193,118,0.6)); }
-          38%  { transform: scale(1.02);  filter: drop-shadow(0 0 4px rgba(233,193,118,0.25)); }
-          54%  { transform: scale(1.1);   filter: drop-shadow(0 0 9px rgba(233,193,118,0.5)); }
-          72%  { transform: scale(1);     filter: drop-shadow(0 0 0px rgba(233,193,118,0)); }
-          100% { transform: scale(1);     filter: drop-shadow(0 0 0px rgba(233,193,118,0)); }
-        }
-        .logo-heartbeat {
-          animation: logoHeartbeat 3.6s cubic-bezier(0.45,0,0.2,1) infinite;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .logo-heartbeat { animation: none; }
-        }
       `}</style>
 
       <section
@@ -419,66 +348,26 @@ export default function Hero({ preFill, onPreFillConsumed }: HeroProps) {
 
         {/* Hero Title */}
         <div className="relative z-10 max-w-4xl mx-auto text-center space-y-5 md:space-y-7 animate-fade-in-up mt-8 md:mt-12">
-          {/* Real H1 for SEO/screen readers — the animated text below is decorative and empty on first paint */}
+          {/* Real H1 for SEO/screen readers — the logo image below is decorative */}
           <h1 className="sr-only">
             Brown Tree Resorts – Luxury Resort, Home Stay &amp; Heritage Stays in Ooty, Kothagiri &amp; Kodaikanal
           </h1>
-          {!titleTyped ? (
-            <TextType
-              text="BROWN TREE"
-              className="font-brand text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1.1] text-[#fcf9f8]"
-              as="div"
-              typingSpeed={60}
-              initialDelay={300}
-              loop={false}
-              showCursor={true}
-              cursorCharacter="|"
-              cursorClassName="text-brand-gold-light"
-              onComplete={() => setTitleTyped(true)}
+          <div className="font-brand text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1.1] text-[#fcf9f8] flex items-center justify-center">
+            <span>BR</span>
+            <img
+              src={btIconLogo}
+              alt=""
+              aria-hidden="true"
+              style={{
+                display: "inline-block",
+                width: "0.76em",
+                height: "0.76em",
+                margin: "0 0.03em",
+                objectFit: "contain",
+              }}
             />
-          ) : (
-            <div
-              ref={titleRef}
-              className="font-brand text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1.1]"
-            >
-              {"BROWN TREE".split("").map((char, i) =>
-                i === 2 && showLogoLetter ? (
-                  <span
-                    key={i}
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: "0.84em",
-                      height: "0.84em",
-                      verticalAlign: "-0.07em",
-                      margin: "0 0.02em",
-                      animation: "logoLetterIn 0.5s cubic-bezier(0.16,1,0.3,1) both",
-                    }}
-                  >
-                    <img
-                      src={btLogo}
-                      alt=""
-                      aria-hidden="true"
-                      className="logo-heartbeat"
-                      style={{
-                        display: "block",
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "contain",
-                        objectPosition: "center",
-                        transformOrigin: "center",
-                      }}
-                    />
-                  </span>
-                ) : (
-                  <span key={i} style={{ display: "inline-block" }}>
-                    {char === " " ? " " : char}
-                  </span>
-                )
-              )}
-            </div>
-          )}
+            <span>WN TREE</span>
+          </div>
           <div className="flex flex-col items-center justify-center gap-1 mx-auto w-40 sm:w-56">
             <div className="w-full h-px bg-gradient-to-r from-transparent via-brand-gold-light/80 to-transparent" />
             <div className="w-3/4 h-px bg-gradient-to-r from-transparent via-brand-gold-light/40 to-transparent" />
