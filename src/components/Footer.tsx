@@ -4,7 +4,7 @@
  */
 
 import { Facebook, Instagram, Youtube } from "lucide-react";
-import btLogo from "../assets/images/brown_tree_transparents.png";
+import btIconLogo from "../assets/images/browntreelogo_transparent_tight.png";
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
@@ -38,14 +38,27 @@ export default function Footer({ onNavigate, onOpenAboutUs, onOpenBrochure }: Fo
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Brand & Description Block */}
           <div className="md:col-span-4 space-y-6">
-            <div className="flex items-center">
+            <div
+              className="flex items-center font-brand text-2xl md:text-3xl font-black tracking-tight text-brand-background"
+              role="img"
+              aria-label="Brown Tree Resorts brand logo – curated hill station accommodations across the Nilgiri and Palani Hills"
+            >
+              <span aria-hidden="true">BR</span>
               <img
-                src={btLogo}
-                alt="Brown Tree Resorts brand logo – curated hill station accommodations across the Nilgiri and Palani Hills"
+                src={btIconLogo}
+                alt=""
+                aria-hidden="true"
                 loading="lazy"
                 decoding="async"
-                className="h-14 md:h-18 w-auto object-contain"
+                style={{
+                  display: "inline-block",
+                  width: "0.76em",
+                  height: "0.76em",
+                  margin: "0 0.03em",
+                  objectFit: "contain",
+                }}
               />
+              <span aria-hidden="true">WN TREE</span>
             </div>
             <p className="font-sans text-xs sm:text-sm text-brand-background/70 font-light leading-relaxed max-w-sm">
               Curating extraordinary sanctuaries for the modern traveler. Experience luxury redefined.
