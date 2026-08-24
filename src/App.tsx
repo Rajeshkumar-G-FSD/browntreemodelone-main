@@ -12,6 +12,7 @@ import PropertiesSection from "./components/PropertiesSection";
 import DestinationsSection from "./components/DestinationsSection";
 import ReviewsSection from "./components/ReviewsSection";
 import ContactSection from "./components/ContactSection";
+import SectionCurve from "./components/SectionCurve";
 import PropertyDetailPage from "./components/PropertyDetailPage";
 import ThankYouPage from "./components/ThankYouPage";
 import BookingDrawer from "./components/BookingDrawer";
@@ -255,12 +256,18 @@ export default function App() {
               filteredDestination={filteredDestination}
             />
 
+            <SectionCurve fromColor="#fcf9f8" toColor="#ffffff" />
+
             <DestinationsSection
               destinations={DESTINATIONS}
               onSelectDestination={handleSelectDestination}
             />
 
-<ReviewsSection />
+            <SectionCurve fromColor="#ffffff" toColor="#18281e" />
+
+            <ReviewsSection />
+
+            <SectionCurve fromColor="#18281e" toColor="#fcf9f8" />
 
             <ContactSection />
           </main>

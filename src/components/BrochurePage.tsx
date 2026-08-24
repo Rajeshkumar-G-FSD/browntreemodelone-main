@@ -11,49 +11,89 @@ import { useToast } from "./useToast";
 const PDF_URL = "/downloads/brown-tree-property-portfolio.pdf";
 const PDF_FILENAME = "Brown Tree - Property Portfolio.pdf";
 
+const PROPERTY_BROCHURE_DIR = "/downloads/property-brochures/";
+
+interface PropertyBrochureGroup {
+  destination: string;
+  properties: { name: string; filename: string }[];
+}
+
+// One entry per destination; each property links to its own dedicated PDF.
+// Tea Leaf Stays (Ooty) has no PDF yet, so it's omitted until one is provided.
+const PROPERTY_BROCHURES: PropertyBrochureGroup[] = [
+  {
+    destination: "Ooty",
+    properties: [
+      { name: "The Abode by Brown Tree", filename: "The Abode by Brown Tree.pdf" },
+      { name: "The Earthy Nest by Brown Tree", filename: "The Earthly Nest by Brown Tree.pdf" },
+      { name: "The Sholas by Brown Tree", filename: "The Sholas by Brown Tree.pdf" },
+    ],
+  },
+  {
+    destination: "Kothagiri",
+    properties: [{ name: "Humming Bird by Brown Tree", filename: "Humming Bird by Brown Tree.pdf" }],
+  },
+  {
+    destination: "Kodaikanal",
+    properties: [{ name: "Hotel Vetrivel by Brown Tree", filename: "Hotel Vetrivel by Brown Tree.pdf" }],
+  },
+];
+
 interface BrochurePageProps {
   onBack: () => void;
 }
 
 export default function BrochurePage({ onBack }: BrochurePageProps) {
   const { toast } = useToast();
-  const [downloading, setDownloading] = useState(false);
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
 
-  const handleDownload = async () => {
-    const confirmed = window.confirm(`Save "${PDF_FILENAME}" to your device?`);
+  const handleDownload = async (url: string, filename: string, id: string) => {
+    const confirmed = window.confirm(`Save "${filename}" to your device?`);
     if (!confirmed) return;
 
-    setDownloading(true);
+    setDownloadingId(id);
     try {
+      // Fetch and verify the file exists *before* touching any save flow — otherwise a
+      // 404/500 response gets silently saved as if it were the PDF (a "damaged file" for the user).
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error(`File unavailable (${res.status})`);
+      }
+      const blob = await res.blob();
+
       const filePicker = (window as any).showSaveFilePicker;
       if (typeof filePicker === "function") {
         // Chromium browsers: native OS "Save As" dialog — the real permission/location prompt.
         const handle = await filePicker({
-          suggestedName: PDF_FILENAME,
+          suggestedName: filename,
           types: [{ description: "PDF Document", accept: { "application/pdf": [".pdf"] } }],
         });
-        const res = await fetch(PDF_URL);
-        const blob = await res.blob();
         const writable = await handle.createWritable();
         await writable.write(blob);
         await writable.close();
         toast({ title: "Downloaded", description: "Brochure saved to your device." });
       } else {
-        // Safari / Firefox fallback: browser's own download flow.
+        // Safari / Firefox fallback: browser's own download flow, from the already-verified blob.
+        const blobUrl = URL.createObjectURL(blob);
         const a = document.createElement("a");
-        a.href = PDF_URL;
-        a.download = PDF_FILENAME;
+        a.href = blobUrl;
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         a.remove();
+        URL.revokeObjectURL(blobUrl);
         toast({ title: "Download started", description: "Check your device's downloads folder." });
       }
     } catch (err) {
       if ((err as Error)?.name !== "AbortError") {
-        toast({ variant: "destructive", title: "Download failed", description: "Please try again." });
+        toast({
+          variant: "destructive",
+          title: "Download failed",
+          description: "This brochure isn't available right now. Please try again shortly.",
+        });
       }
     } finally {
-      setDownloading(false);
+      setDownloadingId(null);
     }
   };
 
@@ -138,12 +178,12 @@ export default function BrochurePage({ onBack }: BrochurePageProps) {
         </p>
 
         <button
-          onClick={handleDownload}
-          disabled={downloading}
+          onClick={() => handleDownload(PDF_URL, PDF_FILENAME, "portfolio")}
+          disabled={downloadingId === "portfolio"}
           className="mt-8 inline-flex items-center gap-2 bg-brand-secondary text-white font-sans text-xs font-bold tracking-widest uppercase px-6 py-3 rounded-full hover:bg-brand-primary transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
         >
           <Download size={15} />
-          {downloading ? "Preparing…" : "Download PDF"}
+          {downloadingId === "portfolio" ? "Preparing…" : "Download PDF"}
         </button>
 
         <div className="mt-10 rounded-xl overflow-hidden shadow-xl border border-brand-primary/10 bg-white">
@@ -158,6 +198,49 @@ export default function BrochurePage({ onBack }: BrochurePageProps) {
           <FileText size={13} />
           If the preview doesn't load on your device, use the Download button above.
         </p>
+      </section>
+
+      {/* Individual Property Brochures — grouped by destination */}
+      <section className="max-w-5xl mx-auto px-4 md:px-8 pb-16 md:pb-24">
+        <div className="text-center mb-10">
+          <h2 className="font-display text-2xl sm:text-3xl font-medium text-brand-primary">
+            Individual Property Brochures
+          </h2>
+          <p className="mt-2 font-sans text-sm text-brand-primary/60 max-w-xl mx-auto">
+            Prefer just one property? Download its dedicated brochure below.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {PROPERTY_BROCHURES.map((group) => (
+            <div
+              key={group.destination}
+              className="bg-white rounded-2xl border border-brand-primary/10 p-6 space-y-4 text-left"
+            >
+              <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-brand-secondary">
+                {group.destination} Properties
+              </h3>
+              <ul className="space-y-3">
+                {group.properties.map((p) => {
+                  const url = `${PROPERTY_BROCHURE_DIR}${encodeURIComponent(p.filename)}`;
+                  const isDownloading = downloadingId === p.filename;
+                  return (
+                    <li key={p.filename}>
+                      <button
+                        onClick={() => handleDownload(url, p.filename, p.filename)}
+                        disabled={isDownloading}
+                        className="w-full flex items-center justify-between gap-3 text-left text-sm font-medium text-brand-primary hover:text-brand-secondary transition-colors duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed group"
+                      >
+                        <span>{p.name}</span>
+                        <Download size={14} className="flex-shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );

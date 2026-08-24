@@ -153,7 +153,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32 px-4 bg-brand-background border-t border-brand-primary/5">
+    <section id="contact" className="py-24 md:py-32 px-4 bg-brand-background">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
         {/* Left Column: Brand Statement & Details */}
         <div className="lg:col-span-5 space-y-8 lg:sticky lg:top-32">

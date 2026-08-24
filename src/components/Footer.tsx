@@ -96,7 +96,7 @@ export default function Footer({ onNavigate, onOpenAboutUs, onOpenBrochure }: Fo
           </div>
 
           {/* Links Columns */}
-          <div className="md:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-6">
+          <div className="md:col-span-8 grid grid-cols-2 gap-8 sm:gap-6">
             {/* Column 1: Explore */}
             <div className="space-y-5">
               <h4 className="font-sans text-xs font-bold tracking-[0.25em] text-brand-gold-light uppercase">
@@ -136,35 +136,6 @@ export default function Footer({ onNavigate, onOpenAboutUs, onOpenBrochure }: Fo
                   <button onClick={() => handleLinkClick("contact")} className="hover:text-brand-gold-light transition duration-300 cursor-pointer text-left">
                     Contact
                   </button>
-                </li>
-                <li>
-                  <button onClick={() => onOpenAboutUs("careers")} className="hover:text-brand-gold-light transition duration-300 cursor-pointer text-left">
-                    Careers
-                  </button>
-                </li>
-                <li>
-                  <button onClick={onOpenBrochure} className="hover:text-brand-gold-light transition duration-300 cursor-pointer text-left">
-                    Brochure
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-            {/* Column 3: Legal */}
-            <div className="space-y-5 col-span-2 sm:col-span-1 sm:border-l sm:border-brand-background/10 sm:pl-6">
-              <h4 className="font-sans text-xs font-bold tracking-[0.25em] text-brand-gold-light uppercase">
-                Legal
-              </h4>
-              <ul className="space-y-3 text-xs font-medium text-brand-background/75">
-                <li>
-                  <a href="#" className="hover:text-brand-gold-light transition duration-300">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-brand-gold-light transition duration-300">
-                    Terms of Service
-                  </a>
                 </li>
               </ul>
             </div>
